@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "pm4ml-management-api-service.fullname" . }}-tls-configmap
+  labels:
+    app.kubernetes.io/name: {{ include "pm4ml-management-api-service.fullname" . }}-tls-configmap
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+data:
+  tlsClientCSRParameters.json: {{ .Values.config.tlsClientCSRParametersData | quote }}
+  tlsServerCSRParameters.json: {{ .Values.config.tlsServerCSRParametersData | quote }}

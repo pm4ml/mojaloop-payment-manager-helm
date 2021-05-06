@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pm4ml-mojaloop-connector.fullname" . }}
+  labels:
+{{ include "pm4ml-mojaloop-connector.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.env.INBOUND_LISTEN_PORT }}
+      protocol: TCP
+      name: inboundapi
+      targetPort: inboundapi
+    - port: {{ .Values.env.OUTBOUND_LISTEN_PORT }}
+      protocol: TCP
+      name: outboundapi
+      targetPort: outboundapi
+    {{- if .Values.env.ENABLE_TEST_FEATURES }}
+    - port: {{ .Values.env.TEST_LISTEN_PORT }}
+      protocol: TCP
+      name: testapi
+      targetPort: testapi
+    {{- end }}
+    - port: {{ .Values.env.WS_PORT }}
+      protocol: TCP
+      name: websocket
+      targetPort: websocket
+    - port: {{ .Values.env.METRICS_SERVER_LISTEN_PORT }}
+      protocol: TCP
+      name: metrics
+      targetPort: metrics
+  selector:
+    app.kubernetes.io/name: {{ include "pm4ml-mojaloop-connector.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

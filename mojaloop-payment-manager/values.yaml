@@ -1,0 +1,235 @@
+# Default values for mojaloop-payment-manager.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+# common/shared values
+
+imagePullCredentials: &imagePullCredentials
+  registry: "modusbox-mbx-docker.jfrog.io/modusintegration/"
+  user: "someusername"
+  pass: "somepassword"
+
+experienceApiClientSecret: &experienceApiClientSecret "somesecret"
+
+# set both these to the external URL of the UI itself
+frontendRootUrl: &frontendRootUrl "http://portal.external.url:1234/"
+frontendBaseUrl: &frontendBaseUrl "http://experience-api.external.url:1234/"
+
+# this needs to have external URLs of both the UI and experience API
+frontendRedirectUris: &frontendRedirectUris
+  - "http://portal.external.url:1234/*"
+  - "http://experience-api.external.url/*"
+
+# this _should_ be set to only allow requests from known origins
+frontendWebOrigins: &frontendWebOrigins
+  - "*"
+
+# this should be set to the FSPID assigned by the mojaloop hub to this DFSP
+dfspId: &dfspId "pm4mldfsp"
+# this should be set to the ID of the default MCM environment for this DFSP
+mcmEnvironmentId: &mcmEnvironmentId 1
+
+ingress:
+    enabled: true
+
+
+# values for sub components
+
+frontend:
+  imagePullCredentials: *imagePullCredentials
+  env:
+    # this should be set to the external URL of the experience API
+    API_BASE_URL: "http://experience-api.external.url:30095"
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/rewrite-target: /
+    hosts:
+      - host: localhost
+        paths: ['/']
+
+experience-api:
+  imagePullCredentials: *imagePullCredentials
+  env:
+    envId: *mcmEnvironmentId
+    dfspId: *dfspId
+    appKeys: some-secret-please-change
+    managementEndPoint: pm4ml-management-api
+    metricsEndPoint: pm4ml-prometheus-server
+    # this should be set to the internal URL of the keycloak pm4ml realm discovery endpoint
+    # note that the hostname will be the deployment name followed by "-keycloak-http"
+    # e.g. the example below works when the deployment name is "pm4ml".
+    # HELM does not give us a nice way of getting the deployment name in the values file :(
+    authDiscoveryEndpoint: "http://pm4ml-keycloak-http:80/auth/realms/pm4ml/.well-known/openid-configuration"
+    authClientId: pm4ml-customer-ui
+    authClientSecret: *experienceApiClientSecret
+    # this should be set to the external URL of the auth endpoint on the experience API
+    authRedirectUri: "http://experience-api.external.url:1234/auth"
+    authScopes: roles
+    authResourceName: pm4ml-customer-ui
+    # this should be set to the external URL of the UI
+    authLoggedInLandingUrl: "http://frontend.external.url:1234/"
+    authSessionSecure: true
+    authSessionRedisUrl: "redis://redis-master/2"
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+      - host: localhost
+        paths: ['/experience-api(/|$)(.*)']
+
+management-api:
+  imagePullCredentials: *imagePullCredentials
+  env:
+    cache_host: redis-master
+    dfspId: *dfspId
+    envId: *mcmEnvironmentId
+    mcmServerEndpoint: mcm-server
+    mcmClientRefreshInterval: 300
+    p12PassPhrase: SOME_S3C4R3_P@SS
+    AUTH_ENABLED: true
+    AUTH_USER: mcmusername
+    AUTH_PASS: mcmpassword
+
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+      - host: localhost
+        paths: ['/management-api(/|$)(.*)']
+
+mysql:
+  replication:
+    enabled: false
+  db:
+    user: test
+    password: test123
+    name: testdb
+  master:
+    persistence:
+      enabled: false
+
+redis:
+  usePassword: false
+  nameOverride: redis
+  fullnameOverride: redis
+  cluster:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+
+mojaloop-connector:
+  imagePullCredentials: *imagePullCredentials
+  env:
+    DFSP_ID: *dfspId
+    CACHE_HOST: redis-master
+    # the below should be set to the external gateway endpoint for the mojaloop switch
+    # the pm4ml instance is going to talk to
+    PEER_ENDPOINT: "mojaloop.hub.external.fspiop.endpoint:1234"
+    JWS_SIGN: true
+
+prometheus:
+  nodeExporter:
+    enabled: false
+  server:
+    persistentVolume:
+      enabled: true
+    extraScrapeConfigs: |
+      - job_name: 'mojaloop-connector'
+        static_configs:
+          - targets:
+            - "pm4ml-mojaloop-connector:4004"
+      - job_name: 'sim-core-connector'
+        static_configs:
+          - targets:
+            - "mojaloop-simulator-core-connector:7001"
+  alertmanager:
+    enabled: false
+  pushgateway:
+    enabled: false
+  kubeStateMetrics:
+    enabled: false
+
+mojaloop-simulator:
+  defaults:
+    ingress:
+      enabled: true
+
+mojaloop-simulator-core-connector:
+  imagePullCredentials: *imagePullCredentials
+  enabled: true
+  env:
+    backendApplicationEndpoint: http://localhost:3002
+    outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
+
+ttk:
+  ml-testing-toolkit-frontend:
+  enabled: true
+  ingress:
+    enabled: false
+    hosts:
+      localhost:
+        port: 6060
+        paths: ['/']
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: '/$2'
+      kubernetes.io/ingress.class: "nginx"
+  config:
+    API_BASE_URL: http://localhost
+
+  ml-testing-toolkit-backend:
+    enabled: true
+    ingress:
+      enabled: false
+      hosts:
+        localhost:
+          port: 5050
+          paths: ['/api/', '/socket.io/']
+        ttk-specapi-backend.local:
+          port: 5000
+          paths: ['/']
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: '/$2'
+    ## Persist data to a persistent volume
+    persistence:
+      enabled: false
+    ## Default config
+    config:
+      user_config.json: {
+        "CALLBACK_ENDPOINT": "https://gateway.io",
+        "FSPID": "ttk"
+      }
+
+keycloak:
+  enabled: true
+
+  extraVolumes: |
+    - name: realm-config
+      # the below should be set to the name of the keycloak realm config map
+      # this has the deployment name on the front but because helm is so horrible
+      # we cant get the deployment name here in a nice way. You have to plug it
+      # in manually. e.g. the below works for a deployment called "pm4ml"
+      configMap:
+        name: pm4ml-mojaloop-payment-manager-keycloak-realm
+
+  extraVolumeMounts: |
+    - name: realm-config
+      mountPath: "/realm"
+      readOnly: true
+
+  # KEYCLOAK_USER and KEYCLOAK_PASSWORD are for the admin user account
+  extraEnv: |
+    - name: KEYCLOAK_USER
+      value: admin
+    - name: KEYCLOAK_PASSWORD
+      value: admin
+    - name: KEYCLOAK_IMPORT
+      value: /realm/realm.json
+    # the below should be set to the external URL of keycloak
+    - name: KEYCLOAK_FRONTEND_URL
+      value: "http://keycloak.external.url:1234/auth"

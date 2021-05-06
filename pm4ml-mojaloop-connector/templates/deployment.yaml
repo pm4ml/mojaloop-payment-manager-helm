@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pm4ml-mojaloop-connector.fullname" . }}
+  labels:
+{{ include "pm4ml-mojaloop-connector.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "pm4ml-mojaloop-connector.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "pm4ml-mojaloop-connector.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      {{- if .Values.imagePullCredentials }}
+      imagePullSecrets:
+        - name: {{ include "pm4ml-mojaloop-connector.fullname" . }}-cred
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: CACHE_HOST
+              value: {{ printf "%s-cache" ( include "pm4ml-mojaloop-connector.fullname" . ) }}
+            - name: BACKEND_ENDPOINT
+              value: {{ printf "%s-backend:3000" ( include "pm4ml-mojaloop-connector.fullname" . ) }}
+            - name: DFSP_ID
+              value: {{ .Values.env.DFSP_ID | quote }}
+            - name: IN_CA_CERT_PATH
+              value: "/secrets/inbound-cacert.pem"
+            - name: IN_SERVER_CERT_PATH
+              value: "/secrets/inbound-cert.pem"
+            - name: IN_SERVER_KEY_PATH
+              value: "/secrets/inbound-key.pem"
+            - name: OUT_CA_CERT_PATH
+              value: "/secrets/outbound-cacert.pem"
+            - name: OUT_CLIENT_CERT_PATH
+              value: "/secrets/outbound-cert.pem"
+            - name: OUT_CLIENT_KEY_PATH
+              value: "/secrets/outbound-key.pem"
+            - name: TEST_CA_CERT_PATH
+              value: "/secrets/test-cacert.pem"
+            - name: TEST_CLIENT_CERT_PATH
+              value: "/secrets/test-cert.pem"
+            - name: TEST_CLIENT_KEY_PATH
+              value: "/secrets/test-key.pem"
+            - name: JWS_SIGNING_KEY_PATH
+              value: "/jwsSigningKey/private.key"
+            {{- range $k, $v := .Values.env }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+            {{- end }}
+          ports:
+            - name: inboundapi
+              containerPort: {{ .Values.env.INBOUND_LISTEN_PORT }}
+              protocol: TCP
+            - name: outboundapi
+              containerPort: {{ .Values.env.OUTBOUND_LISTEN_PORT }}
+              protocol: TCP
+            - name: testapi
+              containerPort: {{ .Values.env.TEST_LISTEN_PORT }}
+              protocol: TCP
+            - name: websocket
+              containerPort: {{ .Values.env.WS_PORT }}
+              protocol: TCP
+            - name: metrics
+              containerPort: {{ .Values.env.METRICS_SERVER_LISTEN_PORT }}
+              protocol: TCP
+          volumeMounts:
+          - name: jws-public-keys
+            mountPath: {{ .Values.env.JWS_VERIFICATION_KEYS_DIRECTORY }}
+          {{- if .Values.env.JWS_SIGN }}
+          - name: jws-private-key
+            mountPath: "/jwsSigningKey/"
+          {{- end }}
+          - name: tls-secrets
+            mountPath: "/secrets/"  
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.env.OUTBOUND_LISTEN_PORT }}
+              scheme: HTTP
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.env.OUTBOUND_LISTEN_PORT }}
+              scheme: HTTP
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      {{- if .Values.env.JWS_SIGN }}
+      - name: jws-private-key
+        secret:
+          {{- if .Values.secrets.jws.privKeySecretName }}
+          secretName: {{ .Values.secrets.jws.privKeySecretName }}
+          {{- else }}
+          secretName: {{ include "pm4ml-mojaloop-connector.fullname" . }}-jws-priv-key
+          {{- end }}
+      {{- end }}
+      - name: jws-public-keys
+        configMap:
+          {{- if .Values.secrets.jws.publicKeyConfigMapName }}
+          name: {{ .Values.secrets.jws.publicKeyConfigMapName }}
+          {{- else }}
+          name: {{ include "pm4ml-mojaloop-connector.fullname" . }}-jws-public-keys
+          {{- end }}
+      - name: tls-secrets
+        secret:
+          {{- if .Values.secrets.tlsSecretName }}
+          secretName: {{ .Values.secrets.tlsSecretName }}
+          {{- else }}
+          secretName: {{ include "pm4ml-mojaloop-connector.fullname" . }}-tls-creds
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

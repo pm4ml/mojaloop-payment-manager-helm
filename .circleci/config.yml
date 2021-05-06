@@ -1,0 +1,81 @@
+version: 2
+
+jobs:
+  lint:
+    working_directory: ~/repo
+    docker:
+      - image: alpine/helm:3.5.2
+    steps:
+      - run:
+          name: Install default dependencies
+          command: apk --no-cache add git openssh-client
+      - checkout
+      - run:
+          name: Lint Chart
+          command: helm lint mojaloop-payment-manager
+
+  build_and_publish_chart:
+    working_directory: ~/repo
+    docker:
+      - image: alpine/helm:3.5.2
+    steps:
+      - run:
+          name: Install default dependencies
+          command: apk --no-cache add git openssh-client
+      - add_ssh_keys:
+         fingerprints:
+           - "f3:86:38:91:a7:90:9e:3d:65:3a:e5:50:ed:a6:09:97"
+      - checkout
+      - run:
+          name: Add helm repo
+          command: |
+            helm repo add bitnami https://charts.bitnami.com/bitnami
+            helm repo add prometheus https://prometheus-community.github.io/helm-charts
+            helm repo add mojaloop http://mojaloop.io/helm/repo
+      - run:
+          name: Update the dependencies
+          command: |
+            cd mojaloop-payment-manager
+            helm dep update
+            cd ..
+      - run:
+          name: Build helm chart
+          command: |
+            helm package mojaloop-payment-manager
+      - run:
+          name: Add new chart to chart repo and publish
+          command: |
+            git checkout gh-pages
+            git checkout master -- .circleci/config.yml
+            mv mojaloop-payment-manager-*.tgz ./repo
+            mv mojaloop-payment-manager/charts/* ./repo
+            rm -rf ./mojaloop-payment-manager
+            cd ./repo
+            helm repo index --url https://$CIRCLE_PROJECT_USERNAME.github.io/$CIRCLE_PROJECT_REPONAME/repo .
+            git add -A
+            git config user.email "cicd@modusbox.com"
+            git config user.name "CICD at ModusBox"
+            git commit -m "Automated deployment to GitHub Pages" --allow-empty
+            GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no" git push origin gh-pages
+
+workflows:
+  version: 2
+  build_and_publish:
+    jobs:
+      - lint:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore:
+                - gh-pages
+      - build_and_publish_chart:
+          requires:
+            - lint
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore:
+                - /.*/
+                - gh-pages

@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pm4ml-experience-api.fullname" . }}
+  labels:
+{{ include "pm4ml-experience-api.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "pm4ml-experience-api.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "pm4ml-experience-api.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      {{- if .Values.imagePullCredentials }}
+      imagePullSecrets:
+        - name: {{ include "pm4ml-experience-api.fullname" . }}-cred
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: "MOCK_DATA"
+              value: "{{ .Values.env.enableMockData }}"
+            - name: "MANAGEMENT_ENDPOINT"
+              value: "{{ .Values.env.managementEndPoint }}"
+            - name: "METRICS_ENDPOINT"
+              value: "{{ .Values.env.metricsEndPoint }}"
+            - name: "ENV_ID"
+              value: "{{ .Values.env.envId }}"
+            - name: "DFSP_ID"
+              value: "{{ .Values.env.dfspId }}"
+            - name: "APP_KEYS"
+              value: "{{ .Values.env.appKeys }}"
+            - name: "AUTH_DISCOVERY_ENDPOINT"
+              value: "{{ .Values.env.authDiscoveryEndpoint }}"
+            - name: "AUTH_CLIENT_ID"
+              value: "{{ .Values.env.authClientId }}"
+            - name: "AUTH_CLIENT_SECRET"
+              value: "{{ .Values.env.authClientSecret }}"
+            - name: "AUTH_REDIRECT_URI"
+              value: "{{ .Values.env.authRedirectUri }}"
+            - name: "AUTH_SCOPES"
+              value: "{{ .Values.env.authScopes }}"
+            - name: "AUTH_REDIRECT_NAME"
+              value: "{{ .Values.env.authResourceName }}"
+            - name: "AUTH_LOGGED_IN_LANDING_URL"
+              value: "{{ .Values.env.authLoggedInLandingUrl }}"
+            - name: "SESSION_SECURE"
+              value: "{{ .Values.env.authSessionSecure }}"
+            - name: "SESSION_REDIS_URL"
+              value: "{{ .Values.env.authSessionRedisUrl }}"
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
