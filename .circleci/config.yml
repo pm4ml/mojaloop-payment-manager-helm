@@ -24,7 +24,7 @@ jobs:
           command: apk --no-cache add git openssh-client
       - add_ssh_keys:
          fingerprints:
-           - "f3:86:38:91:a7:90:9e:3d:65:3a:e5:50:ed:a6:09:97"
+           - "27:60:48:42:65:59:f3:15:37:63:f1:ba:43:0f:9c:5b"
       - checkout
       - run:
           name: Add helm repo
