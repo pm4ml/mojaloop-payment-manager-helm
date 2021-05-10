@@ -26,10 +26,12 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
+        {{- if .Values.ingress.outboundIngressEnabled }}
           - path: /outbound{{ $.Values.ingress.ingressPathRewriteRegex }}
             backend:
               serviceName: {{ $fullName }}
               servicePort: outboundapi
+        {{- end }}
           - path: /inbound{{ $.Values.ingress.ingressPathRewriteRegex }}
             backend:
               serviceName: {{ $fullName }}

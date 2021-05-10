@@ -164,7 +164,7 @@ mojaloop-simulator-core-connector:
   imagePullCredentials: *imagePullCredentials
   enabled: true
   env:
-    backendApplicationEndpoint: http://localhost:3002
+    backendApplicationEndpoint: http://pm4ml-mojaloop-simulator:3000
     outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
 
 ttk:
@@ -233,3 +233,7 @@ keycloak:
     # the below should be set to the external URL of keycloak
     - name: KEYCLOAK_FRONTEND_URL
       value: "http://keycloak.external.url:1234/auth"
+mojaloop-simulator:
+  enabled: true
+  env:
+    OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
