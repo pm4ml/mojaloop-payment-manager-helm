@@ -3,7 +3,7 @@ entries:
   keycloak:
   - apiVersion: v1
     appVersion: 12.0.4
-    created: "2021-05-07T16:11:56.853011313Z"
+    created: "2021-05-10T11:02:00.642503529Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -36,7 +36,7 @@ entries:
   ml-testing-toolkit:
   - apiVersion: v1
     appVersion: 'ml-testing-toolkit: v11.7.0 ml-testing-toolkit-ui: v11.6.2'
-    created: "2021-05-07T16:11:56.902209327Z"
+    created: "2021-05-10T11:02:00.651068587Z"
     dependencies:
     - condition: ml-testing-toolkit-frontend.enabled
       name: ml-testing-toolkit-frontend
@@ -91,7 +91,7 @@ entries:
   mojaloop-payment-manager:
   - apiVersion: v1
     appVersion: v2.0.0
-    created: "2021-05-07T16:11:56.93180342Z"
+    created: "2021-05-10T11:02:00.675320221Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -135,8 +135,12 @@ entries:
       name: keycloak
       repository: https://codecentric.github.io/helm-charts
       version: 10.3.0
+    - condition: mojaloop-simulator.enabled
+      name: mojaloop-simulator
+      repository: http://mojaloop.io/helm/repo
+      version: 11.3.0
     description: Helm chart for Mojaloop Payment Manager
-    digest: 0863b275d74747a7574bd42efd4b9839b32b48aced5ab7aa1116063593f36180
+    digest: 070e70c0133ef10cb4eb761bd41784e19f752bf9f190ce7e479e7e2042c3eb6f
     maintainers:
     - email: james.bush@modusbox.com
       name: James Bush
@@ -144,12 +148,22 @@ entries:
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/mojaloop-payment-manager-2.0.0.tgz
     version: 2.0.0
+  mojaloop-simulator:
+  - apiVersion: v1
+    appVersion: 'sdk-scheme-adapter: v11.11.2; mojaloop-simulator: v11.3.0'
+    created: "2021-05-10T11:02:00.676539075Z"
+    description: Helm Chart for the Mojaloop (SDK-based) Simulator
+    digest: 2323f38ba635e37f7112b794ecd535a85ceeffecbb73f6328c80d62f4e64e73c
+    name: mojaloop-simulator
+    urls:
+    - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/mojaloop-simulator-11.3.0.tgz
+    version: 11.3.0
   mojaloop-simulator-core-connector:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-05-07T16:11:56.93220761Z"
+    created: "2021-05-10T11:02:00.676916162Z"
     description: A Helm chart for Kubernetes
-    digest: caf676b35c74aba18691ab249705bd89241d63160fcbd2fb6b7c485df5cd9c67
+    digest: f629c06c01a9a3143168c9cd430b7ec47d64d7c694bdc819f883b30e417c2505
     name: mojaloop-simulator-core-connector
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/mojaloop-simulator-core-connector-1.4.0.tgz
@@ -157,9 +171,9 @@ entries:
   pm4ml-experience-api:
   - apiVersion: v1
     appVersion: 1.8.15
-    created: "2021-05-07T16:11:56.932606415Z"
+    created: "2021-05-10T11:02:00.677336338Z"
     description: A Helm chart for Kubernetes
-    digest: 224e83dd3cd53166711d6e8fe5df4b8541f84fcc687950255c500391b364f58b
+    digest: ed13645abea77871b51659bc4ee6d01c20349ff70d0037fe3ba6a9af9c61e7b8
     maintainers:
     - email: murthy@modusbox.com
       name: Murthy Kakarlamudi
@@ -170,9 +184,9 @@ entries:
   pm4ml-management-api-service:
   - apiVersion: v1
     appVersion: 1.9.1
-    created: "2021-05-07T16:11:56.933039913Z"
+    created: "2021-05-10T11:02:00.677818931Z"
     description: A Helm chart for Kubernetes
-    digest: 357524012fa96f851f067369ef429adde8a7ef0e7ac9c08d40b0a68285eec1b9
+    digest: 411964e10ca07875431342a884ae65c9abbafd24509b2866d4bec26a21552c3a
     name: pm4ml-management-api-service
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/pm4ml-management-api-service-1.9.1.tgz
@@ -180,9 +194,9 @@ entries:
   pm4ml-mojaloop-connector:
   - apiVersion: v1
     appVersion: 12.4.1
-    created: "2021-05-07T16:11:56.93361118Z"
+    created: "2021-05-10T11:02:00.678462106Z"
     description: A Helm chart for Kubernetes
-    digest: 070f5ac45ee774eb715ad9423f3386938b9df7790e39ffbf265638e502ac8327
+    digest: 9595cf8e8d74a9b2fefa2c6a057f074abfd8692efb268cd7a263ab82da64f202
     name: pm4ml-mojaloop-connector
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/pm4ml-mojaloop-connector-1.2.1.tgz
@@ -190,9 +204,9 @@ entries:
   pm4ml-ui:
   - apiVersion: v1
     appVersion: 1.8.9
-    created: "2021-05-07T16:11:56.933973054Z"
+    created: "2021-05-10T11:02:00.678832285Z"
     description: A Helm chart for Kubernetes
-    digest: cfbe1f083e1bd431aaff021b79974e6a607fc12687c742d32f02935224140369
+    digest: 103f4aa9418a53510808f33d3b14e3be5c8e626623fedf03410bd2e7ea6bc7d8
     maintainers:
     - email: murthy@modusbox.com
       name: Murthy Kakarlamudi
@@ -203,7 +217,7 @@ entries:
   prometheus:
   - apiVersion: v1
     appVersion: 2.21.0
-    created: "2021-05-07T16:11:56.939457096Z"
+    created: "2021-05-10T11:02:00.68350563Z"
     dependencies:
     - condition: kubeStateMetrics.enabled
       name: kube-state-metrics
@@ -239,7 +253,7 @@ entries:
       category: Database
     apiVersion: v1
     appVersion: 6.0.6
-    created: "2021-05-07T16:11:56.942432867Z"
+    created: "2021-05-10T11:02:00.688982791Z"
     description: Open source, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
     digest: a6f0fd8ff6e83d318eb532763a77da6ce410b9b4e8da9dc230ae1c36784a9766
     home: http://redis.io/
@@ -259,4 +273,4 @@ entries:
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/redis-10.7.16.tgz
     version: 10.7.16
-generated: "2021-05-07T16:11:56.848281261Z"
+generated: "2021-05-10T11:02:00.63326132Z"
