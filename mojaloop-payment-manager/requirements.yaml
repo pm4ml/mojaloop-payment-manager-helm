@@ -43,6 +43,6 @@ dependencies:
   alias: keycloak
   condition: keycloak.enabled
 - name: mojaloop-simulator
-  version: 11.4.1
+  version: 11.3.0
   repository: http://mojaloop.io/helm/repo
   condition: mojaloop-simulator.enabled
