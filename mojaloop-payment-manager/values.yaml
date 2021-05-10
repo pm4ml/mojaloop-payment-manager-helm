@@ -31,7 +31,7 @@ dfspId: &dfspId "pm4mldfsp"
 mcmEnvironmentId: &mcmEnvironmentId 1
 
 ingress:
-    enabled: true
+  enabled: true
 
 
 # values for sub components
