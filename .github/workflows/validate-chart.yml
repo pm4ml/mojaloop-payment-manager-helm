@@ -14,8 +14,8 @@ jobs:
       run: nix-env -if ci-helpers/default.nix
     - name: Run manifest validations
       run: |-
-        helm template -a 1.17.9 --validate testname ./mojaloop-simulator-backend/ | kubeconform -strict -kubernetes-version 1.17.9
-        helm template -a 1.21.1 --validate testname ./mojaloop-simulator-backend/ | kubeconform -strict -kubernetes-version 1.21.1
+        helm template -a apps/v1/Deployment --validate testname ./mojaloop-simulator-backend/ | kubeconform -strict -kubernetes-version 1.17.9
+        helm template -a apps/v1/Deployment -a networking.k8s.io/v1/Ingress --validate testname ./mojaloop-simulator-backend/ | kubeconform -strict -kubernetes-version 1.21.1
 
   smoke_test_deploy:
     needs: manifest_validation
