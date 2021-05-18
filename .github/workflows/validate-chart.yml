@@ -1,0 +1,37 @@
+name: Validate chart
+
+on: [pull_request, push]
+
+jobs:
+  manifest_validation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cachix/install-nix-action@v13
+      with:
+        nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/8e4fe32876ca15e3d5eb3ecd3ca0b224417f5f17.tar.gz
+    - name: Install dependencies
+      run: nix-env -if ci-helpers/default.nix
+    - name: Run manifest validation
+      run: helm template testname ./mojaloop-simulator-backend/ | kubeconform -strict -kubernetes-version 1.17.9
+
+  smoke_test_deploy:
+    needs: manifest_validation
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cachix/install-nix-action@v13
+      with:
+        nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/8e4fe32876ca15e3d5eb3ecd3ca0b224417f5f17.tar.gz
+    - name: Install dependencies
+      run: nix-env -if ci-helpers/default.nix
+    # Cluster setup
+    - name: Start cluster
+      run: |-
+        k3d cluster create \
+          --kubeconfig-update-default \
+          --kubeconfig-switch-context \
+          --image=rancher/k3s:v1.17.9-k3s1 \
+          int-test
+    - name: Deploy
+      run: helm install int-test ./mojaloop-simulator-backend/
