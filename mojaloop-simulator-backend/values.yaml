@@ -1,0 +1,108 @@
+env:
+  ##### Section for simulator backend container #####
+  # This is the endpoint the backend expects to communicate with the scheme adapter on.
+  # Include the protocol, i.e. http.
+  # It's not configured by default in this chart as the default value is calculated in a
+  # template and configuring it is likely to break communication between the backend and the
+  # scheme adapter.
+  # OUTBOUND_ENDPOINT: "http://localhost:4001" # within the pod
+
+  # Enable mutual TLS authentication. Useful when the simulator is not running in a managed
+  # environment, i.e. when you're running it locally against your own implementation.
+  MUTUAL_TLS_ENABLED: false
+
+  # Enable server-only TLS; i.e. serve on HTTPS instead of HTTP.
+  HTTPS_ENABLED: false
+
+  # Location of certs and key required for TLS
+  CA_CERT_PATH: ./secrets/cacert.pem
+  SERVER_CERT_PATH: ./secrets/servercert.pem
+  SERVER_KEY_PATH: ./secrets/serverkey.pem
+
+  # The number of space characters by which to indent pretty-printed logs. If set to zero, log events
+  # will each be printed on a single line.
+  LOG_INDENT: "0"
+
+  # The name of the sqlite log file. This probably doesn't matter much to the user, except that
+  # setting :memory: will use an in-memory sqlite db, which will be faster and not consume disk
+  # space. However, it will also mean that the logs will be lost once the container is stopped.
+  SQLITE_LOG_FILE: ./log.sqlite
+
+  # The DFSPID of this simulator. The simulator will accept any requests routed to
+  # FSPIOP-Destination: $SCHEME_NAME. Other requests will be rejected.
+  # Not set in this chart as these are calculated in templates. Setting this values is likely
+  # to break expected functionality.
+  # SCHEME_NAME: golden
+  # DFSP_ID: golden
+
+  # The name of the sqlite model database. If you would like to start the simulator with preloaded
+  # state you can use a preexisting file. If running in a container, you can mount a sqlite file as a
+  # volume in the container to preserve state between runs.
+  # Use MODEL_DATABASE: :memory: for an ephemeral in-memory database
+  MODEL_DATABASE: ./model.sqlite
+
+  # The simulator can automatically add fees when generating quote responses. Use this
+  # variable to control the fee amounts added. e.g. for a transfer of 100 USD a FEE_MULTIPLIER of 0.1
+  # reuslts in fees of USD 10 being applied to the quote response
+  FEE_MULTIPLIER: "0.05"
+
+  # Specifies the location of a rules file for the simulator backend. Rules can be used to produce
+  # specific simulator behaviours in response to incoming requests that match certain conditions.
+  # e.g. a rule can be used to trigger NDC errors given transfers between certain limits.
+  RULES_FILE: ../rules/rules.json
+
+  # Ports for simulator, report, and test APIs
+  SIMULATOR_API_LISTEN_PORT: 3000
+  REPORT_API_LISTEN_PORT: 3002
+  TEST_API_LISTEN_PORT: 3003
+
+  # The path that the simulator will find mojaloop-connector on
+  OUTBOUND_ENDPOINT: http://mojaloop-connector:3001
+
+  # The participant name of this DFSP
+  DFSP_ID: golden
+
+image:
+  repository: mojaloop/mojaloop-simulator
+  tag: v11.4.1
+
+ingress:
+  enabled:
+    true
+
+  # If you're using nginx ingress controller >= v0.22.0 set this to (/|$)(.*). Ensure that you set the `"nginx.ingress.kubernetes.io/rewrite-target": "/$2"`
+  # If you're using nginx ingress controller < v0.22.0 set this to an empty string or "/". Ensure that you set the `"nginx.ingress.kubernetes.io/rewrite-target": "/"`
+  # This affects the way your rewrite target will work.
+  # For more information see "Breaking changes" here:
+  # https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md#0220
+
+  annotations:
+    ## https://kubernetes.github.io/ingress-nginx/examples/rewrite/
+    # nginx.ingress.kubernetes.io/rewrite-target: '/'
+    # nginx.ingress.kubernetes.io/rewrite-target: '/$2'
+    ## https://kubernetes.github.io/ingress-nginx/user-guide/multiple-ingress/
+    # kubernetes.io/ingress.class: nginx
+    ## https://kubernetes.github.io/ingress-nginx/user-guide/tls/#automated-certificate-management-with-kube-lego
+    # kubernetes.io/tls-acme: "true""
+
+  ## nginx ingress controller >= v0.22.0
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: '/$2'
+  # ingressPathRewriteRegex: (/|$)(.*)
+
+  ## nginx ingress controller < v0.22.0
+  # annotations:
+  #   nginx.ingress.kubernetes.io/rewrite-target: '/'
+  ingressPathRewriteRegex: "/"
+
+# Supply JSON rules here as a string
+# Example:
+# rules: |-
+#   [
+#     {
+#       "ruleId": 1,
+#       .. etc.
+#     }
+#   ]
+rules: |-
+  []
