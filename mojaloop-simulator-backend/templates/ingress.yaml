@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-apiVersion: {{ ternary "networking.k8s.io/v1" "networking.k8s.io/v1beta1" (.Capabilities.APIVersions.Has "apps/v1/Deployment") }}
+apiVersion: {{ ternary "networking.k8s.io/v1" "networking.k8s.io/v1beta1" (.Capabilities.APIVersions.Has "networking.k8s.io/v1") }}
 kind: Ingress
 metadata:
   name: sim-backend
@@ -13,6 +13,8 @@ spec:
       paths:
       - path: /sim/test{{ $.Values.ingress.ingressPathRewriteRegex }}
         backend:
-          serviceName: sim-backend
-          servicePort: testapi
+          service:
+            name: sim-backend
+            port:
+              name: testapi
 {{- end }}
