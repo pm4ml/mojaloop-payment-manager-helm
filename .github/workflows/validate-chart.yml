@@ -36,4 +36,4 @@ jobs:
           --image=rancher/k3s:v1.17.9-k3s1 \
           int-test
     - name: Deploy
-      run: helm install int-test ./mojaloop-simulator-backend/
+      run: time helm install --wait --wait-for-jobs int-test ./mojaloop-simulator-backend/
