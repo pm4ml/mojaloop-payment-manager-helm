@@ -41,8 +41,8 @@ jobs:
         set -euxo pipefail
         VALUES="--set management-api.config.tlsServerPvtKeyData=anything --set management-api.config.tlsServerCAData=test"
         CAPABILITIES="-a apps/v1/Deployment"
-        helm template --dependency-update $VALUES $CAPABILITIES testname ./mojaloop-payment-manager > manifests.yaml
-        kubeconform -strict -kubernetes-version 1.17.9 manifests.yaml
+        helm template --dependency-update $VALUES $CAPABILITIES testname ./mojaloop-payment-manager --output-dir manifests
+        kubeconform -strict -kubernetes-version 1.17.9 manifests
         # Note that we don't test against 1.21 here because the currently used version of the TTK
         # chart is not compatible with it.
     - name: Print templated manifests on failure
