@@ -6,36 +6,51 @@ jobs:
   validate_sim_backend_manifests:
     runs-on: ubuntu-latest
     steps:
+
     - uses: actions/checkout@v2
+
     - uses: cachix/install-nix-action@v13
       with:
         nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/8e4fe32876ca15e3d5eb3ecd3ca0b224417f5f17.tar.gz
+
     - name: Install dependencies
       run: nix-env -if ci-helpers/default.nix
+
     - name: Validate generated sim backend manifests
       run: |-
         set -euxo pipefail
+
         CAPABILITIES="-a apps/v1/Deployment"
-        helm template $CAPABILITIES testname ./mojaloop-simulator-backend | kubeconform -strict -kubernetes-version 1.17.9
+        helm template $CAPABILITIES testname ./mojaloop-simulator-backend --output-dir manifests_1_17
+        kubeconform -strict -kubernetes-version 1.17.9 manifests_1_17
+
         CAPABILITIES="-a apps/v1/Deployment -a networking.k8s.io/v1/Ingress"
-        helm template $CAPABILITIES testname ./mojaloop-simulator-backend | kubeconform -strict -kubernetes-version 1.21.1
-    - name: Print templated manifests on failure
+        helm template $CAPABILITIES testname ./mojaloop-simulator-backend --output-dir manifests_1_21
+        kubeconform -strict -kubernetes-version 1.21.1 manifests_1_21
+
+    - name: Store templated manifests on failure
+      uses: actions/upload-artifact@v2
       if: failure()
-      run: |-
-        CAPABILITIES="-a apps/v1/Deployment"
-        helm template $CAPABILITIES testname ./mojaloop-simulator-backend
-        CAPABILITIES="-a apps/v1/Deployment -a networking.k8s.io/v1/Ingress"
-        helm template $CAPABILITIES testname ./mojaloop-simulator-backend
+      with:
+        retention-days: 4 # over the weekend plus a bit
+        name: failed_templates
+        path: |
+          manifests_1_17
+          manifests_1_21
+
 
   validate_payment_manager_manifests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - uses: cachix/install-nix-action@v13
       with:
         nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/8e4fe32876ca15e3d5eb3ecd3ca0b224417f5f17.tar.gz
+
     - name: Install dependencies
       run: nix-env -if ci-helpers/default.nix
+
     - name: Validate generated payment manager manifests
       run: |-
         set -euxo pipefail
@@ -45,23 +60,29 @@ jobs:
         kubeconform -strict -kubernetes-version 1.17.9 manifests
         # Note that we don't test against 1.21 here because the currently used version of the TTK
         # chart is not compatible with it.
-    - name: Print templated manifests on failure
+
+    - name: Store templated manifests on failure
+      uses: actions/upload-artifact@v2
       if: failure()
-      run: |-
-        VALUES="--set management-api.config.tlsServerPvtKeyData=anything --set management-api.config.tlsServerCAData=test"
-        CAPABILITIES="-a apps/v1/Deployment"
-        helm template --dependency-update $VALUES $CAPABILITIES testname ./mojaloop-payment-manager
+      with:
+        retention-days: 4 # over the weekend plus a bit
+        name: failed_templates
+        path: manifests
+
 
   smoke_test_deploy_sim_backend:
     needs: validate_sim_backend_manifests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - uses: cachix/install-nix-action@v13
       with:
         nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/8e4fe32876ca15e3d5eb3ecd3ca0b224417f5f17.tar.gz
+
     - name: Install dependencies
       run: nix-env -if ci-helpers/default.nix
+
     - name: Start cluster
       run: |-
         k3d cluster create \
@@ -69,8 +90,10 @@ jobs:
           --kubeconfig-switch-context \
           --image=rancher/k3s:v1.17.9-k3s1 \
           int-test
+
     - name: Deploy
       run: time helm install --wait --wait-for-jobs int-test ./mojaloop-simulator-backend/
+
 
   smoke_test_deploy_payment_manager:
     needs:
@@ -79,11 +102,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - uses: cachix/install-nix-action@v13
       with:
         nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/8e4fe32876ca15e3d5eb3ecd3ca0b224417f5f17.tar.gz
+
     - name: Install dependencies
       run: nix-env -if ci-helpers/default.nix
+
     - name: Start cluster
       run: |-
         k3d cluster create \
@@ -91,15 +117,14 @@ jobs:
           --kubeconfig-switch-context \
           --image=rancher/k3s:v1.17.9-k3s1 \
           int-test
+
     - name: Deploy
       run: |-
-        cfssl genkey -initca ci-helpers/csr.json | cfssljson -bare ca
         time \
           helm install \
             --dependency-update \
-            --set-file management-api.config.tlsServerPvtKeyData=ca-key.pem \
-            --set-file management-api.config.tlsServerCAData=ca.pem \
             --wait \
             --wait-for-jobs \
+            -f environments/values-minikube.yaml \
             int-test \
             ./mojaloop-payment-manager

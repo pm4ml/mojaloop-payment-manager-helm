@@ -27,6 +27,5 @@ in
 [
   nixpkgs.kubeconform
   nixpkgs.kubernetes-helm
-  nixpkgs.cfssl
   k3d
 ]
