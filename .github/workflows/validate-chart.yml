@@ -1,6 +1,14 @@
 name: Validate charts
 
-on: [pull_request, push]
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        description: 'Run the build with tmate debugging enabled (https://github.com/marketplace/actions/debugging-with-tmate)'     
+        required: false
+        default: false
 
 jobs:
   validate_sim_backend_manifests:
@@ -96,6 +104,7 @@ jobs:
 
 
   smoke_test_deploy_payment_manager:
+    timeout-minutes: 15
     needs:
     - validate_payment_manager_manifests
     - smoke_test_deploy_sim_backend
@@ -128,3 +137,8 @@ jobs:
             -f environments/values-minikube.yaml \
             int-test \
             ./mojaloop-payment-manager
+
+    # Enable tmate debugging of failed, or manually-triggered workflows if the input option was provided
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.debug_enabled) || failure() }}
