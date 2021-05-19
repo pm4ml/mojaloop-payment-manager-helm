@@ -134,7 +134,7 @@ jobs:
   #           --dependency-update \
   #           --wait \
   #           --wait-for-jobs \
-  #           -f environments/values-minikube.yaml \
+  #           -f environments/values-ci.yaml \
   #           int-test \
   #           ./mojaloop-payment-manager
   #
