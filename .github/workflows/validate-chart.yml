@@ -91,10 +91,9 @@ jobs:
           --kubeconfig-switch-context \
           --image=rancher/k3s:v1.17.9-k3s1 \
           int-test
-    - name: Generate secrets
-      run: cfssl genkey -initca ci-helpers/csr.json | cfssljson -bare ca
     - name: Deploy
       run: |-
+        cfssl genkey -initca ci-helpers/csr.json | cfssljson -bare ca
         time \
           helm install \
             --dependency-update \
