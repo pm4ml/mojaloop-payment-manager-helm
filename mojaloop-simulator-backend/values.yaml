@@ -57,7 +57,7 @@ env:
   TEST_API_LISTEN_PORT: 3003
 
   # The path that the simulator will find mojaloop-connector on
-  OUTBOUND_ENDPOINT: http://mojaloop-connector:3001
+  OUTBOUND_ENDPOINT: http://mojaloop-connector:4001
 
   # The participant name of this DFSP
   DFSP_ID: golden
