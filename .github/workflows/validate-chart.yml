@@ -14,14 +14,14 @@ jobs:
       run: nix-env -if ci-helpers/default.nix
     - name: Validate generated sim backend manifests
       run: |-
-        set -euxo pipefail
+        set -euo pipefail
         CAPABILITIES="-a apps/v1/Deployment"
         helm template $CAPABILITIES testname ./mojaloop-simulator-backend | kubeconform -strict -kubernetes-version 1.17.9
         CAPABILITIES="-a apps/v1/Deployment -a networking.k8s.io/v1/Ingress"
         helm template $CAPABILITIES testname ./mojaloop-simulator-backend | kubeconform -strict -kubernetes-version 1.21.1
     - name: Validate generated payment manager manifests
       run: |-
-        set -euxo pipefail
+        set -euo pipefail
         VALUES="--set management-api.config.tlsServerPvtKeyData=anything --set management-api.config.tlsServerCAData=test"
         CAPABILITIES="-a apps/v1/Deployment"
         helm template --dependency-update $VALUES $CAPABILITIES testname ./mojaloop-payment-manager | kubeconform -strict -kubernetes-version 1.17.9
