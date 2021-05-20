@@ -155,11 +155,6 @@ prometheus:
   kubeStateMetrics:
     enabled: false
 
-mojaloop-simulator:
-  defaults:
-    ingress:
-      enabled: true
-
 mojaloop-simulator-core-connector:
   imagePullCredentials: *imagePullCredentials
   enabled: true
@@ -238,3 +233,4 @@ sim-backend:
   enabled: true
   env:
     OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+    DFSP_ID: *dfspId
