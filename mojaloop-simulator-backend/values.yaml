@@ -28,12 +28,8 @@ env:
   # space. However, it will also mean that the logs will be lost once the container is stopped.
   SQLITE_LOG_FILE: ./log.sqlite
 
-  # The DFSPID of this simulator. The simulator will accept any requests routed to
-  # FSPIOP-Destination: $SCHEME_NAME. Other requests will be rejected.
-  # Not set in this chart as these are calculated in templates. Setting this values is likely
-  # to break expected functionality.
-  # SCHEME_NAME: golden
-  # DFSP_ID: golden
+  # The participant name of this DFSP
+  DFSP_ID: golden
 
   # The name of the sqlite model database. If you would like to start the simulator with preloaded
   # state you can use a preexisting file. If running in a container, you can mount a sqlite file as a
@@ -58,9 +54,6 @@ env:
 
   # The path that the simulator will find mojaloop-connector on
   OUTBOUND_ENDPOINT: http://mojaloop-connector:4001
-
-  # The participant name of this DFSP
-  DFSP_ID: golden
 
 image:
   repository: mojaloop/mojaloop-simulator
