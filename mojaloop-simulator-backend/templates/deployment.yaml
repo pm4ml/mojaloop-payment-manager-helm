@@ -1,0 +1,49 @@
+apiVersion: {{ ternary "apps/v1" "apps/v1beta2" (.Capabilities.APIVersions.Has "apps/v1/Deployment") }}
+kind: Deployment
+metadata:
+  name: sim-backend
+  labels: &labels
+    {{- include "sim-backend.common-labels" $ | nindent 4 }}
+spec:
+  selector:
+    matchLabels: *labels
+  template:
+    metadata:
+      labels: *labels
+    spec:
+      containers:
+      - name: app
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: simapi
+          containerPort: 3000 # these are hard-coded in the service
+          protocol: TCP
+        - name: reportapi
+          containerPort: 3002 # these are hard-coded in the service
+          protocol: TCP
+        - name: testapi
+          containerPort: 3003 # these are hard-coded in the service
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+            scheme: HTTP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+            scheme: HTTP
+        env:
+        {{- range $k, $v := .Values.env }}
+        - name: {{ $k }}
+          value: {{ $v | quote }}
+        {{- end }}
+        volumeMounts:
+        - name: rules
+          mountPath: /rules/
+      volumes:
+      - name: rules
+        configMap:
+          name: sim-backend-rules

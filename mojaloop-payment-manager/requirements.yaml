@@ -42,7 +42,7 @@ dependencies:
   repository: https://codecentric.github.io/helm-charts
   alias: keycloak
   condition: keycloak.enabled
-- name: mojaloop-simulator
-  version: 11.3.0
-  repository: http://mojaloop.io/helm/repo
-  condition: mojaloop-simulator.enabled
+- name: sim-backend
+  version: 1.0.0
+  repository: file://../mojaloop-simulator-backend
+  condition: sim-backend.enabled

@@ -233,7 +233,8 @@ keycloak:
     # the below should be set to the external URL of keycloak
     - name: KEYCLOAK_FRONTEND_URL
       value: "http://keycloak.external.url:1234/auth"
-mojaloop-simulator:
+
+sim-backend:
   enabled: true
   env:
     OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001

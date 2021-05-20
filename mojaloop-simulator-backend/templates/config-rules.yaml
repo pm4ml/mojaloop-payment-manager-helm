@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sim-backend-rules
+  labels:
+    {{- include "sim-backend.common-labels" $ | nindent 4 }}
+data:
+  rules.json: {{ .Values.rules | quote }}

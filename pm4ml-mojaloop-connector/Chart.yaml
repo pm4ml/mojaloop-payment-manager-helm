@@ -2,4 +2,4 @@ apiVersion: v1
 appVersion: "12.4.1"
 description: A Helm chart for Kubernetes
 name: pm4ml-mojaloop-connector
-version: 1.2.1
+version: 1.2.2
