@@ -123,7 +123,7 @@ redis:
     persistence:
       enabled: true
 
-mojaloop-connector:
+pm4ml-mojaloop-connector:
   imagePullCredentials: *imagePullCredentials
   env:
     DFSP_ID: *dfspId
