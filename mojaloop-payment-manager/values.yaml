@@ -30,9 +30,19 @@ dfspId: &dfspId "pm4mldfsp"
 # this should be set to the ID of the default MCM environment for this DFSP
 mcmEnvironmentId: &mcmEnvironmentId 1
 
+
+# the test ingress exposes four internal endpoints used for test automation
+# on a single ingress. if this is enabled you must provide real values for the
+# service names below.
+testIngress:
+  enabled: true
+  simBackendServiceName: "deployment-simulator-backend-service"
+  coreConnectorServiceName: "deployment-core-connector-service"
+  mojaloopConnectorServiceName: "deployment-mojaloop-connector-service"
+
+
 ingress:
   enabled: true
-
 
 # values for sub components
 

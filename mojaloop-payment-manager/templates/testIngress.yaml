@@ -1,0 +1,49 @@
+{{- if .Values.testIngress.enabled -}}
+{{- $fullName := include "mojaloop-payment-manager.fullname" . -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-test-ingress
+  labels:
+{{ include "mojaloop-payment-manager.labels" . | indent 4 }}
+  {{- with .Values.testIngress.annotations }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  {{- with .Values.testIngress.annotations }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+{{- if .Values.testIngress.tls }}
+  tls:
+  {{- range .Values.ingress.tls }}
+    - hosts:
+      {{- range .hosts }}
+        - {{ . | quote }}
+      {{- end }}
+      secretName: {{ .secretName }}
+  {{- end }}
+{{- end }}
+  rules:
+  {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          - path: /sim-backend-test(/|$)(.*)
+            backend:
+              serviceName: {{ .Values.testIngress.simBackendServiceName }}
+              servicePort: testapi
+          - path: /cc-send(/|$)(.*)
+            backend:
+              serviceName: {{ .Values.testIngress.coreConnectorServiceName }}
+              servicePort: http 
+          - path: /mlcon-outbound(/|$)(.*)
+            backend:
+              serviceName: {{ .Values.testIngress.mojaloopConnectorServiceName }}
+              servicePort: outboundapi 
+          - path: /mlcon-sdktest(/|$)(.*)
+            backend:
+              serviceName: {{ .Values.testIngress.mojaloopConnectorServiceName }}
+              servicePort: testapi
+        {{- end }}
+  {{- end }}
+{{- end }}
