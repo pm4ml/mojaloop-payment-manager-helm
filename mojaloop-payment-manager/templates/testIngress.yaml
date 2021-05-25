@@ -43,6 +43,5 @@ spec:
             backend:
               serviceName: {{ .Values.testIngress.mojaloopConnectorServiceName }}
               servicePort: testapi
-        {{- end }}
   {{- end }}
 {{- end }}
