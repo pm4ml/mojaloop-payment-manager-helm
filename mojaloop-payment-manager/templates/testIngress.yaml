@@ -15,7 +15,7 @@ metadata:
 spec:
 {{- if .Values.testIngress.tls }}
   tls:
-  {{- range .Values.ingress.tls }}
+  {{- range .Values.testIngress.tls }}
     - hosts:
       {{- range .hosts }}
         - {{ . | quote }}
