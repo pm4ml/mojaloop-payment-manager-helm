@@ -29,19 +29,19 @@ spec:
         paths:
           - path: /sim-backend-test(/|$)(.*)
             backend:
-              serviceName: {{ .Values.testIngress.simBackendServiceName }}
+              serviceName: {{ $.Values.testIngress.simBackendServiceName }}
               servicePort: testapi
           - path: /cc-send(/|$)(.*)
             backend:
-              serviceName: {{ .Values.testIngress.coreConnectorServiceName }}
+              serviceName: {{ $.Values.testIngress.coreConnectorServiceName }}
               servicePort: http 
           - path: /mlcon-outbound(/|$)(.*)
             backend:
-              serviceName: {{ .Values.testIngress.mojaloopConnectorServiceName }}
+              serviceName: {{ $.Values.testIngress.mojaloopConnectorServiceName }}
               servicePort: outboundapi 
           - path: /mlcon-sdktest(/|$)(.*)
             backend:
-              serviceName: {{ .Values.testIngress.mojaloopConnectorServiceName }}
+              serviceName: {{ $.Values.testIngress.mojaloopConnectorServiceName }}
               servicePort: testapi
   {{- end }}
 {{- end }}
