@@ -43,6 +43,12 @@ mcmEnvironmentId: &mcmEnvironmentId 1
 ingress:
   enabled: false
 
+testIngress:
+  enabled: false
+
+ttk:
+  enabled: false
+
 frontend:
   imagePullCredentials: *imagePullCredentials
   env:
@@ -68,6 +74,9 @@ experience-api:
   ingress:
     enabled: false
 
+sim-backend:
+  ingress:
+    enabled: false
 
 management-api:
   imagePullCredentials: *imagePullCredentials
@@ -327,6 +336,12 @@ mojaloop-simulator-core-connector:
   env:
     backendApplicationEndpoint: http://localhost:3002
     outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
+
+sim-backend:
+  enabled: true
+  env:
+    OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+    DFSP_ID: *dfspId
 
 keycloak:
   enabled: true
