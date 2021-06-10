@@ -337,6 +337,13 @@ mojaloop-simulator-core-connector:
     backendApplicationEndpoint: http://localhost:3002
     outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
 
+mojaloop-mifos-core-connector:
+  enabled: true
+  imagePullCredentials: *imagePullCredentials
+  env:
+    backendApplicationEndpoint: http://localhost:3002
+    outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
+
 sim-backend:
   enabled: true
   env:
