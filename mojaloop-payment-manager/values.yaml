@@ -172,6 +172,12 @@ mojaloop-simulator-core-connector:
     backendApplicationEndpoint: http://pm4ml-mojaloop-simulator:3000
     outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
 
+sim-backend:
+  enabled: true
+  env:
+    OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+    DFSP_ID: *dfspId
+
 ttk:
   ml-testing-toolkit-frontend:
   enabled: true
@@ -239,8 +245,4 @@ keycloak:
     - name: KEYCLOAK_FRONTEND_URL
       value: "http://keycloak.external.url:1234/auth"
 
-sim-backend:
-  enabled: true
-  env:
-    OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
-    DFSP_ID: *dfspId
+
