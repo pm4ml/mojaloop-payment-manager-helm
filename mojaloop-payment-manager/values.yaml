@@ -245,4 +245,5 @@ keycloak:
     - name: KEYCLOAK_FRONTEND_URL
       value: "http://keycloak.external.url:1234/auth"
 
-
+mojaloop-mifos-core-connector:
+  enabled: false
