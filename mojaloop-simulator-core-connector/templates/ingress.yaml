@@ -30,7 +30,11 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: http
+              servicePort: httpBackend
+          - path: {{ . }}
+            outbound:
+              serviceName: {{ $fullName }}
+              servicePort: httpOutbound
         {{- end }}
   {{- end }}
 {{- end }}

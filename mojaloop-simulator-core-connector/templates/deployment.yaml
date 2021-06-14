@@ -30,8 +30,12 @@ spec:
             - name: "MLCONN_OUTBOUND_ENDPOINT"
               value: "{{ .Values.env.outboundApplicationEndpoint }}"
           ports:
-            - name: http
+            - name: httpBackend
               containerPort: 3002
+              protocol: TCP
+          ports:
+            - name: httpOutbound
+              containerPort: 4001
               protocol: TCP
           # livenessProbe:
           #   httpGet:
