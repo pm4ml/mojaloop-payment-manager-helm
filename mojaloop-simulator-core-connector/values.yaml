@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: https://hub.docker.com/repository/docker/pm4ml/mojaloop-payment-manager-simulator-core-connector
+  repository: pm4ml/mojaloop-payment-manager-simulator-core-connector
   tag: 1.4.1
   pullPolicy: Always
 
