@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: modusbox-mbx-docker.jfrog.io/modusintegration/mojaloop-simulator-core-connector
-  tag: 1.4.0
+  tag: 1.4.1
   pullPolicy: Always
 
 imagePullSecrets: []
