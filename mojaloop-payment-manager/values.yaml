@@ -133,7 +133,7 @@ redis:
     persistence:
       enabled: true
 
-mojaloop-connector:
+pm4ml-mojaloop-connector:
   imagePullCredentials: *imagePullCredentials
   env:
     DFSP_ID: *dfspId
@@ -141,7 +141,7 @@ mojaloop-connector:
     # the below should be set to the external gateway endpoint for the mojaloop switch
     # the pm4ml instance is going to talk to
     PEER_ENDPOINT: "mojaloop.hub.external.fspiop.endpoint:1234"
-    JWS_SIGN: true
+    JWS_SIGN: false
 
 prometheus:
   nodeExporter:
