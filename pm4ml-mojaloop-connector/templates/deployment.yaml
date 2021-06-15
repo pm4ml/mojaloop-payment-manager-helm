@@ -25,11 +25,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            {{if not has "CACHE_HOST" .Values.env }}
+            {{if not (has "CACHE_HOST" .Values.env) }}
             - name: CACHE_HOST
               value: {{ printf "%s-cache" ( include "pm4ml-mojaloop-connector.fullname" . ) }}
             {{ end }}
-            {{if not has "BACKEND_ENDPOINT" .Values.env }}
+            {{if not (has "BACKEND_ENDPOINT" .Values.env) }}
             - name: BACKEND_ENDPOINT
               value: {{ printf "%s-backend:3000" ( include "pm4ml-mojaloop-connector.fullname" . ) }}
             {{ end }}              
