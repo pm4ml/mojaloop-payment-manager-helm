@@ -134,6 +134,7 @@ redis:
       enabled: true
 
 pm4ml-mojaloop-connector:
+  enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
     DFSP_ID: *dfspId

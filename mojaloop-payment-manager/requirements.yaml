@@ -22,8 +22,7 @@ dependencies:
 - name: pm4ml-mojaloop-connector
   version: 1.2.3
   repository: file://../pm4ml-mojaloop-connector
-  alias: mojaloop-connector
-  condition: mojaloop-connector.enabled
+  condition: pm4ml-mojaloop-connector.enabled
 - name: mojaloop-simulator-core-connector
   version: 1.3.4
   repository: file://../mojaloop-simulator-core-connector
