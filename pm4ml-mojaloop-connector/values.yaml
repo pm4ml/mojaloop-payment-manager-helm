@@ -5,7 +5,6 @@
 replicaCount: 1
 
 env:
-  CACHE_HOST: redis
   CACHE_PORT: 6379
   INBOUND_LISTEN_PORT: 4000
   OUTBOUND_LISTEN_PORT: 4001
@@ -24,6 +23,17 @@ env:
   MULTIPLE_PARTIES_RESPONSE: false
   AUTO_ACCEPT_PARTY: true
   AUTO_ACCEPT_QUOTES: true
+  IN_CA_CERT_PATH: /secrets/inbound-cacert.pem
+  IN_SERVER_CERT_PATH: /secrets/inbound-cert.pem
+  IN_SERVER_KEY_PATH: /secrets/inbound-key.pem
+  OUT_CA_CERT_PATH: /secrets/outbound-cacert.pem
+  OUT_CLIENT_CERT_PATH: /secrets/outbound-cert.pem
+  OUT_CLIENT_KEY_PATH: /secrets/outbound-key.pem
+  TEST_CA_CERT_PATH: /secrets/test-cacert.pem
+  TEST_CLIENT_CERT_PATH: /secrets/test-cert.pem
+  TEST_CLIENT_KEY_PATH: /secrets/test-key.pem
+  JWS_SIGNING_KEY_PATH: /secrets/jwsSigningKey.key
+
 
 secrets:
   tls: 
