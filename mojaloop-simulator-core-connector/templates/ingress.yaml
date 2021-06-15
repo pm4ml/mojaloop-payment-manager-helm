@@ -30,7 +30,15 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: http
+              servicePort: coreConnector
+          - path: {{ . }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: mlConnOutbound
+          - path: {{ . }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: fspBackend
         {{- end }}
   {{- end }}
 {{- end }}

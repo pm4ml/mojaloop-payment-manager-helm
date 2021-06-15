@@ -30,8 +30,14 @@ spec:
             - name: "MLCONN_OUTBOUND_ENDPOINT"
               value: "{{ .Values.env.outboundApplicationEndpoint }}"
           ports:
-            - name: http
-              containerPort: 3002
+            - name: coreConnector
+              containerPort: {{ .Values.env.LISTEN_PORT }}
+              protocol: TCP
+            - name: mlConnOutbound
+              containerPort: {{ .Values.env.MLCONN_OUTBOUND_LISTEN_PORT }}
+              protocol: TCP
+            - name: fspBackend
+              containerPort: {{ .Values.env.FSP_BACKEND_LISTEN_PORT }}
               protocol: TCP
           # livenessProbe:
           #   httpGet:

@@ -7,10 +7,19 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: {{ .Values.service.coreConnector.port }}
+      targetPort: coreConnector
       protocol: TCP
-      name: http
+      name: coreConnector
+    - port: {{ .Values.service.mlConnOutbound.port }}
+      targetPort: mlConnOutbound
+      protocol: TCP
+      name: mlConnOutbound
+    - port: {{ .Values.service.fspBackend.port }}
+      targetPort: fspBackend
+      protocol: TCP
+      name: fspBackend
+
   selector:
     app.kubernetes.io/name: {{ include "mojaloop-simulator-core-connector.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

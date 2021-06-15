@@ -15,12 +15,20 @@ fullnameOverride: ""
 
 #### ENV values
 env:
+  LISTEN_PORT: 3002
+  MLCONN_OUTBOUND_LISTEN_PORT: 4001
+  outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
+  FSP_BACKEND_LISTEN_PORT: 3000
   backendApplicationEndpoint: http://localhost:3002
-  outboundApplicationEndpoint: http://localhost:4001
 
 service:
   type: ClusterIP
-  port: 80
+  coreConnector:
+    port: 80
+  mlConnOutbound:
+    port: 4001
+  fspBackend:
+    port: 3000
 
 ingress:
   enabled: false
