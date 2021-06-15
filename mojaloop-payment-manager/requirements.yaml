@@ -20,7 +20,7 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   condition: redis.enabled
 - name: pm4ml-mojaloop-connector
-  version: 1.2.3
+  version: 1.2.4
   repository: file://../pm4ml-mojaloop-connector
   alias: mojaloop-connector
   condition: mojaloop-connector.enabled
