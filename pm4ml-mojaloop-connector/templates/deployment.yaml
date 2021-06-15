@@ -25,32 +25,14 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            {{if not (hasKey .Values.env "CACHE_HOST") }}
             - name: CACHE_HOST
               value: {{ printf "%s-cache" ( include "pm4ml-mojaloop-connector.fullname" . ) }}
+            {{ end }}
+            {{if not (hasKey .Values.env "BACKEND_ENDPOINT") }}
             - name: BACKEND_ENDPOINT
               value: {{ printf "%s-backend:3000" ( include "pm4ml-mojaloop-connector.fullname" . ) }}
-            - name: DFSP_ID
-              value: {{ .Values.env.DFSP_ID | quote }}
-            - name: IN_CA_CERT_PATH
-              value: "/secrets/inbound-cacert.pem"
-            - name: IN_SERVER_CERT_PATH
-              value: "/secrets/inbound-cert.pem"
-            - name: IN_SERVER_KEY_PATH
-              value: "/secrets/inbound-key.pem"
-            - name: OUT_CA_CERT_PATH
-              value: "/secrets/outbound-cacert.pem"
-            - name: OUT_CLIENT_CERT_PATH
-              value: "/secrets/outbound-cert.pem"
-            - name: OUT_CLIENT_KEY_PATH
-              value: "/secrets/outbound-key.pem"
-            - name: TEST_CA_CERT_PATH
-              value: "/secrets/test-cacert.pem"
-            - name: TEST_CLIENT_CERT_PATH
-              value: "/secrets/test-cert.pem"
-            - name: TEST_CLIENT_KEY_PATH
-              value: "/secrets/test-key.pem"
-            - name: JWS_SIGNING_KEY_PATH
-              value: "/jwsSigningKey/private.key"
+            {{ end }}              
             {{- range $k, $v := .Values.env }}
             - name: {{ $k }}
               value: {{ $v | quote }}
