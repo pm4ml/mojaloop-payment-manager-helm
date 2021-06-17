@@ -5,7 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: modusbox-mbx-docker.jfrog.io/modusintegration/visa-direct-mojaloop-core-connector
+  # repository: modusbox-mbx-docker.jfrog.io/modusintegration/visa-direct-mojaloop-core-connector
+  repository: vijayg10/visa-direct-mojaloop-core-connector
   tag: 1.0.0
   pullPolicy: Always
 
@@ -15,8 +16,13 @@ fullnameOverride: ""
 
 #### ENV values
 env:
-  backendApplicationEndpoint: http://localhost:3002
-  outboundApplicationEndpoint: http://localhost:4001
+  MOJA_HOSTNAME: pm4ml-mojaloop-connector
+  MOJA_PORT: 4001
+  LISTEN_PORT_VISA_ALIAS_LOOKUP: 3001
+  # VISA_MLE_ENABLED: false
+  # VISA_MLE_KEY_ID: 'mle_key_id'
+  # VISA_MLE_PUBLIC_KEY: './secrets/visa_mle_server_cert.pem'
+  # VISA_MLE_PRIVATE_KEY: './secrets/visa_mle_key.pem'
 
 service:
   type: ClusterIP
