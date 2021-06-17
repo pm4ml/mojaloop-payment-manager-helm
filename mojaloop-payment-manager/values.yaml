@@ -248,3 +248,6 @@ keycloak:
 
 mojaloop-mifos-core-connector:
   enabled: false
+
+mojaloop-visadirect-core-connector:
+  enabled: false
