@@ -5,8 +5,7 @@
 replicaCount: 1
 
 image:
-  # repository: modusbox-mbx-docker.jfrog.io/modusintegration/visa-direct-mojaloop-core-connector
-  repository: vijayg10/visa-direct-mojaloop-core-connector
+  repository: modusbox-mbx-docker.jfrog.io/modusintegration/visa-direct-mojaloop-core-connector
   tag: 1.0.0
   pullPolicy: Always
 
@@ -30,6 +29,7 @@ service:
 
 ingress:
   enabled: false
+  ingressPathRewriteRegex: (/|$)(.*)
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -41,6 +41,13 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+secrets:
+  tls: 
+    visaapi:
+      cacert: test
+      cert: test
+      key: test
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

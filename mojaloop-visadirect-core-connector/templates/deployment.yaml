@@ -30,8 +30,8 @@ spec:
             - name: "MLCONN_OUTBOUND_ENDPOINT"
               value: "{{ .Values.env.outboundApplicationEndpoint }}"
           ports:
-            - name: http
-              containerPort: 3003
+            - name: visalookupapi
+              containerPort: {{ .Values.env.LISTEN_PORT_VISA_ALIAS_LOOKUP }}
               protocol: TCP
           # livenessProbe:
           #   httpGet:

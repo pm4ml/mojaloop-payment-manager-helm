@@ -7,10 +7,10 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: {{ .Values.env.LISTEN_PORT_VISA_ALIAS_LOOKUP }}
       protocol: TCP
-      name: http
+      name: visalookupapi
+      targetPort: visalookupapi
   selector:
     app.kubernetes.io/name: {{ include "mojaloop-visadirect-core-connector.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

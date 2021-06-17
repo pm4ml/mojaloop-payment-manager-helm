@@ -26,11 +26,9 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-        {{- range .paths }}
-          - path: {{ . }}
+          - path: /lookup{{ $.Values.ingress.ingressPathRewriteRegex }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: http
+              servicePort: visalookupapi
         {{- end }}
   {{- end }}
-{{- end }}
