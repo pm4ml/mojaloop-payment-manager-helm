@@ -31,6 +31,10 @@ dependencies:
   version: 1.0.0
   repository: file://../mojaloop-mifos-core-connector
   condition: mojaloop-mifos-core-connector.enabled
+- name: mojaloop-mambu-core-connector
+  version: 1.0.2
+  repository: file://../mojaloop-mambu-core-connector
+  condition: mojaloop-mambu-core-connector.enabled
 - name: prometheus
   version: 11.16.9
   repository: https://prometheus-community.github.io/helm-charts
