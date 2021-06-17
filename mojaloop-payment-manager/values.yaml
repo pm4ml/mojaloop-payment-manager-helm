@@ -142,6 +142,7 @@ pm4ml-mojaloop-connector:
     # the below should be set to the external gateway endpoint for the mojaloop switch
     # the pm4ml instance is going to talk to
     PEER_ENDPOINT: "mojaloop.hub.external.fspiop.endpoint:1234"
+    BACKEND_ENDPOINT: "mojaloop-simulator-core-connector:3003"
     JWS_SIGN: false
 
 prometheus:
@@ -170,8 +171,8 @@ mojaloop-simulator-core-connector:
   imagePullCredentials: *imagePullCredentials
   enabled: true
   env:
-    backendApplicationEndpoint: http://pm4ml-mojaloop-simulator:3000
-    outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
+    BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
+    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
 
 sim-backend:
   enabled: true
