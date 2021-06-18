@@ -38,16 +38,16 @@ ingress:
       paths: []
 
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
-secrets:
-  tls: 
-    visaapi:
-      cacert: test
-      cert: test
-      key: test
+  # - secretName: chart-example-tls
+  #   hosts:
+  #     - chart-example.local
+  # - newSecret:
+  #     nameSuffix: 'someapi'
+  #     cacert: test
+  #     cert: test
+  #     key: test
+  #   hosts:
+  #     - chart-example.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
