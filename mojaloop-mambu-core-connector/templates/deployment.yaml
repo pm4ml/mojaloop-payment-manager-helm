@@ -29,7 +29,7 @@ spec:
               value: "{{ .Values.env.MLCONN_OUTBOUND_ENDPOINT }}"
           ports:
             - name: http
-              containerPort: 3003
+              containerPort: 3002
               protocol: TCP
           # livenessProbe:
           #   httpGet:

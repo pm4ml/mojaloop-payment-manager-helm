@@ -19,7 +19,7 @@ env:
 
 service:
   type: ClusterIP
-  port: 3003
+  port: 3002
 
 ingress:
   enabled: false
