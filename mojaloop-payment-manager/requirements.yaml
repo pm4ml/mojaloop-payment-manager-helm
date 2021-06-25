@@ -28,11 +28,11 @@ dependencies:
   repository: file://../mojaloop-simulator-core-connector
   condition: mojaloop-simulator-core-connector.enabled
 - name: mojaloop-mifos-core-connector
-  version: 1.0.0
+  version: 1.0.2
   repository: file://../mojaloop-mifos-core-connector
   condition: mojaloop-mifos-core-connector.enabled
 - name: mojaloop-mambu-core-connector
-  version: 1.0.2
+  version: 1.0.4
   repository: file://../mojaloop-mambu-core-connector
   condition: mojaloop-mambu-core-connector.enabled
 - name: mojaloop-finflux-core-connector
