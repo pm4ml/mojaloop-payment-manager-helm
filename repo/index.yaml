@@ -3,7 +3,7 @@ entries:
   keycloak:
   - apiVersion: v1
     appVersion: 12.0.4
-    created: "2021-06-25T15:06:30.437577468Z"
+    created: "2021-06-25T16:23:31.349222918Z"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -36,7 +36,7 @@ entries:
   ml-testing-toolkit:
   - apiVersion: v1
     appVersion: 'ml-testing-toolkit: v11.7.0 ml-testing-toolkit-ui: v11.6.2'
-    created: "2021-06-25T15:06:30.446952177Z"
+    created: "2021-06-25T16:23:31.359521722Z"
     dependencies:
     - condition: ml-testing-toolkit-frontend.enabled
       name: ml-testing-toolkit-frontend
@@ -91,16 +91,16 @@ entries:
   mojaloop-finflux-core-connector:
   - apiVersion: v1
     appVersion: v1.0.0
-    created: "2021-06-25T15:06:30.447638695Z"
+    created: "2021-06-25T16:23:31.360312754Z"
     description: A Helm chart for Kubernetes
-    digest: c8d3aac52ee35b58513003ae17674370d9d5c3ce7e157506c3982f316662aefe
+    digest: d6666b5f89dbae344e4680e4c1c9638490bd3b559adce24ea598b39c1272c361
     name: mojaloop-finflux-core-connector
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/mojaloop-finflux-core-connector-1.0.1.tgz
     version: 1.0.1
   - apiVersion: v1
     appVersion: v1.0.0
-    created: "2021-06-25T15:06:30.447300558Z"
+    created: "2021-06-25T16:23:31.359954033Z"
     description: A Helm chart for Kubernetes
     digest: 35333bcae0ef0fe3916289d5cb0c7cab7ffd3e58260ad70330140c1485cefd0a
     name: mojaloop-finflux-core-connector
@@ -110,16 +110,16 @@ entries:
   mojaloop-mambu-core-connector:
   - apiVersion: v1
     appVersion: 1.0.4
-    created: "2021-06-25T15:06:30.448972537Z"
+    created: "2021-06-25T16:23:31.361688181Z"
     description: A Helm chart for Kubernetes
-    digest: 980fa50e42e40e6c7ed74705947d41802a57897ecd3d6d6d0b748bc62bdcc0f9
+    digest: 9d2dfd26c3da7fc32308dbe56f7c52500a3d6964ab2d5022b049b5d0d36dda8e
     name: mojaloop-mambu-core-connector
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/mojaloop-mambu-core-connector-1.0.3.tgz
     version: 1.0.3
   - apiVersion: v1
     appVersion: 1.0.3
-    created: "2021-06-25T15:06:30.44864798Z"
+    created: "2021-06-25T16:23:31.361326832Z"
     description: A Helm chart for Kubernetes
     digest: 2c98d19996ce247b5c493a91aa948108355f996cf5cc8f784f1a8cbae34e4fb1
     name: mojaloop-mambu-core-connector
@@ -128,7 +128,7 @@ entries:
     version: 1.0.2
   - apiVersion: v1
     appVersion: 1.0.3
-    created: "2021-06-25T15:06:30.448323208Z"
+    created: "2021-06-25T16:23:31.360993483Z"
     description: A Helm chart for Kubernetes
     digest: 7fc79cc2e15b749c84adb510a797ce21e61ba80f4fcdfa766fb834a195ebe8a3
     name: mojaloop-mambu-core-connector
@@ -137,7 +137,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: 1.0.2
-    created: "2021-06-25T15:06:30.447997752Z"
+    created: "2021-06-25T16:23:31.360656514Z"
     description: A Helm chart for Kubernetes
     digest: 14db06bfa634c85086fde2c1c7d6c2bd9584c2dfe6147750f0d5777a461388a9
     name: mojaloop-mambu-core-connector
@@ -147,16 +147,16 @@ entries:
   mojaloop-mifos-core-connector:
   - apiVersion: v1
     appVersion: 1.0.2
-    created: "2021-06-25T15:06:30.450053681Z"
+    created: "2021-06-25T16:23:31.362745256Z"
     description: A Helm chart for Kubernetes
-    digest: d2ffedbb235711cfd0bec017207de8b1aee5e02a40e9387caf96097bc6c278b3
+    digest: 5de37bf30c2745968c577f5f1e648f5de7ba65e7322f6747ee446c6a0eeb4187
     name: mojaloop-mifos-core-connector
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/mojaloop-mifos-core-connector-1.0.2.tgz
     version: 1.0.2
   - apiVersion: v1
     appVersion: 1.0.1
-    created: "2021-06-25T15:06:30.449673531Z"
+    created: "2021-06-25T16:23:31.362384873Z"
     description: A Helm chart for Kubernetes
     digest: 6a6d9c35795c801b16e1c0f2e69752fc7434a7286f42d36235e0457fa1556713
     name: mojaloop-mifos-core-connector
@@ -165,7 +165,7 @@ entries:
     version: 1.0.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-06-25T15:06:30.449304609Z"
+    created: "2021-06-25T16:23:31.362036805Z"
     description: A Helm chart for Kubernetes
     digest: 9bbf13f59190325d87434e85a0afcf2820aa78ec66e955c93f7004c585583cd1
     name: mojaloop-mifos-core-connector
@@ -174,8 +174,78 @@ entries:
     version: 1.0.0
   mojaloop-payment-manager:
   - apiVersion: v1
+    appVersion: v2.2.8
+    created: "2021-06-25T16:23:32.026875518Z"
+    dependencies:
+    - alias: frontend
+      condition: frontend.enabled
+      name: pm4ml-ui
+      repository: file://../pm4ml-ui
+      version: 1.8.9
+    - alias: experience-api
+      condition: experience-api.enabled
+      name: pm4ml-experience-api
+      repository: file://../pm4ml-experience-api
+      version: 1.8.15
+    - alias: management-api
+      condition: management-api.enabled
+      name: pm4ml-management-api-service
+      repository: file://../pm4ml-management-api-service
+      version: 1.9.1
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.7.16
+    - condition: pm4ml-mojaloop-connector.enabled
+      name: pm4ml-mojaloop-connector
+      repository: file://../pm4ml-mojaloop-connector
+      version: 1.2.4
+    - condition: mojaloop-simulator-core-connector.enabled
+      name: mojaloop-simulator-core-connector
+      repository: file://../mojaloop-simulator-core-connector
+      version: 1.4.2
+    - condition: mojaloop-mifos-core-connector.enabled
+      name: mojaloop-mifos-core-connector
+      repository: file://../mojaloop-mifos-core-connector
+      version: 1.0.2
+    - condition: mojaloop-mambu-core-connector.enabled
+      name: mojaloop-mambu-core-connector
+      repository: file://../mojaloop-mambu-core-connector
+      version: 1.0.4
+    - condition: mojaloop-finflux-core-connector.enabled
+      name: mojaloop-finflux-core-connector
+      repository: file://../mojaloop-finflux-core-connector
+      version: 1.0.1
+    - alias: prometheus
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 11.16.9
+    - alias: ttk
+      condition: ttk.enabled
+      name: ml-testing-toolkit
+      repository: http://mojaloop.io/helm/repo
+      version: 11.0.0
+    - alias: keycloak
+      condition: keycloak.enabled
+      name: keycloak
+      repository: https://codecentric.github.io/helm-charts
+      version: 10.3.0
+    - condition: sim-backend.enabled
+      name: sim-backend
+      repository: file://../mojaloop-simulator-backend
+      version: 1.0.0
+    description: Helm chart for Mojaloop Payment Manager
+    digest: 839757dc84cb0921af586404d3dd6679ded7a814c85403db2433dcf4b52029d4
+    maintainers:
+    - email: james.bush@modusbox.com
+      name: James Bush
+    name: mojaloop-payment-manager
+    urls:
+    - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/mojaloop-payment-manager-2.2.8.tgz
+    version: 2.2.8
+  - apiVersion: v1
     appVersion: v2.2.7
-    created: "2021-06-25T15:06:31.087969548Z"
+    created: "2021-06-25T16:23:32.003109992Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -245,7 +315,7 @@ entries:
     version: 2.2.7
   - apiVersion: v1
     appVersion: v2.2.6
-    created: "2021-06-25T15:06:31.063899537Z"
+    created: "2021-06-25T16:23:31.979612873Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -315,7 +385,7 @@ entries:
     version: 2.2.6
   - apiVersion: v1
     appVersion: v2.2.4
-    created: "2021-06-25T15:06:31.040195264Z"
+    created: "2021-06-25T16:23:31.954890749Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -385,7 +455,7 @@ entries:
     version: 2.2.4
   - apiVersion: v1
     appVersion: v2.2.3
-    created: "2021-06-25T15:06:31.016825622Z"
+    created: "2021-06-25T16:23:31.926320716Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -455,7 +525,7 @@ entries:
     version: 2.2.3
   - apiVersion: v1
     appVersion: v2.2.2
-    created: "2021-06-25T15:06:30.991390746Z"
+    created: "2021-06-25T16:23:31.902680416Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -521,7 +591,7 @@ entries:
     version: 2.2.2
   - apiVersion: v1
     appVersion: v2.2.1
-    created: "2021-06-25T15:06:30.964508193Z"
+    created: "2021-06-25T16:23:31.879663899Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -587,7 +657,7 @@ entries:
     version: 2.2.1
   - apiVersion: v1
     appVersion: v2.2.0
-    created: "2021-06-25T15:06:30.93248164Z"
+    created: "2021-06-25T16:23:31.854845686Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -653,7 +723,7 @@ entries:
     version: 2.2.0
   - apiVersion: v1
     appVersion: v2.1.9
-    created: "2021-06-25T15:06:30.908606738Z"
+    created: "2021-06-25T16:23:31.828349767Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -715,7 +785,7 @@ entries:
     version: 2.1.9
   - apiVersion: v1
     appVersion: v2.1.8
-    created: "2021-06-25T15:06:30.883510738Z"
+    created: "2021-06-25T16:23:31.804984643Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -777,7 +847,7 @@ entries:
     version: 2.1.8
   - apiVersion: v1
     appVersion: v2.1.7
-    created: "2021-06-25T15:06:30.860781774Z"
+    created: "2021-06-25T16:23:31.782205047Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -839,7 +909,7 @@ entries:
     version: 2.1.7
   - apiVersion: v1
     appVersion: v2.1.6
-    created: "2021-06-25T15:06:30.837211347Z"
+    created: "2021-06-25T16:23:31.758751594Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -901,7 +971,7 @@ entries:
     version: 2.1.6
   - apiVersion: v1
     appVersion: v2.1.5
-    created: "2021-06-25T15:06:30.814616078Z"
+    created: "2021-06-25T16:23:31.730828342Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -964,7 +1034,7 @@ entries:
     version: 2.1.5
   - apiVersion: v1
     appVersion: v2.1.4
-    created: "2021-06-25T15:06:30.788945046Z"
+    created: "2021-06-25T16:23:31.707674316Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1027,7 +1097,7 @@ entries:
     version: 2.1.4
   - apiVersion: v1
     appVersion: v2.1.3
-    created: "2021-06-25T15:06:30.765114476Z"
+    created: "2021-06-25T16:23:31.685354019Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1090,7 +1160,7 @@ entries:
     version: 2.1.3
   - apiVersion: v1
     appVersion: v2.1.2
-    created: "2021-06-25T15:06:30.741961696Z"
+    created: "2021-06-25T16:23:31.661055715Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1153,7 +1223,7 @@ entries:
     version: 2.1.2
   - apiVersion: v1
     appVersion: v2.1.1
-    created: "2021-06-25T15:06:30.718646564Z"
+    created: "2021-06-25T16:23:31.628604771Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1216,7 +1286,7 @@ entries:
     version: 2.1.1
   - apiVersion: v1
     appVersion: v2.1.0
-    created: "2021-06-25T15:06:30.69180267Z"
+    created: "2021-06-25T16:23:31.605681686Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1279,7 +1349,7 @@ entries:
     version: 2.1.0
   - apiVersion: v1
     appVersion: v2.0.7
-    created: "2021-06-25T15:06:30.668247759Z"
+    created: "2021-06-25T16:23:31.582738195Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1338,7 +1408,7 @@ entries:
     version: 2.0.7
   - apiVersion: v1
     appVersion: v2.0.6
-    created: "2021-06-25T15:06:30.644834876Z"
+    created: "2021-06-25T16:23:31.55952673Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1397,7 +1467,7 @@ entries:
     version: 2.0.6
   - apiVersion: v1
     appVersion: v2.0.5
-    created: "2021-06-25T15:06:30.621556362Z"
+    created: "2021-06-25T16:23:31.531999041Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1456,7 +1526,7 @@ entries:
     version: 2.0.5
   - apiVersion: v1
     appVersion: v2.0.4
-    created: "2021-06-25T15:06:30.596841927Z"
+    created: "2021-06-25T16:23:31.508779373Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1515,7 +1585,7 @@ entries:
     version: 2.0.4
   - apiVersion: v1
     appVersion: v2.0.3
-    created: "2021-06-25T15:06:30.573712192Z"
+    created: "2021-06-25T16:23:31.486338167Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1574,7 +1644,7 @@ entries:
     version: 2.0.3
   - apiVersion: v1
     appVersion: v2.0.2
-    created: "2021-06-25T15:06:30.551260184Z"
+    created: "2021-06-25T16:23:31.462997482Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1633,7 +1703,7 @@ entries:
     version: 2.0.2
   - apiVersion: v1
     appVersion: v2.0.2-beta2
-    created: "2021-06-25T15:06:30.526919153Z"
+    created: "2021-06-25T16:23:31.43522779Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1692,7 +1762,7 @@ entries:
     version: 2.0.2-beta2
   - apiVersion: v1
     appVersion: v2.0.2-beta1
-    created: "2021-06-25T15:06:30.498840778Z"
+    created: "2021-06-25T16:23:31.411750994Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1751,7 +1821,7 @@ entries:
     version: 2.0.2-beta1
   - apiVersion: v1
     appVersion: v2.0.1-beta3
-    created: "2021-06-25T15:06:30.47462787Z"
+    created: "2021-06-25T16:23:31.387427854Z"
     dependencies:
     - alias: frontend
       condition: frontend.enabled
@@ -1811,7 +1881,7 @@ entries:
   mojaloop-simulator:
   - apiVersion: v1
     appVersion: 'sdk-scheme-adapter: v11.11.2; mojaloop-simulator: v11.3.0'
-    created: "2021-06-25T15:06:31.089170385Z"
+    created: "2021-06-25T16:23:32.028058721Z"
     description: Helm Chart for the Mojaloop (SDK-based) Simulator
     digest: 2323f38ba635e37f7112b794ecd535a85ceeffecbb73f6328c80d62f4e64e73c
     name: mojaloop-simulator
@@ -1821,16 +1891,16 @@ entries:
   mojaloop-simulator-core-connector:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-06-25T15:06:31.090250811Z"
+    created: "2021-06-25T16:23:32.029123957Z"
     description: A Helm chart for Kubernetes
-    digest: ac90c878cfd82818f15e2ba56d9ce594ce1d3adf14710787f9dc6dfcaaf432e9
+    digest: 7a7d52d4976655af15eeafb31482ba99764dabf1fa2b310d3ca524a15a6a8c0a
     name: mojaloop-simulator-core-connector
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/mojaloop-simulator-core-connector-1.4.2.tgz
     version: 1.4.2
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-06-25T15:06:31.089856722Z"
+    created: "2021-06-25T16:23:32.028773937Z"
     description: A Helm chart for Kubernetes
     digest: a7eb20278bdd3c02a8a7985eac8d911708fa86313f061db9518b927f4ed1df36
     name: mojaloop-simulator-core-connector
@@ -1839,7 +1909,7 @@ entries:
     version: 1.4.1
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-06-25T15:06:31.089520079Z"
+    created: "2021-06-25T16:23:32.028398979Z"
     description: A Helm chart for Kubernetes
     digest: 8aa475d31660fe53bf2acae9d3b0c3d769fb4cb0839f5285572e7f0cc37df98b
     name: mojaloop-simulator-core-connector
@@ -1849,9 +1919,9 @@ entries:
   pm4ml-experience-api:
   - apiVersion: v1
     appVersion: 1.8.15
-    created: "2021-06-25T15:06:31.090631525Z"
+    created: "2021-06-25T16:23:32.029482922Z"
     description: A Helm chart for Kubernetes
-    digest: 6896b03d6851bb22caedb74addb4408e6d05be17f0b927021e3945129f277017
+    digest: db7020827e208672be8f250640d2ae9cbe6082f8dd0ce2680aabd1e85481ca2c
     maintainers:
     - email: murthy@modusbox.com
       name: Murthy Kakarlamudi
@@ -1862,9 +1932,9 @@ entries:
   pm4ml-management-api-service:
   - apiVersion: v1
     appVersion: 1.9.1
-    created: "2021-06-25T15:06:31.091072811Z"
+    created: "2021-06-25T16:23:32.02990574Z"
     description: A Helm chart for Kubernetes
-    digest: 9870f1ee430c7c0c57b484a54154807ab125d9b195bd2c644853dd3569394528
+    digest: 5698d4913fae1d9094c0dfb8aeb94c51bb6770afac442c3da50862c57891ee0d
     name: pm4ml-management-api-service
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/pm4ml-management-api-service-1.9.1.tgz
@@ -1872,16 +1942,16 @@ entries:
   pm4ml-mojaloop-connector:
   - apiVersion: v1
     appVersion: 12.4.1
-    created: "2021-06-25T15:06:31.093422841Z"
+    created: "2021-06-25T16:23:32.032182948Z"
     description: A Helm chart for Kubernetes
-    digest: 238bbe9a03814638471d96188984304bb0fbae166ad6499068e59d2f7ca61c87
+    digest: fde9b3d4f3cf2cac014905aa975ccdceab81667a1e493d0ccab33b11b26e3ae6
     name: pm4ml-mojaloop-connector
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/pm4ml-mojaloop-connector-1.2.4.tgz
     version: 1.2.4
   - apiVersion: v1
     appVersion: 12.4.1
-    created: "2021-06-25T15:06:31.092768965Z"
+    created: "2021-06-25T16:23:32.031580923Z"
     description: A Helm chart for Kubernetes
     digest: cd52da3db5088ac8a838a56ac7edc2d7573ba47cf3785f6ec170ea304e7e46a9
     name: pm4ml-mojaloop-connector
@@ -1890,7 +1960,7 @@ entries:
     version: 1.2.3
   - apiVersion: v1
     appVersion: 12.4.1
-    created: "2021-06-25T15:06:31.092211649Z"
+    created: "2021-06-25T16:23:32.031028426Z"
     description: A Helm chart for Kubernetes
     digest: 5d8a1a130b6fbe6a602adf0d5b122eed3a46c9ccd8cdfaa0d46fe1a0cf71680e
     name: pm4ml-mojaloop-connector
@@ -1899,7 +1969,7 @@ entries:
     version: 1.2.2
   - apiVersion: v1
     appVersion: 12.4.1
-    created: "2021-06-25T15:06:31.091640722Z"
+    created: "2021-06-25T16:23:32.030458565Z"
     description: A Helm chart for Kubernetes
     digest: 9e5fdea97f5909e83ebda39a631d29c79b09a289d13476cdb1f411c0a9636a7c
     name: pm4ml-mojaloop-connector
@@ -1909,9 +1979,9 @@ entries:
   pm4ml-ui:
   - apiVersion: v1
     appVersion: 1.8.9
-    created: "2021-06-25T15:06:31.093783066Z"
+    created: "2021-06-25T16:23:32.032514652Z"
     description: A Helm chart for Kubernetes
-    digest: fc4d5c72ecf6c02013d0f2f9662e27e87d9bb4572427e288a0b350b93f915493
+    digest: 70f273caf968d642a615f3f01ef6dfceae78cbf7e779b60a995c1fc8bb0b5480
     maintainers:
     - email: murthy@modusbox.com
       name: Murthy Kakarlamudi
@@ -1922,7 +1992,7 @@ entries:
   prometheus:
   - apiVersion: v1
     appVersion: 2.21.0
-    created: "2021-06-25T15:06:31.098081959Z"
+    created: "2021-06-25T16:23:32.036766889Z"
     dependencies:
     - condition: kubeStateMetrics.enabled
       name: kube-state-metrics
@@ -1958,7 +2028,7 @@ entries:
       category: Database
     apiVersion: v1
     appVersion: 6.0.6
-    created: "2021-06-25T15:06:31.100722693Z"
+    created: "2021-06-25T16:23:32.040625764Z"
     description: Open source, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
     digest: a6f0fd8ff6e83d318eb532763a77da6ce410b9b4e8da9dc230ae1c36784a9766
     home: http://redis.io/
@@ -1981,11 +2051,11 @@ entries:
   sim-backend:
   - apiVersion: v1
     appVersion: 'mojaloop-simulator: v11.4.1'
-    created: "2021-06-25T15:06:31.101775809Z"
+    created: "2021-06-25T16:23:32.041308713Z"
     description: Helm Chart for the Mojaloop Simulator Backend
-    digest: 76f074cf4eb22c246d665b044b508face075e632889c3a052d1cfc036e95ad89
+    digest: c9fb20d51b5895783d052c640bd931932c6d8aff27a95bbe72b27ae6b2d88f10
     name: sim-backend
     urls:
     - https://pm4ml.github.io/mojaloop-payment-manager-helm/repo/sim-backend-1.0.1.tgz
     version: 1.0.1
-generated: "2021-06-25T15:06:30.433045294Z"
+generated: "2021-06-25T16:23:31.341095155Z"
