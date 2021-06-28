@@ -15,6 +15,7 @@ fullnameOverride: ""
 
 #### ENV values
 env:
+  BACKEND_ENDPOINT: http://localhost:3002
   MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
 
 service:
