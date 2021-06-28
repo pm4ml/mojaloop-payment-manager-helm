@@ -24,7 +24,7 @@ dependencies:
   repository: file://../pm4ml-mojaloop-connector
   condition: pm4ml-mojaloop-connector.enabled
 - name: mojaloop-simulator-core-connector
-  version: 1.4.2
+  version: 1.4.3
   repository: file://../mojaloop-simulator-core-connector
   condition: mojaloop-simulator-core-connector.enabled
 - name: mojaloop-mifos-core-connector
