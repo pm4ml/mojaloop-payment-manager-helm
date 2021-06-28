@@ -32,7 +32,7 @@ dependencies:
   repository: file://../mojaloop-mifos-core-connector
   condition: mojaloop-mifos-core-connector.enabled
 - name: mojaloop-mambu-core-connector
-  version: 1.0.4
+  version: 1.0.5
   repository: file://../mojaloop-mambu-core-connector
   condition: mojaloop-mambu-core-connector.enabled
 - name: mojaloop-finflux-core-connector
