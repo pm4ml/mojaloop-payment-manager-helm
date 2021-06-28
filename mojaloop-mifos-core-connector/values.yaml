@@ -15,8 +15,8 @@ fullnameOverride: ""
 
 #### ENV values
 env:
-  backendApplicationEndpoint: http://localhost:3002
-  outboundApplicationEndpoint: http://localhost:4001
+  BACKEND_ENDPOINT: http://localhost:3002
+  MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
 
 service:
   type: ClusterIP
