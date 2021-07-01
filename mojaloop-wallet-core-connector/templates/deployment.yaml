@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mojaloop-wallet-core-connector.fullname" . }}
+  labels:
+{{ include "mojaloop-wallet-core-connector.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "mojaloop-wallet-core-connector.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "mojaloop-wallet-core-connector.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      {{- if .Values.imagePullCredentials }}
+      imagePullSecrets:
+        - name: {{ include "mojaloop-wallet-core-connector.fullname" . }}-cred
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            # this is the DFSP core (CBS) listen endpoint
+            - name: "BACKEND_ENDPOINT"
+              value: "{{ .Values.env.BACKEND_ENDPOINT}}"
+            # this is the outbound api endpoint on the mojaloop-connector
+            - name: "MLCONN_OUTBOUND_ENDPOINT"
+              value: "{{ .Values.env.MLCONN_OUTBOUND_ENDPOINT }}"
+          ports:
+            - name: http
+              containerPort: 3003
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
