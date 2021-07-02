@@ -25,10 +25,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: "BACKEND_ENDPOINT"
-              value: "{{ .Values.env.backendApplicationEndpoint }}"
-            - name: "MLCONN_OUTBOUND_ENDPOINT"
-              value: "{{ .Values.env.outboundApplicationEndpoint }}"
+            {{- range $k, $v := .Values.env }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+            {{- end }}
           ports:
             - name: visalookupapi
               containerPort: {{ .Values.env.LISTEN_PORT_VISA_ALIAS_LOOKUP }}

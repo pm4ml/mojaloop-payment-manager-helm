@@ -36,5 +36,5 @@ spec:
             backend:
               serviceName: {{ $fullName }}
               servicePort: visalookupapi
-        {{- end }}
   {{- end }}
+{{- end }}
