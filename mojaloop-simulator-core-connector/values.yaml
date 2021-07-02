@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-simulator-core-connector
-  tag: 1.4.1
+  tag: 1.4.2
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -15,12 +15,14 @@ fullnameOverride: ""
 
 #### ENV values
 env:
-  backendApplicationEndpoint: http://localhost:3002
-  outboundApplicationEndpoint: http://localhost:4001
+  BACKEND_ENDPOINT: http://localhost:3002
+  MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
 
 service:
   type: ClusterIP
-  port: 80
+  # this is the port the SERVICE will listen on. requests to the service address on this port
+  # get mapped to the "http" named port on the deployment
+  port: 3003
 
 ingress:
   enabled: false

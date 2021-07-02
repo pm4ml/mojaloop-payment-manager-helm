@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: modusbox-mbx-docker.jfrog.io/modusintegration/mifos-mojaloop-core-connector
-  tag: 1.0.0
+  tag: 1.0.4
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -15,8 +15,8 @@ fullnameOverride: ""
 
 #### ENV values
 env:
-  backendApplicationEndpoint: http://localhost:3002
-  outboundApplicationEndpoint: http://localhost:4001
+  BACKEND_ENDPOINT: http://localhost:3002
+  MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
 
 service:
   type: ClusterIP

@@ -52,8 +52,8 @@ secrets:
     publicKeyConfigMapName: {}
 
 image:
-  repository: modusbox-mbx-docker.jfrog.io/modusintegration/mojaloop-connector
-  tag: 12.4.1
+  repository: pm4ml/mojaloop-connector
+  tag: 13.7.0
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

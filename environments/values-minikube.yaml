@@ -334,15 +334,29 @@ mojaloop-simulator-core-connector:
   enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
-    backendApplicationEndpoint: http://localhost:3002
-    outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
+    BACKEND_ENDPOINT: http://localhost:3002
+    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
 
 mojaloop-mifos-core-connector:
   enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
-    backendApplicationEndpoint: http://localhost:3002
-    outboundApplicationEndpoint: http://pm4ml-mojaloop-connector:4001
+    BACKEND_ENDPOINT: http://localhost:3002
+    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+
+mojaloop-mambu-core-connector:
+  enabled: true
+  imagePullCredentials: *imagePullCredentials
+  env:
+    BACKEND_ENDPOINT: http://localhost:3002
+    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+
+mojaloop-finflux-core-connector:
+  enabled: true
+  imagePullCredentials: *imagePullCredentials
+  env:
+    BACKEND_ENDPOINT: http://localhost:3002
+    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
 
 mojaloop-visadirect-core-connector:
   enabled: false

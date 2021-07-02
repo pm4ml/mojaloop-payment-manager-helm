@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: modusbox-mbx-docker.jfrog.io/modusintegration/mojaloop-payment-manager-experience-api
+  repository: pm4ml/mojaloop-payment-manager-experience-api
   tag: 1.9.1
   pullPolicy: Always
 

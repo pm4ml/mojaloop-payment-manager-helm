@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: modusbox-mbx-docker.jfrog.io/modusintegration/mojaloop-payment-manager-management-api-service
-  tag: 1.9.2
+  repository: pm4ml/mojaloop-payment-manager-management-api
+  tag: 2.0.0
   pullPolicy: IfNotPresent
 
 env:
