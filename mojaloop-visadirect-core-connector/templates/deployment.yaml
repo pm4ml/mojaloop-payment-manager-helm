@@ -33,6 +33,11 @@ spec:
             - name: visalookupapi
               containerPort: {{ .Values.env.LISTEN_PORT_VISA_ALIAS_LOOKUP }}
               protocol: TCP
+          volumeMounts:
+          {{- if .Values.env.VISA_MLE_ENABLED }}
+          - name: mle-creds
+            mountPath: "/mle_creds/"
+          {{- end }}
           # livenessProbe:
           #   httpGet:
           #     path: /health
@@ -43,6 +48,12 @@ spec:
           #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      {{- if .Values.env.VISA_MLE_ENABLED }}
+      - name: mle-creds
+        secret:
+          secretName: {{ include "mojaloop-visadirect-core-connector.fullname" . }}-mle-creds
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

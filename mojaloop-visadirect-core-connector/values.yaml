@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: modusbox-mbx-docker.jfrog.io/modusintegration/visa-direct-mojaloop-core-connector
+  repository: pm4ml/pm4ml-core-connector-visa-direct
   tag: 1.0.0
   pullPolicy: Always
 
@@ -18,10 +18,10 @@ env:
   MOJA_HOSTNAME: pm4ml-mojaloop-connector
   MOJA_PORT: 4001
   LISTEN_PORT_VISA_ALIAS_LOOKUP: 3001
-  # VISA_MLE_ENABLED: false
-  # VISA_MLE_KEY_ID: 'mle_key_id'
-  # VISA_MLE_PUBLIC_KEY: './secrets/visa_mle_server_cert.pem'
-  # VISA_MLE_PRIVATE_KEY: './secrets/visa_mle_key.pem'
+  VISA_MLE_ENABLED: false
+  VISA_MLE_KEY_ID: 'mle_key_id'
+  VISA_MLE_PUBLIC_KEY: '/mle_creds/public_key.pem'
+  VISA_MLE_PRIVATE_KEY: '/mle_creds/private_key.pem'
 
 service:
   type: ClusterIP
@@ -38,16 +38,20 @@ ingress:
       paths: []
 
   tls: []
-  # - secretName: chart-example-tls
-  #   hosts:
+  # - hosts:
   #     - chart-example.local
-  # - newSecret:
+  # # Either specify secretName if you have existing secret or specify newSecret to create one
+  #   secretName: chart-example-tls
+  #   newSecret:
   #     nameSuffix: 'someapi'
   #     cacert: test
   #     cert: test
   #     key: test
-  #   hosts:
-  #     - chart-example.local
+
+secrets:
+  mle:
+    publicKey: test
+    privateKey: test
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
