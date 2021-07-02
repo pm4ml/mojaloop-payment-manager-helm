@@ -267,3 +267,49 @@ keycloak:
     # the below should be set to the external URL of keycloak
     - name: KEYCLOAK_FRONTEND_URL
       value: "http://keycloak.external.url:1234/auth"
+
+mojaloop-visadirect-core-connector:
+  imagePullCredentials: *imagePullCredentials
+  enabled: false
+  env:
+    MOJA_HOSTNAME: pm4ml-mojaloop-connector
+    MOJA_PORT: 4001
+    # LISTEN_PORT_VISA_ALIAS_LOOKUP: 3001
+    # VISA_MLE_ENABLED: false
+    # VISA_MLE_KEY_ID: 'mle_key_id'
+    # VISA_MLE_PUBLIC_KEY: '/mle_creds/public_key.pem'
+    # VISA_MLE_PRIVATE_KEY: '/mle_creds/private_key.pem'
+  ingress:
+    enabled: false
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+      - host: a.url.to.contact.by.visa
+    tls:
+    - hosts:
+        - a.url.to.contact.by.visa
+      newSecret:
+        nameSuffix: 'visaapi'
+        cacert: |-
+          -----BEGIN CERTIFICATE-----
+          COPY_CA_FULL_CHAIN_CERTIFICATE_HERE
+          -----END CERTIFICATE-----
+        cert: |-
+          -----BEGIN CERTIFICATE-----
+          COPY_CERTIFICATE_HERE
+          -----END CERTIFICATE-----
+        key: |-
+          -----BEGIN PRIVATE KEY-----
+          COPY_PRIVATE_KEY_HERE
+          -----END PRIVATE KEY-----
+  secrets:
+    mle:
+      publicKey: |-
+        -----BEGIN CERTIFICATE-----
+        COPY_CERTIFICATE_HERE
+        -----END CERTIFICATE-----
+      privateKey: |-
+        -----BEGIN PRIVATE KEY-----
+        COPY_PRIVATE_KEY_HERE
+        -----END PRIVATE KEY-----

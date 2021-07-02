@@ -349,6 +349,9 @@ mojaloop-finflux-core-connector:
     BACKEND_ENDPOINT: http://localhost:3002
     MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
 
+mojaloop-visadirect-core-connector:
+  enabled: false
+
 keycloak:
   enabled: true
   extraEnv: |

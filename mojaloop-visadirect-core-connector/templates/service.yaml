@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mojaloop-visadirect-core-connector.fullname" . }}
+  labels:
+{{ include "mojaloop-visadirect-core-connector.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.env.LISTEN_PORT_VISA_ALIAS_LOOKUP }}
+      protocol: TCP
+      name: visalookupapi
+      targetPort: visalookupapi
+  selector:
+    app.kubernetes.io/name: {{ include "mojaloop-visadirect-core-connector.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

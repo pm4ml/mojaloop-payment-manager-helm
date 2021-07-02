@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "mojaloop-visadirect-core-connector.fullname" . }}-test-connection"
+  labels:
+{{ include "mojaloop-visadirect-core-connector.labels" . | indent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args:  ['{{ include "mojaloop-visadirect-core-connector.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

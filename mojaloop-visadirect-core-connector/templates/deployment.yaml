@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "mojaloop-visadirect-core-connector.fullname" . }}
+  labels:
+{{ include "mojaloop-visadirect-core-connector.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "mojaloop-visadirect-core-connector.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "mojaloop-visadirect-core-connector.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      {{- if .Values.imagePullCredentials }}
+      imagePullSecrets:
+        - name: {{ include "mojaloop-visadirect-core-connector.fullname" . }}-cred
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- range $k, $v := .Values.env }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+            {{- end }}
+          ports:
+            - name: visalookupapi
+              containerPort: {{ .Values.env.LISTEN_PORT_VISA_ALIAS_LOOKUP }}
+              protocol: TCP
+          volumeMounts:
+          {{- if .Values.env.VISA_MLE_ENABLED }}
+          - name: mle-creds
+            mountPath: "/mle_creds/"
+          {{- end }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      {{- if .Values.env.VISA_MLE_ENABLED }}
+      - name: mle-creds
+        secret:
+          secretName: {{ include "mojaloop-visadirect-core-connector.fullname" . }}-mle-creds
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
