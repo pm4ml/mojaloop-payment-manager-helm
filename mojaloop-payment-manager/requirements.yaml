@@ -44,7 +44,7 @@ dependencies:
   repository: file://../mojaloop-finflux-core-connector
   condition: mojaloop-finflux-core-connector.enabled
 - name: mojaloop-wallet-core-connector
-  version: 1.0.0
+  version: 1.0.2
   repository: file://../mojaloop-wallet-core-connector
   condition: mojaloop-wallet-core-connector.enabled
 - name: prometheus
