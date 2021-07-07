@@ -36,7 +36,7 @@ dependencies:
   repository: file://../mojaloop-visadirect-core-connector
   condition: mojaloop-visadirect-core-connector.enabled
 - name: mojaloop-mambu-core-connector
-  version: 1.0.7
+  version: 1.0.8
   repository: file://../mojaloop-mambu-core-connector
   condition: mojaloop-mambu-core-connector.enabled
 - name: mojaloop-finflux-core-connector
