@@ -1,4 +1,4 @@
-ame: Validate charts
+name: Validate charts
 
 on:
   pull_request:
