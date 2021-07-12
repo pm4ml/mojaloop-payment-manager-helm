@@ -32,7 +32,8 @@ env:
   TEST_CA_CERT_PATH: /secrets/test-cacert.pem
   TEST_CLIENT_CERT_PATH: /secrets/test-cert.pem
   TEST_CLIENT_KEY_PATH: /secrets/test-key.pem
-  JWS_SIGNING_KEY_PATH: /secrets/jwsSigningKey.key
+  JWS_SIGNING_KEY_PATH: /jwsSigningKey/private.key
+  MGMT_API_WS_URL: 127.0.0.1
 
 
 secrets:
