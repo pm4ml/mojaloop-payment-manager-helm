@@ -47,6 +47,10 @@ dependencies:
   version: 1.0.2
   repository: file://../mojaloop-wallet-core-connector
   condition: mojaloop-wallet-core-connector.enabled
+- name: mojaloop-iso20022-core-connector
+  version: 1.0.0
+  repository: file://../mojaloop-iso20022-core-connector
+  condition: mojaloop-iso20022-core-connector.enabled
 - name: prometheus
   version: 11.16.9
   repository: https://prometheus-community.github.io/helm-charts

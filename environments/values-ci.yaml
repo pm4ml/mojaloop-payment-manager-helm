@@ -352,6 +352,14 @@ mojaloop-finflux-core-connector:
 mojaloop-visadirect-core-connector:
   enabled: false
 
+mojaloop-iso20022-core-connector:
+  enabled: true
+  imagePullCredentials: *imagePullCredentials
+  env:
+    BACKEND_ENDPOINT: http://localhost:3002
+    OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+    TEMPLATES_PATH: templates
+
 keycloak:
   enabled: true
   extraEnv: |
