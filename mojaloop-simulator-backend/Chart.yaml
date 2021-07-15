@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 description: "Helm Chart for the Mojaloop Simulator Backend"
 name: sim-backend
 version: 1.0.1
