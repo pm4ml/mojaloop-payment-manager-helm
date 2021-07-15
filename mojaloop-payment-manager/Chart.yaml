@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 version: 2.4.3
 appVersion: "v2.4.3"
 description: Helm chart for Mojaloop Payment Manager
