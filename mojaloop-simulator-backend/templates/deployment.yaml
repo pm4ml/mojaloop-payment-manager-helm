@@ -1,4 +1,4 @@
-apiVersion: {{ ternary "apps/v1" "apps/v1beta2" (.Capabilities.APIVersions.Has "apps/v1/Deployment") }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sim-backend
