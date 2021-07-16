@@ -355,9 +355,17 @@ mojaloop-finflux-core-connector:
   enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
-    BACKEND_ENDPOINT: http://localhost:3002
     MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
-
+    CBS_HOST: ""
+    CBS_USERNAME: ""
+    CBS_PASSWORD: ""
+    CBS_AUTH_CLIENT_ID: ""
+    CBS_AUTH_CLIENT_SECRET: ""
+    CBS_AUTH_GRANT_TYPE: ""
+    CBS_AUTH_SCOPE: ""
+    CBS_AUTH_ENCRYPTED_PASS: ""
+    CBS_AUTH_TENANT_ID: ""
+    
 mojaloop-visadirect-core-connector:
   enabled: false
 

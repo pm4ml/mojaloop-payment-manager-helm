@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: modusbox-mbx-docker.jfrog.io/modusintegration/finflux-pm4ml-core-connector
-  tag: 1.1.0
+  tag: 1.2.0
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -15,8 +15,16 @@ fullnameOverride: ""
 
 #### ENV values
 env:
-  BACKEND_ENDPOINT: http://localhost:3002
   MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
+  CBS_HOST: ""
+  CBS_USERNAME: ""
+  CBS_PASSWORD: ""
+  CBS_AUTH_CLIENT_ID: ""
+  CBS_AUTH_CLIENT_SECRET: ""
+  CBS_AUTH_GRANT_TYPE: ""
+  CBS_AUTH_SCOPE: ""
+  CBS_AUTH_ENCRYPTED_PASS: ""
+  CBS_AUTH_TENANT_ID: ""
 
 service:
   type: ClusterIP

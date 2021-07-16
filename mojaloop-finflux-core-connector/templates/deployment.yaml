@@ -25,12 +25,28 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            # this is the DFSP core (CBS) listen endpoint
-            #- name: "BACKEND_ENDPOINT"
-            #  value: "{{ .Values.env.BACKEND_ENDPOINT }}"
             # this is the outbound api endpoint on the mojaloop-connector
             - name: "MLCONN_OUTBOUND_ENDPOINT"
               value: "{{ .Values.env.MLCONN_OUTBOUND_ENDPOINT }}"
+            # these are for the DFSP core (CBS) connection details
+            - name: "CBS_HOST"
+              value: "{{ .Values.env.CBS_HOST }}"
+            - name: "CBS_USERNAME"
+              value: "{{ .Values.env.CBS_USERNAME }}"
+            - name: "CBS_PASSWORD"
+              value: "{{ .Values.env.CBS_PASSWORD }}"
+            - name: "CBS_AUTH_CLIENT_ID"
+              value: "{{ .Values.env.CBS_AUTH_CLIENT_ID }}"
+            - name: "CBS_AUTH_CLIENT_SECRET"
+              value: "{{ .Values.env.CBS_AUTH_CLIENT_SECRET }}"
+            - name: "CBS_AUTH_GRANT_TYPE"
+              value: "{{ .Values.env.CBS_AUTH_GRANT_TYPE }}"
+            - name: "CBS_AUTH_SCOPE"
+              value: "{{ .Values.env.CBS_AUTH_SCOPE }}"
+            - name: "CBS_AUTH_ENCRYPTED_PASS"
+              value: "{{ .Values.env.CBS_AUTH_ENCRYPTED_PASS }}"
+            - name: "CBS_AUTH_TENANT_ID"
+              value: "{{ .Values.env.CBS_AUTH_TENANT_ID }}"
           ports:
             - name: http
               containerPort: 3003
