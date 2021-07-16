@@ -195,6 +195,14 @@ mojaloop-finflux-core-connector:
     BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
     MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
 
+mojaloop-iso20022-core-connector:
+  imagePullCredentials: *imagePullCredentials
+  enabled: false
+  env:
+    BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
+    OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+    TEMPLATES_PATH: templates
+
 sim-backend:
   enabled: true
   env:
