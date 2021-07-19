@@ -15,7 +15,9 @@ fullnameOverride: ""
 
 #### ENV values
 env:
+  # this is the outbound api endpoint on the mojaloop-connector
   MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
+  # these are for the DFSP core (CBS) connection details
   CBS_HOST: ""
   CBS_USERNAME: ""
   CBS_PASSWORD: ""
