@@ -51,6 +51,10 @@ dependencies:
   version: 1.0.0
   repository: file://../mojaloop-iso20022-core-connector
   condition: mojaloop-iso20022-core-connector.enabled
+- name: mojaloop-musoni-core-connector
+  version: 1.0.0
+  repository: file://../mojaloop-musoni-core-connector
+  condition: mojaloop-mifos-musoni-connector.enabled
 - name: prometheus
   version: 11.16.9
   repository: https://prometheus-community.github.io/helm-charts
