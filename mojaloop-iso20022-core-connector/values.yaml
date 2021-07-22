@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/iso20022-core-connector
-  tag: 0.0.6
+  tag: 0.0.8
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -19,6 +19,7 @@ env:
   OUTBOUND_ENDPOINT: http://localhost:4001
   TEMPLATES_PATH: templates
   REQUEST_TIMEOUT: 5000
+  LISTEN_PORT: 3003
 
 service:
   type: ClusterIP

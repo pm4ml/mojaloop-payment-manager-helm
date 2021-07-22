@@ -35,6 +35,8 @@ spec:
               value: "{{ .Values.env.TEMPLATES_PATH }}"
             - name: "REQUEST_TIMEOUT"
               value: "{{ .Values.env.REQUEST_TIMEOUT }}"
+            - name: "LISTEN_PORT"
+              value: "{{ .Values.env.LISTEN_PORT }}"
           ports:
             - name: http
               containerPort: 3003
