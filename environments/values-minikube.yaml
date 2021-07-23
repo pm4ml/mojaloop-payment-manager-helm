@@ -384,6 +384,13 @@ mojaloop-musoni-core-connector:
     BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
     MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
 
+mojaloop-citizens-core-connector:
+  enabled: false
+  imagePullCredentials: *imagePullCredentials
+  env:
+    BACKEND_ENDPOINT: http://localhost:3002
+    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+
 sim-backend:
   enabled: true
   env:
