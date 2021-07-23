@@ -385,7 +385,7 @@ mojaloop-musoni-core-connector:
     MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
 
 mojaloop-citizens-core-connector:
-  enabled: true
+  enabled: false
   imagePullCredentials: *imagePullCredentials
   env:
     BACKEND_ENDPOINT: http://localhost:3002

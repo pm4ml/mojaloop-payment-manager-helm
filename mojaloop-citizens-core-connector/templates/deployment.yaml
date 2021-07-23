@@ -25,24 +25,25 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            # this is the DFSP core (CBS) listen endpoint
-            - name: "BACKEND_ENDPOINT"
-              value: "{{ .Values.env.BACKEND_ENDPOINT}}"
-            # this is the outbound api endpoint on the mojaloop-connector
-            - name: "MLCONN_OUTBOUND_ENDPOINT"
-              value: "{{ .Values.env.MLCONN_OUTBOUND_ENDPOINT }}"
+            # # this is the outbound api endpoint on the mojaloop-connector
+            # - name: "MLCONN_OUTBOUND_ENDPOINT"
+            #   value: "{{ .Values.env.MLCONN_OUTBOUND_ENDPOINT }}"
+            {{- range $k, $v := .Values.env }}
+            - name: {{ $k }}
+              value: {{ $v | quote }}
+            {{- end }}
           ports:
             - name: http
-              containerPort: 3003
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
