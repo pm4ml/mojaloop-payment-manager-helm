@@ -30,7 +30,7 @@ env:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
+#serviceAccountName: saname
 service:
   type: ClusterIP
   port: 80

@@ -20,6 +20,9 @@ spec:
       imagePullSecrets:
         - name: {{ include "pm4ml-management-api-service.fullname" . }}-cred
       {{- end }}
+      {{- if .Values.serviceAccountName }}
+      serviceAccountName: {{ .Values.serviceAccountName }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
