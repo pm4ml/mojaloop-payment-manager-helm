@@ -60,7 +60,7 @@ dependencies:
   repository: file://../mojaloop-citizens-core-connector
   condition: mojaloop-citizens-core-connector.enabled
 - name: mojaloop-ooredoo-core-connector
-  version: 1.0.0
+  version: 1.0.3
   repository: file://../mojaloop-ooredoo-core-connector
   condition: mojaloop-ooredoo-core-connector.enabled
 - name: prometheus
