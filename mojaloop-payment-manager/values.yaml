@@ -174,70 +174,65 @@ mojaloop-simulator-core-connector:
     BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
     MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
 
-mojaloop-mifos-core-connector:
+
+mojaloop-core-connector:
   imagePullCredentials: *imagePullCredentials
-  enabled: false
+  enabled: true
   env:
     BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
     MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
 
-mojaloop-mambu-core-connector:
-  imagePullCredentials: *imagePullCredentials
-  enabled: false
-  env:
-    BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
-    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+  image:
+    repository: pm4ml/mojaloop-payment-manager-simulator-core-connector
+    tag: 1.4.2
+  
+  #citizens
+  # image:
+  #   repository: modusbox-mbx-docker.jfrog.io/modusintegration/citizens-core-connector
+  #   tag: 1.0.0
 
-mojaloop-finflux-core-connector:
-  imagePullCredentials: *imagePullCredentials
-  enabled: false
-  env:
-    BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
-    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+  # finflux
+  # image:
+  #   repository: modusbox-mbx-docker.jfrog.io/modusintegration/finflux-pm4ml-core-connector
+  #   tag: 1.2.0
 
-mojaloop-wallet-core-connector:
-  imagePullCredentials: *imagePullCredentials
-  enabled: false
-  env:
-    BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
-    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+  # iso20022
+  # image:
+  #   repository: pm4ml/iso20022-core-connector
+  #   tag: 0.0.8
 
-mojaloop-iso20022-core-connector:
-  imagePullCredentials: *imagePullCredentials
-  enabled: false
-  env:
-    BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
-    OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
-    TEMPLATES_PATH: templates
-    LISTEN_PORT: 3003
+  # mambu
+  # image:
+  #   repository: modusbox-mbx-docker.jfrog.io/modusintegration/mambu-pm4ml-core-connector
+  #   tag: 1.0.8
 
-mojaloop-visadirect-core-connector:
-  imagePullCredentials: *imagePullCredentials
-  enabled: false
-  env:
-    MOJA_HOSTNAME: pm4ml-mojaloop-connector
-    MOJA_PORT: 4001
+  # mifos
+  # image:
+  #   repository: modusbox-mbx-docker.jfrog.io/modusintegration/mifos-mojaloop-core-connector
+  #   tag: 1.0.4
 
-mojaloop-musoni-core-connector:
-  imagePullCredentials: *imagePullCredentials
-  enabled: false
-  env:
-    BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
-    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+  # musoni
+  # image:
+  #   repository: modusbox-mbx-docker.jfrog.io/modusintegration/musoni-pm4ml-core-connector
+  #   tag: 1.0.0
 
-mojaloop-citizens-core-connector:
-  imagePullCredentials: *imagePullCredentials
-  enabled: false
-  env:
-    BACKEND_ENDPOINT: http://localhost:3002
-    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+  # ooredoo
+  # image:
+  #   repository: modusbox-mbx-docker.jfrog.io/modusintegration/ooredoo-pm4ml-core-connector
+  #   tag: 1.0.3
 
-mojaloop-ooredoo-core-connector:
-  imagePullCredentials: *imagePullCredentials
-  enabled: false
-  env:
-    BACKEND_ENDPOINT: http://localhost:3002
-    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+  # visa
+  # image:
+  #   repository: pm4ml/pm4ml-core-connector-visa-direct
+  #   tag: 1.0.0 
+  # env:
+  #   MOJA_PORT: 4001
+  #   MOJA_HOSTNAME: pm4ml-mojaloop-connector
+
+  # wallet
+  # image:
+  #   repository: pm4ml/wallet-core-connector
+  #   tag: 1.0.2
 
 sim-backend:
   enabled: true
