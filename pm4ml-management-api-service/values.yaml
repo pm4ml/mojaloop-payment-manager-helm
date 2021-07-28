@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 2.0.0
+  tag: 2.0.3
   pullPolicy: IfNotPresent
 
 env:
@@ -26,6 +26,20 @@ env:
   dfspCsrPrivateKeyAlgorithm: rsa
   wsUrl: scheme-adapter
   wsPort: 4003
+  vault:
+    endpoint: http://vault:8200
+    auth:
+      method: K8S
+      k8s:
+        role: vault-pm4ml-auth
+        tokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      appRole:
+        roleId: /vault/role-id
+        secretId: /vault/secret-id
+    pkiBaseDomain: example.com
+    mount:
+      pki: pki
+      kv: secrets
 
 imagePullSecrets: []
 nameOverride: ""

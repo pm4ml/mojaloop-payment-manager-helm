@@ -48,8 +48,6 @@ spec:
               value: {{ .Values.env.tlsServerPvtKeyPath | quote }}
             - name: DFSP_CA_PATH
               value: {{ .Values.env.tlsServerCAPath | quote }}
-            - name: P12_PASS_PHRASE
-              value: {{ .Values.env.p12PassPhrase | quote }}
             - name: PRIVATE_KEY_LENGTH
               value: {{ .Values.env.dfspCsrPrivateKeyLength | quote }}
             - name: PRIVATE_KEY_ALGORITHM
@@ -62,6 +60,24 @@ spec:
               value: {{ .Values.env.tlsClientCSRParametersPath | quote }}
             - name: DFSP_SERVER_CSR_PARAMETERS
               value: {{ .Values.env.tlsServerCSRParametersPath | quote }}
+            - name: VAULT_ENDPOINT
+              value: {{ .Values.env.vault.endpoint | quote }}
+            - name: VAULT_AUTH_METHOD
+              value: {{ .Values.env.vault.auth.method | quote }}
+            - name: VAULT_K8S_ROLE
+              value: {{ .Values.env.vault.auth.k8s.role | quote }}
+            - name: VAULT_K8S_TOKEN_FILE
+              value: {{ .Values.env.vault.auth.k8s.tokenFile | quote }}
+            - name: VAULT_ROLE_ID_FILE
+              value: {{ .Values.env.vault.auth.appRole.roleId | quote }}
+            - name: VAULT_ROLE_SECRET_ID_FILE
+              value: {{ .Values.env.vault.auth.appRole.secretId | quote }}
+            - name: VAULT_PKI_BASE_DOMAIN
+              value: {{ .Values.env.vault.pkiBaseDomain | quote }}
+            - name: VAULT_MOUNT_PKI
+              value: {{ .Values.env.vault.mount.pki | quote }}
+            - name: VAULT_MOUNT_KV
+              value: {{ .Values.env.vault.mount.kv | quote }}
 
             {{- range $key, $val := .Values.env }}
             - name: {{$key}}
@@ -71,7 +87,7 @@ spec:
             - name: http
               containerPort: 9000
               protocol: TCP
-          volumeMounts: 
+          volumeMounts:
           - mountPath: /secrets
             name: secret-volume
           - mountPath: /tls
