@@ -7,14 +7,14 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    {{- range .Values.ports -}}
-    {{- if .serviceEnabled -}}
+    {{- range .Values.ports }}
+    {{- if .serviceEnabled }}
     - port: 
       targetPort: {{ .targetPort }}
       protocol: {{ .protocol }}
       name: {{ .port | quote }}
-    {{- end -}}
-    {{- end -}}    
+    {{- end }}
+    {{- end }}    
   selector:
     app.kubernetes.io/name: {{ include "self.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

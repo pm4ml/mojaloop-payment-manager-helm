@@ -33,11 +33,11 @@ spec:
               value: {{ $v | quote }}
             {{- end }}
           ports:
-          {{- range .Values.ports -}}
+          {{- range .Values.ports }}
             - name: {{ .port | quote }}
               containerPort: {{ .portNumber }}
               protocol: {{ .protocol }}
-          {{- end -}}        
+          {{- end }}        
           livenessProbe:
             httpGet:
               path: /health
