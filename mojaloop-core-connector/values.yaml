@@ -9,7 +9,6 @@ image:
   tag: 1.4.2
   pullPolicy: Always
 
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -18,11 +17,17 @@ env:
   BACKEND_ENDPOINT: http://localhost:3002
   MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
 
+ports:  
+  - port: http
+    portNumber: 3003
+    targetPort: http
+    protocol: TCP
+    serviceEnabled: true
+  
 service:
   type: ClusterIP
   # this is the port the SERVICE will listen on. requests to the service address on this port
   # get mapped to the "http" named port on the deployment
-  port: 3003
 
 ingress:
   enabled: false
