@@ -123,6 +123,9 @@ mysql:
     persistence:
       enabled: false
 
+vault:
+  enabled: true
+
 redis:
   usePassword: false
   nameOverride: redis
