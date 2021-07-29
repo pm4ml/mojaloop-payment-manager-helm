@@ -28,57 +28,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: DFSP_ID
-              value: {{ .Values.env.dfspId | quote }}
-            - name: ENV_ID
-              value: {{ .Values.env.envId | quote }}
-            - name: MCM_SERVER_ENDPOINT
-              value: {{ .Values.env.mcmServerEndpoint | quote }}
-            - name: MCM_CLIENT_REFRESH_INTERVAL
-              value: {{ .Values.env.mcmClientRefreshInterval | quote }}
-            - name: MCM_CLIENT_SECRETS_LOCATION
-              value: {{ .Values.env.mcmClientsSecretsLocation | quote }}
-            - name: MCM_API_TOKEN
-              value: {{ .Values.env.mcmAPIToken | quote }}
-            - name: PEER_ENDPOINT
-              value: {{ .Values.env.peer_endpoint | quote }}
-            - name: CACHE_HOST
-              value: {{ .Values.env.cache_host | quote }}
-            - name: TLS_SERVER_PRIVATE_KEY
-              value: {{ .Values.env.tlsServerPvtKeyPath | quote }}
-            - name: DFSP_CA_PATH
-              value: {{ .Values.env.tlsServerCAPath | quote }}
-            - name: PRIVATE_KEY_LENGTH
-              value: {{ .Values.env.dfspCsrPrivateKeyLength | quote }}
-            - name: PRIVATE_KEY_ALGORITHM
-              value: {{ .Values.env.dfspCsrPrivateKeyAlgorithm | quote }}
-            - name: WS_URL
-              value: {{ .Values.env.wsUrl | quote }}
-            - name: WS_PORT
-              value: {{ .Values.env.wsPort | quote }}
-            - name: DFSP_CLIENT_CSR_PARAMETERS
-              value: {{ .Values.env.tlsClientCSRParametersPath | quote }}
-            - name: DFSP_SERVER_CSR_PARAMETERS
-              value: {{ .Values.env.tlsServerCSRParametersPath | quote }}
-            - name: VAULT_ENDPOINT
-              value: {{ .Values.env.vault.endpoint | quote }}
-            - name: VAULT_AUTH_METHOD
-              value: {{ .Values.env.vault.auth.method | quote }}
-            - name: VAULT_K8S_ROLE
-              value: {{ .Values.env.vault.auth.k8s.role | quote }}
-            - name: VAULT_K8S_TOKEN_FILE
-              value: {{ .Values.env.vault.auth.k8s.tokenFile | quote }}
-            - name: VAULT_ROLE_ID_FILE
-              value: {{ .Values.env.vault.auth.appRole.roleId | quote }}
-            - name: VAULT_ROLE_SECRET_ID_FILE
-              value: {{ .Values.env.vault.auth.appRole.secretId | quote }}
-            - name: VAULT_PKI_BASE_DOMAIN
-              value: {{ .Values.env.vault.pkiBaseDomain | quote }}
-            - name: VAULT_MOUNT_PKI
-              value: {{ .Values.env.vault.mount.pki | quote }}
-            - name: VAULT_MOUNT_KV
-              value: {{ .Values.env.vault.mount.kv | quote }}
-
             {{- range $key, $val := .Values.env }}
             - name: {{$key}}
               value: {{$val | quote}}
