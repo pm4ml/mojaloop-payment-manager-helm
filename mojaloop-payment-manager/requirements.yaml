@@ -56,7 +56,7 @@ dependencies:
   repository: file://../mojaloop-musoni-core-connector
   condition: mojaloop-musoni-core-connector.enabled
 - name: mojaloop-citizens-core-connector
-  version: 1.0.0
+  version: 1.0.3
   repository: file://../mojaloop-citizens-core-connector
   condition: mojaloop-citizens-core-connector.enabled
 - name: mojaloop-ooredoo-core-connector
