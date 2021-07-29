@@ -23,7 +23,17 @@ ports:
     targetPort: http
     protocol: TCP
     serviceEnabled: true
-  
+
+livenessProbe:
+  enabled: true
+  path: /health
+  port: http
+
+readinessProbe:
+  enabled: true
+  path: /health
+  port: http
+
 service:
   type: ClusterIP
   # this is the port the SERVICE will listen on. requests to the service address on this port
