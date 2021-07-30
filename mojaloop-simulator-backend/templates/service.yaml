@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sim-backend
+  name: {{ $.Release.Name }}-sim-backend
   labels:
     {{- include "sim-backend.common-labels" $ | nindent 4 }}
 spec:

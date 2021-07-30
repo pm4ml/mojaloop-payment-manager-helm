@@ -3,7 +3,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: sim-backend
+  name: {{ $.Release.Name }}-sim-backend
   labels:
     {{- include "sim-backend.common-labels" $ | nindent 4 }}
   annotations:
