@@ -23,6 +23,16 @@ ports:
     targetPort: http
     protocol: TCP
     serviceEnabled: true
+
+livenessProbe:
+  enabled: true
+  path: /health
+  port: http
+
+readinessProbe:
+  enabled: true
+  path: /health
+  port: http
   
 service:
   type: ClusterIP

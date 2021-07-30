@@ -167,14 +167,6 @@ prometheus:
   kubeStateMetrics:
     enabled: false
 
-mojaloop-simulator-core-connector:
-  imagePullCredentials: *imagePullCredentials
-  enabled: true
-  env:
-    BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
-    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
-
-
 mojaloop-core-connector:
   imagePullCredentials: *imagePullCredentials
   enabled: true
@@ -186,6 +178,15 @@ mojaloop-core-connector:
     repository: pm4ml/mojaloop-payment-manager-simulator-core-connector
     tag: 1.4.2
   
+  livenessProbe:
+    enabled: true
+    path: /health
+    port: http
+
+  readinessProbe:
+    enabled: true
+    path: /health
+    port: http
   #citizens
   # image:
   #   repository: modusbox-mbx-docker.jfrog.io/modusintegration/citizens-core-connector
