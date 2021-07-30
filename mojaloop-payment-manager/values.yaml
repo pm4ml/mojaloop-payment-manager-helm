@@ -94,15 +94,23 @@ experience-api:
 management-api:
   imagePullCredentials: *imagePullCredentials
   env:
-    cache_host: redis-master
-    dfspId: *dfspId
-    envId: *mcmEnvironmentId
-    mcmServerEndpoint: mcm-server
-    mcmClientRefreshInterval: 300
-    p12PassPhrase: SOME_S3C4R3_P@SS
+    CACHE_HOST: redis-master
+    DFSP_ID: *dfspId
+    ENV_ID: *mcmEnvironmentId
+    MCM_SERVER_ENDPOINT: mcm-server
+    MCM_CLIENT_REFRESH_INTERVAL: 300
     AUTH_ENABLED: true
     AUTH_USER: mcmusername
     AUTH_PASS: mcmpassword
+    VAULT_ENDPOINT: http://vault:8200
+    VAULT_AUTH_METHOD: K8S
+    VAULT_K8S_ROLE: vault-pm4ml-auth
+    VAULT_K8S_TOKEN_FILE: /var/run/secrets/kubernetes.io/serviceaccount/token
+    VAULT_ROLE_ID_FILE: /vault/role-id
+    VAULT_ROLE_SECRET_ID_FILE: /vault/secret-id
+    VAULT_PKI_BASE_DOMAIN: example.com
+    VAULT_MOUNT_PKI: pki
+    VAULT_MOUNT_KV: secrets
 
   ingress:
     enabled: true
@@ -122,6 +130,9 @@ mysql:
   master:
     persistence:
       enabled: false
+
+vault:
+  enabled: false
 
 redis:
   usePassword: false
