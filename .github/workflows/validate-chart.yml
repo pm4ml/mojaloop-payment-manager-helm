@@ -106,6 +106,22 @@ jobs:
     - name: Deploy
       run: time helm install --wait --wait-for-jobs int-test ./mojaloop-simulator-backend/
 
+    - name: Print docker containers to check any issues with the cluster
+      if: ${{ failure() }}
+      run: docker ps
+
+    - name: Print resources
+      if: ${{ always() }}
+      run: kubectl get svc,deploy,sts,pv,pvc,configmap,job,pod -A
+
+    - name: Describe resources
+      if: ${{ failure() }}
+      run: kubectl describe svc,deploy,sts,pv,pvc,configmap,job,pod -A
+
+    - name: Print secret values
+      if: ${{ failure() }}
+      run: |-
+        kubectl get secrets -o json | jq -r '.items[] | { name: .metadata.name, data: .data | map_values(@base64d) }'
 
   # smoke_test_deploy_payment_manager:
   #   timeout-minutes: 15
