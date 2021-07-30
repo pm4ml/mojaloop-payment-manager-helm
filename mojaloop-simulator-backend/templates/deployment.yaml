@@ -46,4 +46,4 @@ spec:
       volumes:
       - name: rules
         configMap:
-          name: sim-backend-rules
+          name: {{ $.Release.Name }}-sim-backend-rules
