@@ -39,8 +39,6 @@ spec:
           volumeMounts:
           - mountPath: /secrets
             name: secret-volume
-          - mountPath: /tls
-            name: tls-secret
           - mountPath: /resources
             name: tls-configmap
           livenessProbe:
@@ -56,9 +54,6 @@ spec:
       volumes:
       - name: secret-volume
         emptyDir: {}
-      - name: tls-secret
-        secret:
-            secretName: {{ include "pm4ml-management-api-service.fullname" . }}-tls-secret
       - name: tls-configmap
         configMap:
             name: {{ include "pm4ml-management-api-service.fullname" . }}-tls-configmap
