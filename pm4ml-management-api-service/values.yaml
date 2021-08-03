@@ -6,31 +6,38 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 2.0.0
+  tag: 2.0.4
   pullPolicy: IfNotPresent
 
 env:
-  peer_endpoint: mojaloop.io
-  cache_host: redis-master
-  dfspId: test
-  envId: 1
-  mcmServerEndpoint: mcm-server
-  mcmClientRefreshInterval: 300
-  mcmClientsSecretsLocation: /tmp
-  mcmAPIToken: test
-  tlsServerPvtKeyPath: /tlsServerPvtKey.key
-  tlsServerCAPath: /tlsServerCA.pem
-  tlsClientCSRParametersPath: /resources/tlsClientCSRParameters.json
-  tlsServerCSRParametersPath: /resources/tlsServerCSRParameters.json
-  dfspCsrPrivateKeyLength: 4096
-  dfspCsrPrivateKeyAlgorithm: rsa
-  wsUrl: scheme-adapter
-  wsPort: 4003
+  PEER_ENDPOINT: mojaloop.io
+  CACHE_HOST: redis-master
+  DFSP_ID: test
+  ENV_ID: 1
+  MCM_SERVER_ENDPOINT: mcm-server
+  MCM_CLIENT_REFRESH_INTERVAL: 300
+  MCM_CLIENT_SECRETS_LOCATION: /tmp
+  MCM_API_TOKEN: test
+  DFSP_CLIENT_CSR_PARAMETERS: /resources/tlsClientCSRParameters.json
+  DFSP_SERVER_CSR_PARAMETERS: /resources/tlsServerCSRParameters.json
+  PRIVATE_KEY_LENGTH: 4096
+  PRIVATE_KEY_ALGORITHM: rsa
+  WS_URL: scheme-adapter
+  WS_PORT: 4003
+  VAULT_ENDPOINT: http://vault:8200
+  VAULT_AUTH_METHOD: K8S
+  VAULT_K8S_ROLE: vault-pm4ml-auth
+  VAULT_K8S_TOKEN_FILE: /var/run/secrets/kubernetes.io/serviceaccount/token
+  VAULT_ROLE_ID_FILE: /vault/role-id
+  VAULT_ROLE_SECRET_ID_FILE: /vault/secret-id
+  VAULT_PKI_BASE_DOMAIN: example.com
+  VAULT_MOUNT_PKI: pki
+  VAULT_MOUNT_KV: secrets
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
+#serviceAccountName: saname
 service:
   type: ClusterIP
   port: 80

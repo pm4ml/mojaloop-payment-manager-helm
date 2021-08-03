@@ -11,7 +11,7 @@ dependencies:
   alias: experience-api
   condition: experience-api.enabled
 - name: pm4ml-management-api-service
-  version: 1.9.1
+  version: 1.9.5
   repository: file://../pm4ml-management-api-service
   alias: management-api
   condition: management-api.enabled
@@ -23,50 +23,19 @@ dependencies:
   version: 1.2.4
   repository: file://../pm4ml-mojaloop-connector
   condition: pm4ml-mojaloop-connector.enabled
-- name: mojaloop-simulator-core-connector
-  version: 1.4.3
-  repository: file://../mojaloop-simulator-core-connector
-  condition: mojaloop-simulator-core-connector.enabled
-- name: mojaloop-mifos-core-connector
-  version: 1.0.5
-  repository: file://../mojaloop-mifos-core-connector
-  condition: mojaloop-mifos-core-connector.enabled
-- name: mojaloop-visadirect-core-connector
-  version: 1.0.0
-  repository: file://../mojaloop-visadirect-core-connector
-  condition: mojaloop-visadirect-core-connector.enabled
-- name: mojaloop-mambu-core-connector
-  version: 1.0.8
-  repository: file://../mojaloop-mambu-core-connector
-  condition: mojaloop-mambu-core-connector.enabled
-- name: mojaloop-finflux-core-connector
-  version: 1.0.2
-  repository: file://../mojaloop-finflux-core-connector
-  condition: mojaloop-finflux-core-connector.enabled
-- name: mojaloop-wallet-core-connector
-  version: 1.0.2
-  repository: file://../mojaloop-wallet-core-connector
-  condition: mojaloop-wallet-core-connector.enabled
-- name: mojaloop-iso20022-core-connector
-  version: 1.0.0
-  repository: file://../mojaloop-iso20022-core-connector
-  condition: mojaloop-iso20022-core-connector.enabled
-- name: mojaloop-musoni-core-connector
-  version: 1.0.0
-  repository: file://../mojaloop-musoni-core-connector
-  condition: mojaloop-musoni-core-connector.enabled
-- name: mojaloop-citizens-core-connector
-  version: 1.0.0
-  repository: file://../mojaloop-citizens-core-connector
-  condition: mojaloop-citizens-core-connector.enabled
-- name: mojaloop-ooredoo-core-connector
-  version: 1.0.0
-  repository: file://../mojaloop-ooredoo-core-connector
-  condition: mojaloop-ooredoo-core-connector.enabled
+- name: mojaloop-core-connector
+  version: 1.0.1
+  repository: file://../mojaloop-core-connector
+  condition: mojaloop-core-connector.enabled
 - name: prometheus
   version: 11.16.9
   repository: https://prometheus-community.github.io/helm-charts
   alias: prometheus
+- name: vault
+  version: 0.14.0
+  repository: https://helm.releases.hashicorp.com
+  alias: vault
+  condition: vault.enabled
 - name: ml-testing-toolkit
   version: 11.0.0
   repository: http://mojaloop.io/helm/repo
