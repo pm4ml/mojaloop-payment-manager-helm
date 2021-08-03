@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: modusbox-mbx-docker.jfrog.io/modusintegration/citizens-core-connector
-  tag: 1.0.0
+  repository: pm4ml/citizens-pm4ml-core-connector
+  tag: 1.1.0
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -15,8 +15,14 @@ fullnameOverride: ""
 
 #### ENV values
 env:
-  BACKEND_ENDPOINT: http://localhost:3002
+  # this is the outbound api endpoint on the mojaloop-connector
   MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
+  # these are for the DFSP core (CBS) connection details
+  DFSP_HOST: ""
+  DFSP_USERNAME: ""
+  DFSP_PASSWORD: ""
+  DFSP_API_VERSION: ""
+  DFSP_AUTH_API_KEY: ""
 
 service:
   type: ClusterIP

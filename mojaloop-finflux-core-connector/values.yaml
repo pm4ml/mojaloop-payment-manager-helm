@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: modusbox-mbx-docker.jfrog.io/modusintegration/finflux-pm4ml-core-connector
-  tag: 1.2.0
+  repository: pm4ml/finflux-pm4ml-core-connector
+  tag: 1.3.0
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -18,15 +18,16 @@ env:
   # this is the outbound api endpoint on the mojaloop-connector
   MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
   # these are for the DFSP core (CBS) connection details
-  CBS_HOST: ""
-  CBS_USERNAME: ""
-  CBS_PASSWORD: ""
-  CBS_AUTH_CLIENT_ID: ""
-  CBS_AUTH_CLIENT_SECRET: ""
-  CBS_AUTH_GRANT_TYPE: ""
-  CBS_AUTH_SCOPE: ""
-  CBS_AUTH_ENCRYPTED_PASS: ""
-  CBS_AUTH_TENANT_ID: ""
+  DFSP_HOST: ""
+  DFSP_USERNAME: ""
+  DFSP_PASSWORD: ""
+  DFSP_NAME: ""
+  DFSP_AUTH_CLIENT_ID: ""
+  DFSP_AUTH_CLIENT_SECRET: ""
+  DFSP_AUTH_GRANT_TYPE: ""
+  DFSP_AUTH_SCOPE: ""
+  DFSP_AUTH_ENCRYPTED_PASS: ""
+  DFSP_AUTH_TENANT_ID: ""
 
 service:
   type: ClusterIP
