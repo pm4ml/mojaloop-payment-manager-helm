@@ -1,8 +1,10 @@
 apiVersion: v2
-version: 3.1.6
-appVersion: "v3.1.6"
+version: 3.1.7
+appVersion: "v3.1.7"
 description: Helm chart for Mojaloop Payment Manager
 name: mojaloop-payment-manager
 maintainers:
   - name: James Bush
     email: james.bush@modusbox.com
+  - name: David Fry
+    email: david.fry@modusbox.com
