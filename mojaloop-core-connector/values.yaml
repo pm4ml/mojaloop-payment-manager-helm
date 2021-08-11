@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-simulator-core-connector
-  tag: 1.4.3
+  tag: 1.4.4
   pullPolicy: Always
 
 nameOverride: ""
