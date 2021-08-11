@@ -187,7 +187,7 @@ mojaloop-core-connector:
 
   image:
     repository: pm4ml/mojaloop-payment-manager-simulator-core-connector
-    tag: 1.4.2
+    tag: 1.4.3
   
   livenessProbe:
     enabled: true
