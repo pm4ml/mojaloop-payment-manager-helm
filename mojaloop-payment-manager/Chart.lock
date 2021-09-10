@@ -1,52 +1,36 @@
-# requirements.yaml
 dependencies:
 - name: pm4ml-ui
-  version: 1.8.9
   repository: file://../pm4ml-ui
-  alias: frontend
-  condition: frontend.enabled
+  version: 1.8.9
 - name: pm4ml-experience-api
-  version: 1.8.15
   repository: file://../pm4ml-experience-api
-  alias: experience-api
-  condition: experience-api.enabled
+  version: 1.8.15
 - name: pm4ml-management-api-service
-  version: 1.9.5
   repository: file://../pm4ml-management-api-service
-  alias: management-api
-  condition: management-api.enabled
+  version: 1.9.5
 - name: redis
-  version: 10.7.16
   repository: https://charts.bitnami.com/bitnami
-  condition: redis.enabled
+  version: 10.7.16
 - name: pm4ml-mojaloop-connector
-  version: 1.2.8
   repository: file://../pm4ml-mojaloop-connector
-  condition: pm4ml-mojaloop-connector.enabled
+  version: 1.2.8
 - name: mojaloop-core-connector
-  version: 1.1.0
   repository: file://../mojaloop-core-connector
-  condition: mojaloop-core-connector.enabled
+  version: 1.1.0
 - name: prometheus
-  version: 11.16.9
   repository: https://prometheus-community.github.io/helm-charts
-  alias: prometheus
+  version: 11.16.9
 - name: vault
-  version: 0.14.0
   repository: https://helm.releases.hashicorp.com
-  alias: vault
-  condition: vault.enabled
+  version: 0.14.0
 - name: ml-testing-toolkit
-  version: 12.2.0
   repository: http://mojaloop.io/helm/repo
-  alias: ttk
-  condition: ttk.enabled
+  version: 12.2.0
 - name: keycloak
-  version: 10.3.0
   repository: https://codecentric.github.io/helm-charts
-  alias: keycloak
-  condition: keycloak.enabled
+  version: 10.3.0
 - name: sim-backend
-  version: 1.0.0
   repository: file://../mojaloop-simulator-backend
-  condition: sim-backend.enabled
+  version: 1.0.1
+digest: sha256:4ae827397b5f96b9127d98aadbabce3af1c30ac72a47deca2af302e3fad31ab3
+generated: "2021-09-11T00:31:14.913227+05:30"
