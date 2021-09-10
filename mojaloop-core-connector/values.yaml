@@ -70,3 +70,11 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+secrets:
+  # secretName1:
+  #   key1: "value"
+  #   key2: "value"
+  # secretName2:
+  #   key1: "value"
+  #   key2: "value"
