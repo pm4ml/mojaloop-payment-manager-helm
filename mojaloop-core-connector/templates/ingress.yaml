@@ -27,10 +27,10 @@ spec:
       http:
         paths:
         {{- range .paths }}
-          - path: {{ . }}
+          - path: {{ .path | quote }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: http
+              servicePort: {{ .servicePort | quote }}
         {{- end }}
   {{- end }}
 {{- end }}
