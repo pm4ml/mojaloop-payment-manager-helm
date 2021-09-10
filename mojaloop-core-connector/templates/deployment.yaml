@@ -1,3 +1,4 @@
+{{- $fullName := include "self.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -52,6 +53,17 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          {{- range $secretName, $secretValue := .Values.secrets }}
+            - name: {{ $fullName }}-secret-{{ $secretName }}
+              mountPath: "/secrets/{{ $secretName }}/"
+          {{- end }}
+      volumes:
+      {{- range $secretName, $secretValue := .Values.secrets }}
+        - name: {{ $fullName }}-secret-{{ $secretName }}
+          secret:
+            secretName: {{ $fullName }}-{{ $secretName }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
