@@ -1,7 +1,7 @@
 # requirements.yaml
 dependencies:
 - name: pm4ml-ui
-  version: 1.8.10
+  version: 1.8.11
   repository: file://../pm4ml-ui
   alias: frontend
   condition: frontend.enabled
