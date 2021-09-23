@@ -47,6 +47,6 @@ dependencies:
   alias: keycloak
   condition: keycloak.enabled
 - name: sim-backend
-  version: 1.0.1
+  version: 1.0.3
   repository: file://../mojaloop-simulator-backend
   condition: sim-backend.enabled
