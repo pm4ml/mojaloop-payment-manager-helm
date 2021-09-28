@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 4.0.4
-appVersion: "v4.0.4"
+version: 4.1.0
+appVersion: "v4.1.0"
 description: Helm chart for Mojaloop Payment Manager
 name: mojaloop-payment-manager
 maintainers:
