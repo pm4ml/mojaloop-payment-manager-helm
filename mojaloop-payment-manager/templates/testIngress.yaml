@@ -27,7 +27,7 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-          {{- if .Values."sim-backend".enabled }}
+          {{- if index .Values "sim-backend" enabled }}
           - path: /sim-backend-test(/|$)(.*)
             backend:
               serviceName: {{ $.Values.testIngress.simBackendServiceName }}
