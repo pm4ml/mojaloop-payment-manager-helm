@@ -6,7 +6,9 @@ metadata:
     {{- include "sim-backend.common-labels" $ | nindent 4 }}
 spec:
   selector:
-    matchLabels: *labels
+    matchLabels:
+      app.kubernetes.io/name: sim-backend
+      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels: *labels
