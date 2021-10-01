@@ -54,7 +54,7 @@ secrets:
 
 image:
   repository: pm4ml/mojaloop-connector
-  tag: 14.1.0
+  tag: 14.1.1
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
