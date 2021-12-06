@@ -14,8 +14,18 @@ fullnameOverride: ""
 
 #### ENV values
 env:
+  # FSP Backend endpoint
   BACKEND_ENDPOINT: http://localhost:3002
-  MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
+  # ML-Connector endpoint
+  OUTBOUND_ENDPOINT: http://localhost:4001
+  # Request Timeout (ms)
+  REQUEST_TIMEOUT: 500
+  # Callback Handler timeout (s) to correlate the inbound PostTransfer and async ISO-2022 PACS.02 Callback from the Receiver
+  CALLBACK_TIMEOUT: 30
+  # Redis host
+  CACHE_HOST: localhost
+  # Redis Port
+  CACHE_PORT: 637
 
 ports:
   - port: http
