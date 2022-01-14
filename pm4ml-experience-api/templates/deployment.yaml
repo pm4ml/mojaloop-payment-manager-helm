@@ -31,8 +31,6 @@ spec:
               value: "{{ .Values.env.managementEndPoint }}"
             - name: "METRICS_ENDPOINT"
               value: "{{ .Values.env.metricsEndPoint }}"
-            - name: "ENV_ID"
-              value: "{{ .Values.env.envId }}"
             - name: "DFSP_ID"
               value: "{{ .Values.env.dfspId }}"
             - name: "APP_KEYS"
