@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-experience-api
-  tag: 1.9.1
+  tag: 2.0.0
   pullPolicy: Always
 
 nameOverride: ""
@@ -16,7 +16,6 @@ fullnameOverride: ""
 env:
   enableMockData: false
   managementEndPoint: management-api
-  envId: 1
   dfspId: test
   metricsEndPoint: prometheus-server
 

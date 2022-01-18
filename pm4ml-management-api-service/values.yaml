@@ -6,14 +6,13 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 2.0.4
+  tag: 3.0.0
   pullPolicy: IfNotPresent
 
 env:
   PEER_ENDPOINT: mojaloop.io
   CACHE_HOST: redis-master
   DFSP_ID: test
-  ENV_ID: 1
   MCM_SERVER_ENDPOINT: mcm-server
   MCM_CLIENT_REFRESH_INTERVAL: 300
   MCM_CLIENT_SECRETS_LOCATION: /tmp

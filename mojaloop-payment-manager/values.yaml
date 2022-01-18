@@ -96,7 +96,6 @@ management-api:
   env:
     CACHE_HOST: redis-master
     DFSP_ID: *dfspId
-    ENV_ID: *mcmEnvironmentId
     MCM_SERVER_ENDPOINT: mcm-server
     MCM_CLIENT_REFRESH_INTERVAL: 300
     AUTH_ENABLED: true
