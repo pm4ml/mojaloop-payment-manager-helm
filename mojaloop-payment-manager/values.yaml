@@ -27,8 +27,6 @@ frontendWebOrigins: &frontendWebOrigins
 
 # this should be set to the FSPID assigned by the mojaloop hub to this DFSP
 dfspId: &dfspId "pm4mldfsp"
-# this should be set to the ID of the default MCM environment for this DFSP
-mcmEnvironmentId: &mcmEnvironmentId 1
 
 
 # the test ingress exposes four internal endpoints used for test automation
@@ -63,7 +61,6 @@ frontend:
 experience-api:
   imagePullCredentials: *imagePullCredentials
   env:
-    envId: *mcmEnvironmentId
     dfspId: *dfspId
     appKeys: some-secret-please-change
     managementEndPoint: pm4ml-management-api
@@ -187,7 +184,7 @@ mojaloop-core-connector:
   image:
     repository: pm4ml/mojaloop-payment-manager-simulator-core-connector
     tag: 1.4.5
-  
+
   livenessProbe:
     enabled: true
     path: /health
@@ -235,7 +232,7 @@ mojaloop-core-connector:
   # visa
   # image:
   #   repository: pm4ml/pm4ml-core-connector-visa-direct
-  #   tag: 1.0.0 
+  #   tag: 1.0.0
   # env:
   #   MOJA_PORT: 4001
   #   MOJA_HOSTNAME: pm4ml-mojaloop-connector

@@ -1,6 +1,6 @@
 frontend:
   ingress:
-    hosts: 
+    hosts:
       - host: pm4ml.dev.uncdf.uncdfmfi.org
         paths: ['/']
 
@@ -8,7 +8,6 @@ experience-api:
   env:
     enableMockData: true
     managementEndPoint: pm4ml-management-api
-    envId: 1
     dfspId: pm4mltest
     metricsEndPoint: pm4ml-prometheus-server
   ingress:
@@ -16,16 +15,15 @@ experience-api:
       - host: pm4ml.dev.uncdf.uncdfmfi.org
         paths: ['/experience-api(/|$)(.*)']
 
-management-api: 
+management-api:
   env:
     peer_endpoint: https://extgw.dev.uncdf.uncdfmfi.org:8243/fsp/1.0
     cache_host: pm4ml-sim-easydfsp-cache
     dfspId: pm4mltest
-    envId: 1
     mcmServerEndpoint: mcmweb.dev.uncdf.uncdfmfi.org:30000/api
     mcmClientRefreshInterval: 300
     mcmClientsSecretsLocation: /secrets
-    AUTH_ENABLED: true    
+    AUTH_ENABLED: true
     AUTH_USER: pm4mltest
     AUTH_PASS: pm4mltest123
   ingress:
@@ -40,7 +38,7 @@ mojaloop-simulator:
         - "pm4ml.dev.uncdf.uncdfmfi.org"
   simulators:
     easydfsp:
-      config:      
+      config:
         schemeAdapter:
           env:
             JWS_SIGN: true

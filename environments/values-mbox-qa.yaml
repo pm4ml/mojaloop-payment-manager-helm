@@ -8,7 +8,6 @@ experience-api:
   env:
     enableMockData: true
     managementEndPoint: pm4ml-management-api
-    envId: 1
     dfspId: pm4mltest
     metricsEndPoint: pm4ml-prometheus-server
   ingress:
@@ -21,7 +20,6 @@ management-api:
     peer_endpoint: https://extgw.qa.prod-dev.mbox-dev.io:8243/fsp/1.0
     cache_host: redis-master
     dfspId: pm4mltest
-    envId: 1
     mcmServerEndpoint: mcmweb.qa.prod-dev.mbox-dev.io:30000/api
     mcmClientRefreshInterval: 300
     p12PassPhrase: SOME_S3C4R3_P@SS

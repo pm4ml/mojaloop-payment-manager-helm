@@ -22,7 +22,6 @@ The following table lists the configurable parameters of the Mojaloop-payment-ma
 | `experience-api.imagePullCredentials.pass` |  | `"KWtgDzg4Z@7i/h,x8jgy"` |
 | `experience-api.imagePullCredentials.registry` |  | `"modusbox-mbx-docker.jfrog.io"` |
 | `experience-api.env.managementEndPoint` |  | `"management-api"` |
-| `experience-api.env.envId` |  | `1` |
 | `experience-api.env.dfspId` |  | `"test"` |
 | `experience-api.ingress.enabled` |  | `true` |
 | `experience-api.ingress.annotations.nginx.ingress.kubernetes.io/rewrite-target` |  | `"/$2"` |
@@ -33,7 +32,6 @@ The following table lists the configurable parameters of the Mojaloop-payment-ma
 | `management-api.env.cache_host` |  | `"pm4ml-sim-easydfsp-cache"` |
 | `management-api.env.peer_endpoint` |  | `"mojaloop.io"` |
 | `management-api.env.dfspId` |  | `"test"` |
-| `management-api.env.envId` |  | `1` |
 | `management-api.env.mcmServerEndpoint` |  | `"mcm-server"` |
 | `management-api.env.mcmClientRefreshInterval` |  | `300` |
 | `management-api.env.mcmClientsSecretsLocation` |  | `"/secrets"` |

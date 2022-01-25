@@ -37,8 +37,6 @@ frontendWebOrigins: &frontendWebOrigins
 
 # this should be set to the FSPID assigned by the mojaloop hub to this DFSP
 dfspId: &dfspId "pm4mldfsp"
-# this should be set to the ID of the default MCM environment for this DFSP
-mcmEnvironmentId: &mcmEnvironmentId 1
 
 ingress:
   enabled: false
@@ -55,7 +53,6 @@ experience-api:
   imagePullCredentials: *imagePullCredentials
   env:
     enableMockData: false
-    envId: *mcmEnvironmentId
     dfspId: *dfspId
     appKeys: ootu1yoo5geeS7izai4ox1Yae1Eey6ai
     authClientSecret: *experienceApiClientSecret
@@ -73,7 +70,6 @@ management-api:
   imagePullCredentials: *imagePullCredentials
   env:
     dfspId: *dfspId
-    envId: *mcmEnvironmentId
     mcmServerEndpoint: mcmweb.qa.prod-dev.mbox-dev.io:30000/api
     AUTH_USER: pm4mltest
     AUTH_PASS: pm4mltest123
