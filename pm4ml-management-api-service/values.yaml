@@ -23,6 +23,7 @@ env:
   PRIVATE_KEY_ALGORITHM: rsa
   WS_URL: scheme-adapter
   WS_PORT: 4003
+  CONTROL_LISTEN_PORT: 4005
   VAULT_ENDPOINT: http://vault:8200
   VAULT_AUTH_METHOD: K8S
   VAULT_K8S_ROLE: vault-pm4ml-auth

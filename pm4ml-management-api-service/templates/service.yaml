@@ -11,6 +11,9 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: {{ .Values.env.CONTROL_LISTEN_PORT }}
+      protocol: TCP
+      name: control
   selector:
     app.kubernetes.io/name: {{ include "pm4ml-management-api-service.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
