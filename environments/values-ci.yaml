@@ -17,8 +17,9 @@
 
 imagePullCredentials: &imagePullCredentials
   registry: "modusbox-mbx-docker.jfrog.io/modusintegration/"
-  user: "mbx-cicd-deployer"
-  pass: "KWtgDzg4Z@7i/h,x8jgy"
+  # NOTE: Update these values
+  user: "username"
+  pass: "password"
 
 experienceApiClientSecret: &experienceApiClientSecret "38f84299-d9b4-4d4e-a195-c1996d028406"
 
