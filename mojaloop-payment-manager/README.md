@@ -27,7 +27,7 @@ The following table lists the configurable parameters of the Mojaloop-payment-ma
 | `experience-api.ingress.annotations.nginx.ingress.kubernetes.io/rewrite-target` |  | `"/$2"` |
 | `experience-api.ingress.hosts` |  | `[{"host": "localhost", "paths": ["/experience-api(/|$)(.*)"]}]` |
 | `management-api.imagePullCredentials.user` |  | `"username"` |
-| `management-api.imagePullCredentials.pass` |  | `"oassword"` |
+| `management-api.imagePullCredentials.pass` |  | `"password"` |
 | `management-api.imagePullCredentials.registry` |  | `"modusbox-mbx-docker.jfrog.io"` |
 | `management-api.env.cache_host` |  | `"pm4ml-sim-easydfsp-cache"` |
 | `management-api.env.peer_endpoint` |  | `"mojaloop.io"` |
