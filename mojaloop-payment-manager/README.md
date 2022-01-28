@@ -12,8 +12,8 @@ The following table lists the configurable parameters of the Mojaloop-payment-ma
 | Parameter                | Description             | Default        |
 | ------------------------ | ----------------------- | -------------- |
 | `ingress.enabled` |  | `false` |
-| `frontend.imagePullCredentials.user` |  | `"mbx-cicd-deployer"` |
-| `frontend.imagePullCredentials.pass` |  | `"KWtgDzg4Z@7i/h,x8jgy"` |
+| `frontend.imagePullCredentials.user` |  | `"username"` |
+| `frontend.imagePullCredentials.pass` |  | `"password"` |
 | `frontend.imagePullCredentials.registry` |  | `"modusbox-mbx-docker.jfrog.io"` |
 | `frontend.ingress.enabled` |  | `true` |
 | `frontend.ingress.annotations.nginx.ingress.kubernetes.io/rewrite-target` |  | `"/"` |
