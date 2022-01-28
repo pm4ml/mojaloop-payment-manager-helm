@@ -35,9 +35,10 @@ env:
   JWS_SIGNING_KEY_PATH: /jwsSigningKey/private.key
   MGMT_API_WS_URL: 127.0.0.1
   LOG_INDENT: 0
+  PM4ML_ENABLED: true
 
 secrets:
-  tls: 
+  tls:
     inbound:
       cacert: test
       cert: test
@@ -54,7 +55,7 @@ secrets:
 
 image:
   repository: pm4ml/mojaloop-connector
-  tag: 14.1.1
+  tag: 14.1.2
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -75,7 +76,7 @@ readinessProbe:
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 3
-  
+
 service:
   type: ClusterIP
   port: 80
