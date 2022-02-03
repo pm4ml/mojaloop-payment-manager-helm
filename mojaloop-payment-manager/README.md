@@ -12,22 +12,22 @@ The following table lists the configurable parameters of the Mojaloop-payment-ma
 | Parameter                | Description             | Default        |
 | ------------------------ | ----------------------- | -------------- |
 | `ingress.enabled` |  | `false` |
-| `frontend.imagePullCredentials.user` |  | `"mbx-cicd-deployer"` |
-| `frontend.imagePullCredentials.pass` |  | `"KWtgDzg4Z@7i/h,x8jgy"` |
+| `frontend.imagePullCredentials.user` |  | `"username"` |
+| `frontend.imagePullCredentials.pass` |  | `"password"` |
 | `frontend.imagePullCredentials.registry` |  | `"modusbox-mbx-docker.jfrog.io"` |
 | `frontend.ingress.enabled` |  | `true` |
 | `frontend.ingress.annotations.nginx.ingress.kubernetes.io/rewrite-target` |  | `"/"` |
 | `frontend.ingress.hosts` |  | `[{"host": "localhost", "paths": ["/"]}]` |
-| `experience-api.imagePullCredentials.user` |  | `"mbx-cicd-deployer"` |
-| `experience-api.imagePullCredentials.pass` |  | `"KWtgDzg4Z@7i/h,x8jgy"` |
+| `experience-api.imagePullCredentials.user` |  | `"username"` |
+| `experience-api.imagePullCredentials.pass` |  | `"password"` |
 | `experience-api.imagePullCredentials.registry` |  | `"modusbox-mbx-docker.jfrog.io"` |
 | `experience-api.env.managementEndPoint` |  | `"management-api"` |
 | `experience-api.env.dfspId` |  | `"test"` |
 | `experience-api.ingress.enabled` |  | `true` |
 | `experience-api.ingress.annotations.nginx.ingress.kubernetes.io/rewrite-target` |  | `"/$2"` |
 | `experience-api.ingress.hosts` |  | `[{"host": "localhost", "paths": ["/experience-api(/|$)(.*)"]}]` |
-| `management-api.imagePullCredentials.user` |  | `"mbx-cicd-deployer"` |
-| `management-api.imagePullCredentials.pass` |  | `"KWtgDzg4Z@7i/h,x8jgy"` |
+| `management-api.imagePullCredentials.user` |  | `"username"` |
+| `management-api.imagePullCredentials.pass` |  | `"password"` |
 | `management-api.imagePullCredentials.registry` |  | `"modusbox-mbx-docker.jfrog.io"` |
 | `management-api.env.cache_host` |  | `"pm4ml-sim-easydfsp-cache"` |
 | `management-api.env.peer_endpoint` |  | `"mojaloop.io"` |
