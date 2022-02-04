@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 3.0.17
+  tag: 3.0.19
   pullPolicy: IfNotPresent
 
 config:
@@ -72,7 +72,8 @@ env:
   VAULT_K8S_TOKEN_FILE: /var/run/secrets/kubernetes.io/serviceaccount/token
   VAULT_ROLE_ID_FILE: /vault/role-id
   VAULT_ROLE_SECRET_ID_FILE: /vault/secret-id
-  VAULT_PKI_BASE_DOMAIN: example.com
+  VAULT_PKI_SERVER_ROLE: server-role
+  VAULT_PKI_CLIENT_ROLE: client-role
   VAULT_MOUNT_PKI: pki
   VAULT_MOUNT_KV: secrets
   MOJALOOP_CONNECTOR_FQDN: connector.fsp.example.com
