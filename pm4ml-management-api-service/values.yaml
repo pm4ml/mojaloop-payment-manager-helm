@@ -6,8 +6,50 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 3.0.12
+  tag: 3.0.14
   pullPolicy: IfNotPresent
+
+config:
+  tlsClientCSRParametersData: |-
+    {
+      "subject": {
+        "E": "test@test.com",
+        "ST": "test_client",
+        "C": "US",
+        "L": "test",
+        "O": "test",
+        "CN": "test_client",
+        "OU": "test"
+      },
+      "extensions": {
+        "subjectAltName": {
+          "dns": [
+          ],
+          "ips": [
+          ]
+        }
+      }
+    }
+  tlsServerCSRParametersData: |-
+    {
+      "subject": {
+        "E": "test@test.com",
+        "ST": "test_server",
+        "C": "US",
+        "L": "test",
+        "O": "test",
+        "CN": "test_server",
+        "OU": "test"
+      },
+      "extensions": {
+        "subjectAltName": {
+          "dns": [
+          ],
+          "ips": [
+          ]
+        }
+      }
+    }
 
 env:
   PEER_ENDPOINT: mojaloop.io
@@ -33,6 +75,7 @@ env:
   VAULT_PKI_BASE_DOMAIN: example.com
   VAULT_MOUNT_PKI: pki
   VAULT_MOUNT_KV: secrets
+  MOJALOOP_CONNECTOR_FQDN: connector.fsp.example.com
 
 imagePullSecrets: []
 nameOverride: ""
