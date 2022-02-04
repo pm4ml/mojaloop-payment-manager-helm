@@ -2,4 +2,4 @@ apiVersion: v2
 appVersion: "1.9.7"
 description: A Helm chart for Kubernetes
 name: pm4ml-management-api-service
-version: 1.9.17
+version: 1.9.18
