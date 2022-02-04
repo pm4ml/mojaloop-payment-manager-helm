@@ -16,10 +16,6 @@ spec:
         app.kubernetes.io/name: {{ include "pm4ml-mojaloop-connector.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
-      {{- if .Values.imagePullCredentials }}
-      imagePullSecrets:
-        - name: {{ include "pm4ml-mojaloop-connector.fullname" . }}-cred
-      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -32,7 +28,7 @@ spec:
             {{if not (hasKey .Values.env "BACKEND_ENDPOINT") }}
             - name: BACKEND_ENDPOINT
               value: {{ printf "%s-backend:3000" ( include "pm4ml-mojaloop-connector.fullname" . ) }}
-            {{ end }}              
+            {{ end }}
             {{- range $k, $v := .Values.env }}
             - name: {{ $k }}
               value: {{ $v | quote }}
@@ -53,15 +49,6 @@ spec:
             - name: metrics
               containerPort: {{ .Values.env.METRICS_SERVER_LISTEN_PORT }}
               protocol: TCP
-          volumeMounts:
-          - name: jws-public-keys
-            mountPath: {{ .Values.env.JWS_VERIFICATION_KEYS_DIRECTORY }}
-          {{- if .Values.env.JWS_SIGN }}
-          - name: jws-private-key
-            mountPath: "/jwsSigningKey/"
-          {{- end }}
-          - name: tls-secrets
-            mountPath: "/secrets/"  
           {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
@@ -88,30 +75,6 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      volumes:
-      {{- if .Values.env.JWS_SIGN }}
-      - name: jws-private-key
-        secret:
-          {{- if .Values.secrets.jws.privKeySecretName }}
-          secretName: {{ .Values.secrets.jws.privKeySecretName }}
-          {{- else }}
-          secretName: {{ include "pm4ml-mojaloop-connector.fullname" . }}-jws-priv-key
-          {{- end }}
-      {{- end }}
-      - name: jws-public-keys
-        configMap:
-          {{- if .Values.secrets.jws.publicKeyConfigMapName }}
-          name: {{ .Values.secrets.jws.publicKeyConfigMapName }}
-          {{- else }}
-          name: {{ include "pm4ml-mojaloop-connector.fullname" . }}-jws-public-keys
-          {{- end }}
-      - name: tls-secrets
-        secret:
-          {{- if .Values.secrets.tlsSecretName }}
-          secretName: {{ .Values.secrets.tlsSecretName }}
-          {{- else }}
-          secretName: {{ include "pm4ml-mojaloop-connector.fullname" . }}-tls-creds
-          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
