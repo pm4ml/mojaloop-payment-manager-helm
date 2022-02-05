@@ -25,22 +25,6 @@ env:
   LOG_INDENT: 0
   PM4ML_ENABLED: true
 
-secrets:
-  tls:
-    inbound:
-      cacert: test
-      cert: test
-      key: test
-    outbound:
-      cacert: test
-      cert: test
-      key: test
-  tlsSecretName: {}
-
-  jws:
-    privKeySecretName: {}
-    publicKeyConfigMapName: {}
-
 image:
   repository: pm4ml/mojaloop-connector
   tag: 14.1.2
