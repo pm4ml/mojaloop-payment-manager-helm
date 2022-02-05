@@ -6,19 +6,16 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 3.0.19
+  tag: 3.0.20
   pullPolicy: IfNotPresent
 
 config:
   tlsClientCSRParametersData: |-
     {
       "subject": {
-        "E": "test@test.com",
-        "ST": "test_client",
         "C": "US",
         "L": "test",
         "O": "test",
-        "CN": "test_client",
         "OU": "test"
       },
       "extensions": {
@@ -33,12 +30,9 @@ config:
   tlsServerCSRParametersData: |-
     {
       "subject": {
-        "E": "test@test.com",
-        "ST": "test_server",
         "C": "US",
         "L": "test",
         "O": "test",
-        "CN": "test_server",
         "OU": "test"
       },
       "extensions": {
@@ -63,8 +57,6 @@ env:
   DFSP_SERVER_CSR_PARAMETERS: /resources/tlsServerCSRParameters.json
   PRIVATE_KEY_LENGTH: 4096
   PRIVATE_KEY_ALGORITHM: rsa
-  WS_URL: scheme-adapter
-  WS_PORT: 4003
   CONTROL_LISTEN_PORT: 4005
   VAULT_ENDPOINT: http://vault:8200
   VAULT_AUTH_METHOD: K8S
