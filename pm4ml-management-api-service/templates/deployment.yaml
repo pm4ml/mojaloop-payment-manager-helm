@@ -62,6 +62,8 @@ spec:
               path: tlsClientCSRParameters.json
             - key: tlsServerCSRParameters.json
               path: tlsServerCSRParameters.json
+            - key: caCSRParameters.json
+              path: caCSRParameters.json
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

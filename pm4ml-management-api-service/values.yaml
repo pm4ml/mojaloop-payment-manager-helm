@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 3.0.22
+  tag: 3.0.23
   pullPolicy: IfNotPresent
 
 config:
@@ -44,6 +44,16 @@ config:
         }
       }
     }
+  caCSRParametersData: |-
+    {
+      "CN": "DFSPCA",
+      "E": "ca@test.com",
+      "O": "test",
+      "OU": "test",
+      "C": "US",
+      "ST": "test",
+      "L": "test"
+    }
 
 env:
   PEER_ENDPOINT: mojaloop.io
@@ -55,6 +65,7 @@ env:
   MCM_API_TOKEN: test
   DFSP_CLIENT_CSR_PARAMETERS: /resources/tlsClientCSRParameters.json
   DFSP_SERVER_CSR_PARAMETERS: /resources/tlsServerCSRParameters.json
+  CA_CSR_PARAMETERS: /resources/caCSRParameters.json
   PRIVATE_KEY_LENGTH: 4096
   PRIVATE_KEY_ALGORITHM: rsa
   CONTROL_LISTEN_PORT: 4005
