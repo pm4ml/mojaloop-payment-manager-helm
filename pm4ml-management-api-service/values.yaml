@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 3.0.21
+  tag: 3.0.22
   pullPolicy: IfNotPresent
 
 config:
@@ -69,6 +69,9 @@ env:
   VAULT_MOUNT_PKI: pki
   VAULT_MOUNT_KV: secrets
   MOJALOOP_CONNECTOR_FQDN: connector.fsp.example.com
+  CERT_MANAGER_ENABLED: false
+  CERT_MANAGER_SERVER_CERT_SECRET_NAME: dummy
+  CERT_MANAGER_SERVER_CERT_SECRET_NAMESPACE: dummy
 
 imagePullSecrets: []
 nameOverride: ""
