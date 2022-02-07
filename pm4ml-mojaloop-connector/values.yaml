@@ -23,11 +23,12 @@ env:
   AUTO_ACCEPT_QUOTES: true
   MGMT_API_WS_URL: 127.0.0.1
   LOG_INDENT: 0
+  OAUTH_REFRESH_SECONDS: 3600
   PM4ML_ENABLED: true
 
 image:
   repository: pm4ml/mojaloop-connector
-  tag: 14.1.4
+  tag: 14.1.5
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
