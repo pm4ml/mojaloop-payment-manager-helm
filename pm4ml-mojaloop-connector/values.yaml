@@ -28,7 +28,7 @@ env:
 
 image:
   repository: pm4ml/mojaloop-connector
-  tag: 14.1.5
+  tag: 14.1.7
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
