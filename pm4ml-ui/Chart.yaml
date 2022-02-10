@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 1.8.11
-appVersion: "1.8.11"
+version: 1.8.11-fix.1
+appVersion: "1.11.0"
 description: A Helm chart for Kubernetes
 name: pm4ml-ui
 maintainers:
