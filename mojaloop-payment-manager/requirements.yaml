@@ -11,7 +11,7 @@ dependencies:
   alias: experience-api
   condition: experience-api.enabled
 - name: pm4ml-management-api-service
-  version: 1.9.6-fix.2
+  version: 1.9.6-fix.3
   repository: file://../pm4ml-management-api-service
   alias: management-api
   condition: management-api.enabled
