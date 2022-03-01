@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 3.0.25
+  tag: 3.0.27
   pullPolicy: IfNotPresent
 
 config:
