@@ -1,5 +1,5 @@
 apiVersion: v2
-version: 4.2.1
+version: 4.2.2
 appVersion: "v4.2.0"
 description: Helm chart for Mojaloop Payment Manager
 name: mojaloop-payment-manager
@@ -21,7 +21,7 @@ dependencies:
   alias: experience-api
   condition: experience-api.enabled
 - name: pm4ml-management-api-service
-  version: 1.9.29
+  version: 1.9.30
   repository: file://../pm4ml-management-api-service
   alias: management-api
   condition: management-api.enabled
