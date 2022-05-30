@@ -58,6 +58,7 @@ frontend:
     annotations:
       #kubernetes.io/ingress.class: "nginx"
       nginx.ingress.kubernetes.io/rewrite-target: /
+      kubernetes.io/ingress.class: nginxinternal
     hosts:
       - host: pm4ml.frontend.local
         paths: ['/']
@@ -88,6 +89,7 @@ experience-api:
     enabled: true
     annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /$2
+      kubernetes.io/ingress.class: nginxinternal
     hosts:
       - host: pm4ml.api.local
         paths: ['/experience-api(/|$)(.*)']
