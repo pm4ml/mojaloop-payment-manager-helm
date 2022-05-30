@@ -13,7 +13,6 @@ jobs:
       - run:
           name: Update the dependencies
           command: |
-            cd mojaloop-payment-manager
             helm dep update ./mojaloop-payment-manager
       - run:
           name: Lint Chart
