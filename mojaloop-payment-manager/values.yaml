@@ -422,7 +422,9 @@ keycloak:
             "realmRoles": ["offline_access", "uma_auhtorization"],
             "clientRoles": {
               "realm-management": [ "view-users" ]
-            }
+            },
+            "requiredActions": [
+            ]
           },
           {
             "username" : "nofirstlastname",
@@ -435,7 +437,9 @@ keycloak:
             "realmRoles": ["offline_access", "uma_auhtorization"],
             "clientRoles": {
               "realm-management": [ "view-users" ]
-            }
+            },
+            "requiredActions": [
+            ]
           },
           {
             "username" : "nofirstname",
@@ -448,7 +452,9 @@ keycloak:
             "realmRoles": ["offline_access", "uma_auhtorization"],
             "clientRoles": {
               "realm-management": [ "view-users" ]
-            }
+            },
+            "requiredActions": [
+            ]
           },
           {
             "username" : "nolastname",
@@ -461,7 +467,9 @@ keycloak:
             "realmRoles": ["offline_access", "uma_auhtorization"],
             "clientRoles": {
               "realm-management": [ "view-users" ]
-            }
+            },
+            "requiredActions": [
+            ]
           }
         ],
         "roles": {
