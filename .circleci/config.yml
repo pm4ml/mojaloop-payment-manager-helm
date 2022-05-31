@@ -11,6 +11,10 @@ jobs:
           command: apk --no-cache add git openssh-client
       - checkout
       - run:
+          name: Update the dependencies
+          command: |
+            helm dep update ./mojaloop-payment-manager
+      - run:
           name: Lint Chart
           command: helm lint mojaloop-payment-manager
 

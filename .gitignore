@@ -1,2 +1,9 @@
 .DS_Store
 mojaloop-payment-manager/charts
+
+# Add Geneneral Ignores
+*IGNORE*
+*ignore*
+
+# Helm
+Chart.lock
