@@ -14,6 +14,12 @@ spec:
     - port: {{ .Values.env.CONTROL_LISTEN_PORT }}
       protocol: TCP
       name: control
+    {{- if .Values.env.ENABLE_TEST_API }}
+    - port: {{ .Values.env.TEST_API_PORT }}
+      protocol: TCP
+      name: testapi
+      targetPort: testapi
+    {{- end }}
   selector:
     app.kubernetes.io/name: {{ include "pm4ml-management-api-service.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
