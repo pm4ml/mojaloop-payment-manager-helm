@@ -323,12 +323,12 @@ keycloak:
 
   ingress:
     # If `true`, an Ingress is created
-    enabled: false
+    enabled: true
     # The Service port targeted by the Ingress
     servicePort: http
     # Ingress annotations
     annotations:
-      # kubernetes.io/ingress.class: nginxinternal
+      kubernetes.io/ingress.class: nginxinternal
       ## Resolve HTTP 502 error using ingress-nginx:
       ## See https://www.ibm.com/support/pages/502-error-ingress-keycloak-response
       # nginx.ingress.kubernetes.io/proxy-buffer-size: 128k
@@ -2497,7 +2497,7 @@ keycloak:
             "name": "Update Password",
             "providerId": "UPDATE_PASSWORD",
             "enabled": true,
-            "defaultAction": false,
+            "defaultAction": true,
             "priority": 30,
             "config": {}
           },
