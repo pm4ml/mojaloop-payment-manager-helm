@@ -52,6 +52,12 @@ spec:
             httpGet:
               path: /health
               port: http
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            failureThreshold: 10
+            periodSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
