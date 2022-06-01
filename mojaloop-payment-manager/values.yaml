@@ -37,6 +37,8 @@ testIngress:
   simBackendServiceName: "deployment-simulator-backend-service"
   coreConnectorServiceName: "deployment-core-connector-service"
   mojaloopConnectorServiceName: "deployment-mojaloop-connector-service"
+  mgmtApiServiceName: "deployment-pm4ml-management-api-service"
+
   hosts:
     - host: pm4ml.test
 
@@ -44,7 +46,7 @@ ingress:
   enabled: true
   hosts:
     - host: pm4ml.local
-      paths: 
+      paths:
         - '/management-api(/|$)(.*)'
 # values for sub components
 

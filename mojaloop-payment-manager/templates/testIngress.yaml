@@ -36,14 +36,18 @@ spec:
           - path: /cc-send(/|$)(.*)
             backend:
               serviceName: {{ $.Values.testIngress.coreConnectorServiceName }}
-              servicePort: http 
+              servicePort: http
           - path: /mlcon-outbound(/|$)(.*)
             backend:
               serviceName: {{ $.Values.testIngress.mojaloopConnectorServiceName }}
-              servicePort: outboundapi 
+              servicePort: outboundapi
           - path: /mlcon-sdktest(/|$)(.*)
             backend:
               serviceName: {{ $.Values.testIngress.mojaloopConnectorServiceName }}
+              servicePort: testapi
+          - path: /mgmt-api(/|$)(.*)
+            backend:
+              serviceName: {{ $.Values.testIngress.mgmtApiServiceName }}
               servicePort: testapi
   {{- end }}
 {{- end }}
