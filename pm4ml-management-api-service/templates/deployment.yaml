@@ -36,6 +36,9 @@ spec:
             - name: http
               containerPort: 9000
               protocol: TCP
+            - name: testapi
+              containerPort: {{ .Values.env.TEST_API_PORT }}
+              protocol: TCP
           volumeMounts:
           - mountPath: /secrets
             name: secret-volume
