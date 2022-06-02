@@ -139,7 +139,9 @@ vault:
   enabled: false
 
 redis:
-  usePassword: false
+  auth:
+    enabled: false
+    sentinel: false
   nameOverride: redis
   fullnameOverride: redis
   cluster:
