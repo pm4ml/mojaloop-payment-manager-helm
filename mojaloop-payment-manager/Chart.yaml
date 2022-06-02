@@ -25,7 +25,7 @@ dependencies:
     alias: management-api
     condition: management-api.enabled
   - name: redis
-    version: 10.9.0
+    version: 16.10.1
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
   - name: pm4ml-mojaloop-connector
