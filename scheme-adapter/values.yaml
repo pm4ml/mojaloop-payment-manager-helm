@@ -1,11 +1,11 @@
-# Default values for pm4ml-mojaloop-connector.
+# Default values for scheme-adapter.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 env:
-  CACHE_PORT: 6379
+  CACHE_URL: redis://redis:6379
   INBOUND_LISTEN_PORT: 4000
   OUTBOUND_LISTEN_PORT: 4001
   ENABLE_TEST_FEATURES: true
@@ -27,8 +27,8 @@ env:
   PM4ML_ENABLED: true
 
 image:
-  repository: pm4ml/mojaloop-connector
-  tag: 14.1.16
+  repository: mojaloop/sdk-scheme-adapter
+  tag: 16.0.0
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

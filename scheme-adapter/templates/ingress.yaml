@@ -1,11 +1,11 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "pm4ml-mojaloop-connector.fullname" . -}}
+{{- $fullName := include "scheme-adapter.fullname" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-{{ include "pm4ml-mojaloop-connector.labels" . | indent 4 }}
+{{ include "scheme-adapter.labels" . | indent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

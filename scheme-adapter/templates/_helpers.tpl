@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "pm4ml-mojaloop-connector.name" -}}
+{{- define "scheme-adapter.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "pm4ml-mojaloop-connector.fullname" -}}
+{{- define "scheme-adapter.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "pm4ml-mojaloop-connector.chart" -}}
+{{- define "scheme-adapter.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Common labels
 */}}
-{{- define "pm4ml-mojaloop-connector.labels" -}}
-app.kubernetes.io/name: {{ include "pm4ml-mojaloop-connector.name" . }}
-helm.sh/chart: {{ include "pm4ml-mojaloop-connector.chart" . }}
+{{- define "scheme-adapter.labels" -}}
+app.kubernetes.io/name: {{ include "scheme-adapter.name" . }}
+helm.sh/chart: {{ include "scheme-adapter.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}

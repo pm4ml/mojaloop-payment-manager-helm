@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "pm4ml-mojaloop-connector.fullname" . }}
+  name: {{ include "scheme-adapter.fullname" . }}
   labels:
-{{ include "pm4ml-mojaloop-connector.labels" . | indent 4 }}
+{{ include "scheme-adapter.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "pm4ml-mojaloop-connector.name" . }}
+      app.kubernetes.io/name: {{ include "scheme-adapter.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "pm4ml-mojaloop-connector.name" . }}
+        app.kubernetes.io/name: {{ include "scheme-adapter.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       containers:
@@ -21,13 +21,9 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            {{if not (hasKey .Values.env "CACHE_HOST") }}
-            - name: CACHE_HOST
-              value: {{ printf "%s-cache" ( include "pm4ml-mojaloop-connector.fullname" . ) }}
-            {{ end }}
             {{if not (hasKey .Values.env "BACKEND_ENDPOINT") }}
             - name: BACKEND_ENDPOINT
-              value: {{ printf "%s-backend:3000" ( include "pm4ml-mojaloop-connector.fullname" . ) }}
+              value: {{ printf "%s-backend:3000" ( include "scheme-adapter.fullname" . ) }}
             {{ end }}
             {{- range $k, $v := .Values.env }}
             - name: {{ $k }}

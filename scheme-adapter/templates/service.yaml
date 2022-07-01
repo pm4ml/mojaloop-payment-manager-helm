@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "pm4ml-mojaloop-connector.fullname" . }}
+  name: {{ include "scheme-adapter.fullname" . }}
   labels:
-{{ include "pm4ml-mojaloop-connector.labels" . | indent 4 }}
+{{ include "scheme-adapter.labels" . | indent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -30,5 +30,5 @@ spec:
       name: metrics
       targetPort: metrics
   selector:
-    app.kubernetes.io/name: {{ include "pm4ml-mojaloop-connector.name" . }}
+    app.kubernetes.io/name: {{ include "scheme-adapter.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

@@ -150,7 +150,7 @@ redis:
     persistence:
       enabled: true
 
-pm4ml-mojaloop-connector:
+scheme-adapter:
   enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
@@ -172,7 +172,7 @@ prometheus:
       - job_name: 'mojaloop-connector'
         static_configs:
           - targets:
-            - "pm4ml-mojaloop-connector:4004"
+            - "scheme-adapter:4004"
       - job_name: 'sim-core-connector'
         static_configs:
           - targets:
@@ -189,7 +189,7 @@ mojaloop-core-connector:
   enabled: true
   env:
     BACKEND_ENDPOINT: http://pm4ml-mojaloop-simulator:3000
-    MLCONN_OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+    MLCONN_OUTBOUND_ENDPOINT: http://scheme-adapter:4001
 
   image:
     repository: pm4ml/mojaloop-payment-manager-simulator-core-connector
@@ -245,7 +245,7 @@ mojaloop-core-connector:
   #   tag: 1.0.0
   # env:
   #   MOJA_PORT: 4001
-  #   MOJA_HOSTNAME: pm4ml-mojaloop-connector
+  #   MOJA_HOSTNAME: scheme-adapter
 
   # wallet
   # image:
@@ -255,7 +255,7 @@ mojaloop-core-connector:
 sim-backend:
   enabled: true
   env:
-    OUTBOUND_ENDPOINT: http://pm4ml-mojaloop-connector:4001
+    OUTBOUND_ENDPOINT: http://scheme-adapter:4001
     DFSP_ID: *dfspId
 
 ttk:
