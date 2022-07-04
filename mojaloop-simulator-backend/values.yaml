@@ -52,8 +52,8 @@ env:
   REPORT_API_LISTEN_PORT: 3002
   TEST_API_LISTEN_PORT: 3003
 
-  # The path that the simulator will find mojaloop-connector on
-  OUTBOUND_ENDPOINT: http://mojaloop-connector:4001
+  # The path that the simulator will find scheme-adapter on
+  OUTBOUND_ENDPOINT: http://scheme-adapter:4001
 
 image:
   repository: mojaloop/mojaloop-simulator

@@ -38,14 +38,14 @@ spec:
             - name: {{ .port | quote }}
               containerPort: {{ .portNumber }}
               protocol: {{ .protocol }}
-          {{- end }}  
-          {{- if .Values.livenessProbe.enabled }}      
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
               path: {{ .Values.livenessProbe.path }}
               port: {{ .Values.livenessProbe.port }}
           {{- end }}
-          {{- if .Values.readinessProbe.enabled }}  
+          {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
               path: {{ .Values.readinessProbe.path }}

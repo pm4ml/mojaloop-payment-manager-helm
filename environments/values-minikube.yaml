@@ -269,7 +269,7 @@ management-api:
       - host: pm4ml.qa.prod-dev.mbox-dev.io
         paths: ['/management-api(/|$)(.*)']
 
-mojaloop-connector:
+scheme-adapter:
   imagePullCredentials: *imagePullCredentials
   env:
     PEER_ENDPOINT: https://extgw.qa.prod-dev.mbox-dev.io:8243/fsp/1.0

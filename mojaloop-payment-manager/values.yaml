@@ -36,7 +36,7 @@ testIngress:
   enabled: true
   simBackendServiceName: "deployment-simulator-backend-service"
   coreConnectorServiceName: "deployment-core-connector-service"
-  mojaloopConnectorServiceName: "deployment-mojaloop-connector-service"
+  schemeAdapterServiceName: "deployment-scheme-adapter-service"
   mgmtApiServiceName: "deployment-pm4ml-management-api-service"
 
   hosts:
@@ -169,7 +169,7 @@ prometheus:
     persistentVolume:
       enabled: true
     extraScrapeConfigs: |
-      - job_name: 'mojaloop-connector'
+      - job_name: 'scheme-adapter'
         static_configs:
           - targets:
             - "scheme-adapter:4004"

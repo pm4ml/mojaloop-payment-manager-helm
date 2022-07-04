@@ -39,11 +39,11 @@ spec:
               servicePort: http
           - path: /mlcon-outbound(/|$)(.*)
             backend:
-              serviceName: {{ $.Values.testIngress.mojaloopConnectorServiceName }}
+              serviceName: {{ $.Values.testIngress.schemeAdapterServiceName }}
               servicePort: outboundapi
           - path: /mlcon-sdktest(/|$)(.*)
             backend:
-              serviceName: {{ $.Values.testIngress.mojaloopConnectorServiceName }}
+              serviceName: {{ $.Values.testIngress.schemeAdapterServiceName }}
               servicePort: testapi
           - path: /mgmt-api(/|$)(.*)
             backend:
