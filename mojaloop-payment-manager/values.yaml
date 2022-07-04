@@ -155,7 +155,7 @@ scheme-adapter:
   imagePullCredentials: *imagePullCredentials
   env:
     DFSP_ID: *dfspId
-    CACHE_HOST: redis-master
+    CACHE_URL: redis://redis-master:6379
     # the below should be set to the external gateway endpoint for the mojaloop switch
     # the pm4ml instance is going to talk to
     PEER_ENDPOINT: "mojaloop.hub.external.fspiop.endpoint:1234"
