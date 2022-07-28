@@ -36,6 +36,9 @@ spec:
             - name: http
               containerPort: 9000
               protocol: TCP
+            - name: control
+              containerPort: {{ .Values.env.CONTROL_LISTEN_PORT }}
+              protocol: TCP
             - name: testapi
               containerPort: {{ .Values.env.TEST_API_PORT }}
               protocol: TCP
