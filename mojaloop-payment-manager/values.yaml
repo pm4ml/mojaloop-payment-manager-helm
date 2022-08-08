@@ -259,42 +259,63 @@ sim-backend:
     DFSP_ID: *dfspId
 
 ttk:
-  ml-testing-toolkit-frontend:
-  enabled: true
-  ingress:
-    enabled: false
-    hosts:
-      localhost:
-        port: 6060
-        paths: ['/']
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: '/$2'
-      #kubernetes.io/ingress.class: "nginx"
-  config:
-    API_BASE_URL: http://localhost
+  enabled: false
+  # payeeSimulationEnabled: false
+  ## The above option is not implemented. But this option is intended for automation of payee simulation using TTK.
+  ## For now, we can manually change the following to achieve this functionality
+  ## 1. Change scheme-adapter.env.BACKEND_ENDPOINT to {{ $.Release.Name }}-ml-testing-toolkit-backend:4040
+  ## 2. Disable sim-backend and mojaloop-core-connector (optional)
+  ## 3. Change SEND_CALLBACK_ENABLE to true in TTK user config (For bulk async callbacks)
+  ## 4. Change CALLBACK_ENDPOINT to {{ $.Release.Name }}-scheme-adapter:4001 (For bulk async callbacks)
 
   ml-testing-toolkit-backend:
     enabled: true
-    ingress:
-      enabled: false
-      hosts:
-        localhost:
-          port: 5050
-          paths: ['/api/', '/socket.io/']
-        ttk-specapi-backend.local:
-          port: 5000
-          paths: ['/']
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: '/$2'
-    ## Persist data to a persistent volume
-    persistence:
-      enabled: false
-    ## Default config
     config:
       user_config.json: {
-        "CALLBACK_ENDPOINT": "https://gateway.io",
-        "FSPID": "ttk"
+        "VERSION": 1,
+        "CALLBACK_ENDPOINT": "http://{{ $.Release.Name }}-scheme-adapter:4001",
+        "SEND_CALLBACK_ENABLE": true,
+        "DEFAULT_ENVIRONMENT_FILE_NAME": "pm4ml-default-environment.json",
+        "FSPID": *dfspId
       }
+      system_config.json: {
+        "API_DEFINITIONS": [
+          {
+            "type": "scheme_adapter_outbound",
+            "version": "1.0",
+            "folderPath": "mojaloop_sdk_outbound_scheme_adapter_1.0"
+          },
+          {
+            "type": "core_connector",
+            "version": "1.4",
+            "folderPath": "payment_manager_1.4"
+          }
+        ]
+      }
+    ingress:
+      enabled: true
+      hosts:
+        specApi:
+          host: pm4ml-testing-toolkit-specapi.local
+        adminApi:
+          host: pm4ml-testing-toolkit.local
+    extraEnvironments:
+      pm4ml-default-environment.json: {
+        "inputValues": {
+          "VAR1": "VALUE1"
+        }
+      }
+
+  ml-testing-toolkit-frontend:
+    enabled: true
+    ingress:
+      enabled: true
+      hosts:
+        ui:
+          host: pm4ml-testing-toolkit.local
+    config:
+      API_BASE_URL: http://pm4ml-testing-toolkit.local
+
 
 keycloak:
   enabled: true
