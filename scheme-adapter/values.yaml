@@ -28,7 +28,7 @@ env:
 
 image:
   repository: mojaloop/sdk-scheme-adapter
-  tag: v19.0.0
+  tag: v19.0.1
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
