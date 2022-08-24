@@ -271,7 +271,7 @@ ttk:
   ml-testing-toolkit-backend:
     ## Specifying the version here for update API definitions of mojaloop simulator
     image:
-      tag: v15.1.0-snapshot.1
+      tag: v15.1.0
     enabled: true
     config:
       user_config.json: {
