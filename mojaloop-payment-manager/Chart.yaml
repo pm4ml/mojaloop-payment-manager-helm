@@ -25,12 +25,13 @@ dependencies:
     alias: management-api
     condition: management-api.enabled
   - name: redis
-    version: 16.10.1
+    version: 17.6.0
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
-  - name: scheme-adapter
-    version: 1.0.5
-    repository: file://../scheme-adapter
+  - name: sdk-scheme-adapter
+    version: 1.0.0
+    repository: http://mojaloop.io/helm/repo
+    alias: scheme-adapter
     condition: scheme-adapter.enabled
   - name: mojaloop-core-connector
     version: 1.1.1
