@@ -403,7 +403,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v21.6.0
+      tag: v21.6.1
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -832,7 +832,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v21.6.0
+      tag: v21.6.1
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1248,7 +1248,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v21.6.0
+      tag: v21.6.1
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1676,9 +1676,6 @@ ttk:
   ## 4. Change CALLBACK_ENDPOINT to {{ $.Release.Name }}-scheme-adapter:4001 (For bulk async callbacks)
 
   ml-testing-toolkit-backend:
-    ## Specifying the version here for update API definitions of mojaloop simulator
-    image:
-      tag: v15.1.0
     enabled: true
     config:
       user_config.json: {
@@ -1696,9 +1693,16 @@ ttk:
             "folderPath": "mojaloop_sdk_outbound_scheme_adapter_1.0"
           },
           {
-            "type": "core_connector",
+            "type": "core_backend",
             "version": "1.4",
             "folderPath": "mojaloop_simulator_sim_1.4"
+          },
+          {
+            "type": "core_connector",
+            "version": "1.4",
+            "folderPath": "payment_manager_1.4",
+            "hostnames": [],
+            "prefix": "/cc-send"
           }
         ]
       }
