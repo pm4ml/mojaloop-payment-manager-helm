@@ -171,6 +171,8 @@ scheme-adapter:
 
     config:
       simName: *dfspId
+      ## SDKBULK: Enabled following param for bulk
+      bulkTransactionSupportEnabled: false
       ## JWS configuration
       jwsSigningKey: ""
       jwsVerificationKeys: {}
@@ -403,7 +405,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v21.6.1
+      tag: v22.0.0
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -478,65 +480,46 @@ scheme-adapter:
             value: {{ include "common.tplvalues.render" (dict "value" .Values.redis.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.redis.host "context" $)) | quote }}
           - name: REDIS_PORT
             value: {{ .Values.redis.port | default .Values.global.redis.port | quote }}
-    ## SDKBULK: enable following section instead of above for bulk
-    # initContainers: |
-    #   - name: wait-for-kafka
-    #     image: solsson/kafka:2.8.1
-    #     imagePullPolicy: IfNotPresent
-    #     command:
-    #       - sh
-    #       - -c
-    #       - until ./bin/kafka-broker-api-versions.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT};
-    #         do
-    #           echo --------------------;
-    #           echo Waiting for Kafka...;
-    #           sleep 2;
-    #         done;
-    #         echo ====================;
-    #         echo Kafka ok!;
-    #     env:
-    #       - name: KAFKA_HOST
-    #         value: {{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) | quote }}
-    #       - name: KAFKA_PORT
-    #         value: {{ .Values.kafka.port | default .Values.global.kafka.port | quote }}
-    #   - name: kafka-topics-create
-    #     image: docker.io/bitnami/kafka:3.2
-    #     imagePullPolicy: IfNotPresent
-    #     command:
-    #       - sh
-    #       - -c
-    #       - kafka-topics.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --list;
-    #         echo 'Creating kafka topics';
-    #         kafka-topics.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --create --if-not-exists --topic ${SIM_NAME}-topic-sdk-outbound-command-events --replication-factor 1 --partitions 1;
-    #         kafka-topics.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --create --if-not-exists --topic ${SIM_NAME}-topic-sdk-outbound-domain-events --replication-factor 1 --partitions 1;
-    #         echo -e 'Successfully created the following topics:';
-    #         kafka-topics.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --list;
-    #     env:
-    #       - name: KAFKA_HOST
-    #         value: {{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) | quote }}
-    #       - name: KAFKA_PORT
-    #         value: {{ .Values.kafka.port | default .Values.global.kafka.port | quote }}
-    #       - name: SIM_NAME
-    #         value: {{ .Values.config.simName }}
-    #   - name: wait-for-redis
-    #     image: redis:7.0.5
-    #     imagePullPolicy: IfNotPresent
-    #     command:
-    #       - sh
-    #       - -c
-    #       - until redis-cli -h ${REDIS_HOST} -p ${REDIS_PORT} ping;
-    #         do
-    #           echo --------------------;
-    #           echo Waiting for Redis...;
-    #           sleep 2;
-    #         done;
-    #         echo ====================;
-    #         echo Redis ok!;
-    #     env:
-    #       - name: REDIS_HOST
-    #         value: {{ include "common.tplvalues.render" (dict "value" .Values.redis.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.redis.host "context" $)) | quote }}
-    #       - name: REDIS_PORT
-    #         value: {{ .Values.redis.port | default .Values.global.redis.port | quote }}
+      {{- if .Values.config.bulkTransactionSupportEnabled }}
+      - name: wait-for-kafka
+        image: solsson/kafka:2.8.1
+        imagePullPolicy: IfNotPresent
+        command:
+          - sh
+          - -c
+          - until ./bin/kafka-broker-api-versions.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT};
+            do
+              echo --------------------;
+              echo Waiting for Kafka...;
+              sleep 2;
+            done;
+            echo ====================;
+            echo Kafka ok!;
+        env:
+          - name: KAFKA_HOST
+            value: {{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) | quote }}
+          - name: KAFKA_PORT
+            value: {{ .Values.kafka.port | default .Values.global.kafka.port | quote }}
+      - name: kafka-topics-create
+        image: docker.io/bitnami/kafka:3.2
+        imagePullPolicy: IfNotPresent
+        command:
+          - sh
+          - -c
+          - kafka-topics.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --list;
+            echo 'Creating kafka topics';
+            kafka-topics.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --create --if-not-exists --topic ${SIM_NAME}-topic-sdk-outbound-command-events --replication-factor 1 --partitions 1;
+            kafka-topics.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --create --if-not-exists --topic ${SIM_NAME}-topic-sdk-outbound-domain-events --replication-factor 1 --partitions 1;
+            echo -e 'Successfully created the following topics:';
+            kafka-topics.sh --bootstrap-server ${KAFKA_HOST}:${KAFKA_PORT} --list;
+        env:
+          - name: KAFKA_HOST
+            value: {{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) | quote }}
+          - name: KAFKA_PORT
+            value: {{ .Values.kafka.port | default .Values.global.kafka.port | quote }}
+          - name: SIM_NAME
+            value: {{ .Values.config.simName }}
+      {{- end }}
 
     readinessProbe: |
       httpGet:
@@ -832,7 +815,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v21.6.1
+      tag: v22.0.0
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1248,7 +1231,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v21.6.1
+      tag: v22.0.0
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
