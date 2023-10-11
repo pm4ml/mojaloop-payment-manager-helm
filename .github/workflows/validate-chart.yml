@@ -30,7 +30,6 @@ jobs:
 
         CAPABILITIES="-a apps/v1/Deployment"
         helm template $CAPABILITIES testname ./mojaloop-simulator-backend --output-dir manifests_1_17
-        ls -a manifests_1_17/sim-backend/templates
         
         kubeconform -strict -kubernetes-version 1.21.1 manifests_1_17
 
@@ -67,7 +66,7 @@ jobs:
         VALUES="--set management-api.config.tlsServerPvtKeyData=anything --set management-api.config.tlsServerCAData=test"
         CAPABILITIES="-a apps/v1/Deployment"
         helm template --dependency-update $VALUES $CAPABILITIES testname ./mojaloop-payment-manager --output-dir manifests
-        kubeconform -strict -kubernetes-version 1.17.9 manifests
+        kubeconform -strict -kubernetes-version 1.21.1 manifests
         # Note that we don't test against 1.21 here because the currently used version of the TTK
         # chart is not compatible with it.
 
