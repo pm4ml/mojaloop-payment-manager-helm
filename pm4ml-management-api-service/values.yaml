@@ -60,7 +60,7 @@ env:
   CACHE_URL: redis://redis-master:6379
   DFSP_ID: test
   HUB_IAM_PROVIDER_URL: https://change.me
-  MCM_SERVER_ENDPOINT: mcm-server
+  MCM_SERVER_ENDPOINT: http://mcm-server
   MCM_CLIENT_REFRESH_INTERVAL: 300
   MCM_CLIENT_SECRETS_LOCATION: /tmp
   MCM_API_TOKEN: test
