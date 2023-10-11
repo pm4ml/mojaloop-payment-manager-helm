@@ -30,10 +30,10 @@ jobs:
 
         CAPABILITIES="-a apps/v1/Deployment"
         helm template $CAPABILITIES testname ./mojaloop-simulator-backend --output-dir manifests_1_17
-        ls -a manifests_1_17
+        ls -a manifests_1_17/sim-backend
         ls -a ./manifests_1_17
         
-        kubeconform -strict -kubernetes-version 1.17.9 manifests_1_17
+        kubeconform -strict manifests_1_17
 
         CAPABILITIES="-a apps/v1/Deployment -a networking.k8s.io/v1/Ingress"
         helm template $CAPABILITIES testname ./mojaloop-simulator-backend --output-dir manifests_1_21
