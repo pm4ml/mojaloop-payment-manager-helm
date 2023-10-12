@@ -39,8 +39,16 @@ spec:
               value: "{{ .Values.env.authDiscoveryEndpoint }}"
             - name: "AUTH_CLIENT_ID"
               value: "{{ .Values.env.authClientId }}"
+            {{- if .Values.api.oauth.clientSecretSecret }}
+            - name: "AUTH_CLIENT_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Values.env.authClientSecretSecret }}"
+                  key: "{{ .Values.env.authClientSecretSecretKey }}"
+            {{- else }}
             - name: "AUTH_CLIENT_SECRET"
               value: "{{ .Values.env.authClientSecret }}"
+            {{- end }}
             - name: "AUTH_REDIRECT_URI"
               value: "{{ .Values.env.authRedirectUri }}"
             - name: "AUTH_SCOPES"
