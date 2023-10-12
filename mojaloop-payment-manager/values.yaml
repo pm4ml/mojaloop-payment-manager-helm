@@ -2,7 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-
 # common/shared values
 
 imagePullCredentials: &imagePullCredentials
@@ -28,7 +27,6 @@ frontendWebOrigins: &frontendWebOrigins
 # this should be set to the FSPID assigned by the mojaloop hub to this DFSP
 dfspId: &dfspId "pm4mldfsp"
 
-
 # the test ingress exposes four internal endpoints used for test automation
 # on a single ingress. if this is enabled you must provide real values for the
 # service names below.
@@ -47,7 +45,7 @@ ingress:
   hosts:
     - host: pm4ml.local
       paths:
-        - '/management-api(/|$)(.*)'
+        - "/management-api(/|$)(.*)"
 # values for sub components
 
 frontend:
@@ -63,7 +61,7 @@ frontend:
       # kubernetes.io/ingress.class: nginxinternal
     hosts:
       - host: pm4ml.frontend.local
-        paths: ['/']
+        paths: ["/"]
 
 experience-api:
   imagePullCredentials: *imagePullCredentials
@@ -79,6 +77,8 @@ experience-api:
     authDiscoveryEndpoint: "http://pm4ml-keycloak-http:80/auth/realms/pm4ml/.well-known/openid-configuration"
     authClientId: pm4ml-customer-ui
     authClientSecret: *experienceApiClientSecret
+    # authClientSecretSecretKey: key
+    # authClientSecretSecret: secretname
     # this should be set to the external URL of the auth endpoint on the experience API
     authRedirectUri: "http://experience-api.external.url:1234/auth"
     authScopes: roles
@@ -94,7 +94,7 @@ experience-api:
       # kubernetes.io/ingress.class: nginxinternal
     hosts:
       - host: pm4ml.api.local
-        paths: ['/experience-api(/|$)(.*)']
+        paths: ["/experience-api(/|$)(.*)"]
 
 management-api:
   imagePullCredentials: *imagePullCredentials
@@ -123,7 +123,7 @@ management-api:
       nginx.ingress.kubernetes.io/rewrite-target: /$2
     hosts:
       - host: localhost
-        paths: ['/management-api(/|$)(.*)']
+        paths: ["/management-api(/|$)(.*)"]
 
 mysql:
   replication:
@@ -255,7 +255,7 @@ scheme-adapter:
       BACKEND_ENDPOINT: mojaloop-simulator-core-connector:3003
 
       # FSPID of this DFSP
-      DFSP_ID: '{{ .Values.config.simName }}'
+      DFSP_ID: "{{ .Values.config.simName }}"
 
       # Secret used for generation and verification of secure ILP
       ILP_SECRET: Quaixohyaesahju3thivuiChai5cahng
@@ -335,12 +335,12 @@ scheme-adapter:
       BACKEND_EVENT_PRODUCER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
       FSPIOP_EVENT_CONSUMER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
       FSPIOP_EVENT_PRODUCER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
-      BACKEND_EVENT_CONSUMER_GROUP_ID: '{{ .Values.config.simName }}-sdk_api_backend_consumer_group'
-      FSPIOP_EVENT_CONSUMER_GROUP_ID: '{{ .Values.config.simName }}-sdk_api_fspiop_consumer_group'
-      BACKEND_EVENT_CONSUMER_TOPICS: '{{ .Values.config.simName }}-topic-sdk-outbound-domain-events'
-      BACKEND_EVENT_PRODUCER_TOPIC: '{{ .Values.config.simName }}-topic-sdk-outbound-domain-events'
-      FSPIOP_EVENT_CONSUMER_TOPICS: '{{ .Values.config.simName }}-topic-sdk-outbound-domain-events'
-      FSPIOP_EVENT_PRODUCER_TOPIC: '{{ .Values.config.simName }}-topic-sdk-outbound-domain-events'
+      BACKEND_EVENT_CONSUMER_GROUP_ID: "{{ .Values.config.simName }}-sdk_api_backend_consumer_group"
+      FSPIOP_EVENT_CONSUMER_GROUP_ID: "{{ .Values.config.simName }}-sdk_api_fspiop_consumer_group"
+      BACKEND_EVENT_CONSUMER_TOPICS: "{{ .Values.config.simName }}-topic-sdk-outbound-domain-events"
+      BACKEND_EVENT_PRODUCER_TOPIC: "{{ .Values.config.simName }}-topic-sdk-outbound-domain-events"
+      FSPIOP_EVENT_CONSUMER_TOPICS: "{{ .Values.config.simName }}-topic-sdk-outbound-domain-events"
+      FSPIOP_EVENT_PRODUCER_TOPIC: "{{ .Values.config.simName }}-topic-sdk-outbound-domain-events"
 
       ## SDKBULK: Enable following params for bulk
       ENABLE_BACKEND_EVENT_HANDLER: false
@@ -652,27 +652,27 @@ scheme-adapter:
       ##
       # extraPaths: []
       extraPaths:
-      - path: /inbound(/|$)(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: '{{ include "common.names.fullname" . }}'
-            port:
-              name: inboundapi
-      - path: /outbound(/|$)(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: '{{ include "common.names.fullname" . }}'
-            port:
-              name: outboundapi
-      - path: /sdktest(/|$)(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: '{{ include "common.names.fullname" . }}'
-            port:
-              name: testapi
+        - path: /inbound(/|$)(.*)
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: '{{ include "common.names.fullname" . }}'
+              port:
+                name: inboundapi
+        - path: /outbound(/|$)(.*)
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: '{{ include "common.names.fullname" . }}'
+              port:
+                name: outboundapi
+        - path: /sdktest(/|$)(.*)
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: '{{ include "common.names.fullname" . }}'
+              port:
+                name: testapi
       ## @param ingress.extraTls TLS configuration for additional hostname(s) to be covered with this ingress record
       ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
       ## e.g:
@@ -752,9 +752,9 @@ scheme-adapter:
       REDIS_CONNECTION_URL: redis://{{ include "common.tplvalues.render" (dict "value" .Values.redis.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.redis.host "context" $)) }}:{{ .Values.redis.port | default .Values.global.redis.port }}/{{ .Values.redis.database | default .Values.global.redis.database }}
       COMMAND_EVENT_CONSUMER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
       DOMAIN_EVENT_PRODUCER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
-      DOMAIN_EVENT_CONSUMER_GROUP_ID: '{{ .Values.config.simName }}-domain_events_consumer_group'
-      DOMAIN_EVENT_CONSUMER_TOPICS: '{{ .Values.config.simName }}-topic-sdk-outbound-domain-events'
-      COMMAND_EVENT_PRODUCER_TOPIC: '{{ .Values.config.simName }}-topic-sdk-outbound-command-events'
+      DOMAIN_EVENT_CONSUMER_GROUP_ID: "{{ .Values.config.simName }}-domain_events_consumer_group"
+      DOMAIN_EVENT_CONSUMER_TOPICS: "{{ .Values.config.simName }}-topic-sdk-outbound-domain-events"
+      COMMAND_EVENT_PRODUCER_TOPIC: "{{ .Values.config.simName }}-topic-sdk-outbound-command-events"
 
     podAffinityPreset: ""
     ## @param podAntiAffinityPreset Pod anti-affinity preset. Ignored if `main.affinity` is set. Allowed values: `soft` or `hard`
@@ -1085,9 +1085,9 @@ scheme-adapter:
       #       name: '{{ include "common.names.fullname" . }}'
       #       port:
       #         name: testapi
-          ## This is required for
-          # serviceName: '{{ include "common.names.fullname" . }}'
-          # servicePort: testapi
+      ## This is required for
+      # serviceName: '{{ include "common.names.fullname" . }}'
+      # servicePort: testapi
       ## @param ingress.extraTls TLS configuration for additional hostname(s) to be covered with this ingress record
       ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
       ## e.g:
@@ -1168,9 +1168,9 @@ scheme-adapter:
       COMMAND_EVENT_CONSUMER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
       DOMAIN_EVENT_PRODUCER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
       MAX_ITEMS_PER_BATCH: 1000
-      COMMAND_EVENT_CONSUMER_GROUP_ID: '{{ .Values.config.simName }}-command_events_consumer_group'
-      COMMAND_EVENT_CONSUMER_TOPICS: '{{ .Values.config.simName }}-topic-sdk-outbound-command-events'
-      DOMAIN_EVENT_PRODUCER_TOPIC: '{{ .Values.config.simName }}-topic-sdk-outbound-domain-events'
+      COMMAND_EVENT_CONSUMER_GROUP_ID: "{{ .Values.config.simName }}-command_events_consumer_group"
+      COMMAND_EVENT_CONSUMER_TOPICS: "{{ .Values.config.simName }}-topic-sdk-outbound-command-events"
+      DOMAIN_EVENT_PRODUCER_TOPIC: "{{ .Values.config.simName }}-topic-sdk-outbound-domain-events"
 
     podAffinityPreset: ""
     ## @param podAntiAffinityPreset Pod anti-affinity preset. Ignored if `main.affinity` is set. Allowed values: `soft` or `hard`
@@ -1501,9 +1501,9 @@ scheme-adapter:
       #       name: '{{ include "common.names.fullname" . }}'
       #       port:
       #         name: testapi
-          ## This is required for
-          # serviceName: '{{ include "common.names.fullname" . }}'
-          # servicePort: testapi
+      ## This is required for
+      # serviceName: '{{ include "common.names.fullname" . }}'
+      # servicePort: testapi
       ## @param ingress.extraTls TLS configuration for additional hostname(s) to be covered with this ingress record
       ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
       ## e.g:
@@ -1662,42 +1662,45 @@ ttk:
   ml-testing-toolkit-backend:
     enabled: true
     config:
-      user_config.json: {
-        "VERSION": 1,
-        "CALLBACK_ENDPOINT": "http://{{ $.Release.Name }}-scheme-adapter:4001",
-        "SEND_CALLBACK_ENABLE": true,
-        "DEFAULT_ENVIRONMENT_FILE_NAME": "pm4ml-default-environment.json",
-        "FSPID": *dfspId
-      }
-      system_config.json: {
-        "API_DEFINITIONS": [
-          {
-            "type": "scheme_adapter_outbound",
-            "version": "1.0",
-            "folderPath": "mojaloop_sdk_outbound_scheme_adapter_1.0",
-            "asynchronous": true,
-            "hostnames": [],
-            "prefix": "/sdk-out"
-          },
-          {
-            "type": "mojaloop_simulator_inbound",
-            "version": "1.4",
-            "folderPath": "mojaloop_simulator_sim_1.4",
-            "asynchronous": true
-          },
-          {
-            "type": "core_connector",
-            "version": "1.4",
-            "folderPath": "payment_manager_1.4",
-            "hostnames": [],
-            "prefix": "/cc-send"
-          }
-        ]
-      }
-      rules_response__default.json: 'https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/rules_response/default.json'
-      api_definitions__mojaloop_simulator_sim_1.4__api_spec.yaml: 'https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_simulator_sim_1.4/api_spec.yaml'
-      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__api_spec.yaml: 'https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/api_spec.yaml'
-      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__callback_map.json: 'https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/callback_map.json'
+      user_config.json:
+        {
+          "VERSION": 1,
+          "CALLBACK_ENDPOINT": "http://{{ $.Release.Name }}-scheme-adapter:4001",
+          "SEND_CALLBACK_ENABLE": true,
+          "DEFAULT_ENVIRONMENT_FILE_NAME": "pm4ml-default-environment.json",
+          "FSPID": *dfspId,
+        }
+      system_config.json:
+        {
+          "API_DEFINITIONS":
+            [
+              {
+                "type": "scheme_adapter_outbound",
+                "version": "1.0",
+                "folderPath": "mojaloop_sdk_outbound_scheme_adapter_1.0",
+                "asynchronous": true,
+                "hostnames": [],
+                "prefix": "/sdk-out",
+              },
+              {
+                "type": "mojaloop_simulator_inbound",
+                "version": "1.4",
+                "folderPath": "mojaloop_simulator_sim_1.4",
+                "asynchronous": true,
+              },
+              {
+                "type": "core_connector",
+                "version": "1.4",
+                "folderPath": "payment_manager_1.4",
+                "hostnames": [],
+                "prefix": "/cc-send",
+              },
+            ],
+        }
+      rules_response__default.json: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/rules_response/default.json"
+      api_definitions__mojaloop_simulator_sim_1.4__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_simulator_sim_1.4/api_spec.yaml"
+      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/api_spec.yaml"
+      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__callback_map.json: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/callback_map.json"
     ingress:
       enabled: true
       className: "nginx"
@@ -1707,11 +1710,7 @@ ttk:
         adminApi:
           host: pm4ml-testing-toolkit.local
     extraEnvironments:
-      pm4ml-default-environment.json: {
-        "inputValues": {
-          "VAR1": "VALUE1"
-        }
-      }
+      pm4ml-default-environment.json: { "inputValues": { "VAR1": "VALUE1" } }
 
   ml-testing-toolkit-frontend:
     enabled: true
@@ -1723,7 +1722,6 @@ ttk:
           host: pm4ml-testing-toolkit.local
     config:
       API_BASE_URL: http://pm4ml-testing-toolkit.local
-
 
 keycloak:
   enabled: true
@@ -1771,7 +1769,7 @@ keycloak:
     # List of rules for the Ingress
     rules:
       - # Ingress host
-        host: '{{ .Release.Name }}.keycloak.local'
+        host: "{{ .Release.Name }}.keycloak.local"
         # Paths for the host
         paths:
           - /
