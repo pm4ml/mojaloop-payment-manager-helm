@@ -39,7 +39,7 @@ spec:
               value: "{{ .Values.env.authDiscoveryEndpoint }}"
             - name: "AUTH_CLIENT_ID"
               value: "{{ .Values.env.authClientId }}"
-            {{- if .Values.api.oauth.clientSecretSecret }}
+            {{- if .Values.env.authClientSecretSecret }}
             - name: "AUTH_CLIENT_SECRET"
               valueFrom:
                 secretKeyRef:
