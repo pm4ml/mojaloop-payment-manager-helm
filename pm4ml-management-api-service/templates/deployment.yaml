@@ -29,18 +29,21 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- range $key, $val := .Values.env }}
+            {{- if .Values.env.APP_OAUTH_CLIENT_SECRET }}
+            {{- if and (ne "AUTH_CLIENT_SECRET" $key) (ne "AUTH_CLIENT_SECRET_KEY" $key) (ne "APP_OAUTH_CLIENT_SECRET" $key) }}
             - name: {{$key}}
               value: {{$val | quote}}
-            {{- end}}
+            {{- else if eq "APP_OAUTH_CLIENT_SECRET" $key}}
             - name: AUTH_CLIENT_SECRET
-              {{- if .Values.CLIENT_SECRET_NAME }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.CLIENT_SECRET_NAME }}
-                  key: {{ .Values.CLIENT_SECRET_KEY }}
-              {{- else }}
-              value: {{ .Values.env.AUTH_CLIENT_SECRET }}
-              {{- end }}
+                  name: {{ $.Values.env.CLIENT_SECRET_NAME }}
+                  key: {{ $.Values.env.CLIENT_SECRET__KEY }}
+            {{- else }}
+            - name: {{$key}}
+              value: {{$val | quote}}
+            {{- end }}
+            {{- end}}
           ports:
             - name: http
               containerPort: 9000
