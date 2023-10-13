@@ -97,6 +97,8 @@ experience-api:
         paths: ["/experience-api(/|$)(.*)"]
 
 management-api:
+#  clientSecretName: changeme
+#  clientSecretKey: changeme
   imagePullCredentials: *imagePullCredentials
   env:
     CACHE_HOST: redis-master
@@ -104,7 +106,7 @@ management-api:
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
     MCM_CLIENT_REFRESH_INTERVAL: 300
-    AUTH_ENABLED: false
+    AUTH_ENABLED: true
     AUTH_CLIENT_ID: change-me_oidc
     AUTH_CLIENT_SECRET: change-me_oidc
     VAULT_ENDPOINT: http://vault:8200

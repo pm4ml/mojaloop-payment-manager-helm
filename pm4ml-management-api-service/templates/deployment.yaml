@@ -32,6 +32,17 @@ spec:
             - name: {{$key}}
               value: {{$val | quote}}
             {{- end}}
+            - name: AUTH_CLIENT_SECRET
+            {{- with .Values "management-api" }}
+              {{- if .clientSecretName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .clientSecretName }}
+                  key: {{ .clientSecretKey }}
+              {{- else }}
+              value: {{ .env.AUTH_CLIENT_SECRETT }}
+              {{- end }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 9000
