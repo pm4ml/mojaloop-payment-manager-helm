@@ -30,7 +30,7 @@ spec:
           env:
             {{- range $key, $val := .Values.env }}
             {{- if $.Values.env.CLIENT_SECRET_NAME }}
-            {{- if and (ne "CLIENT_SECRET_NAME" $key) (ne "CLIENT_SECRET_KEY" $key) (ne "CLIENT_SECRET" $key) }}
+            {{- if and (ne "CLIENT_SECRET_NAME" $key) (ne "CLIENT_SECRET_KEY" $key) (ne "AUTH_CLIENT_SECRET" $key) }}
             - name: {{$key}}
               value: {{$val | quote}}
             {{- else if eq "CLIENT_SECRET_NAME" $key}}

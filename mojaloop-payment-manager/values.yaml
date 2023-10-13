@@ -97,10 +97,10 @@ experience-api:
         paths: ["/experience-api(/|$)(.*)"]
 
 management-api:
-#  CLIENT_SECRET_NAME: changeme
-#  CLIENT_SECRET_KEY: changeme
   imagePullCredentials: *imagePullCredentials
   env:
+#    CLIENT_SECRET_NAME: changeme
+#    CLIENT_SECRET_KEY: changeme
     CACHE_HOST: redis-master
     DFSP_ID: *dfspId
     HUB_IAM_PROVIDER_URL: https://change.me
