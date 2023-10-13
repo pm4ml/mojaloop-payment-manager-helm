@@ -33,16 +33,16 @@ spec:
               value: {{$val | quote}}
             {{- end}}
             - name: AUTH_CLIENT_SECRET
-            {{- with .Values."management-api" }}
-              {{- if .clientSecretName }}
+{{/*            {{- with index .Values "management-api" }}*/}}
+              {{- if .Values.clientSecretName }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .clientSecretName }}
-                  key: {{ .clientSecretKey }}
+                  name: {{ .Values.clientSecretName }}
+                  key: {{ .Values.clientSecretKey }}
               {{- else }}
-              value: {{ .env.AUTH_CLIENT_SECRETT }}
+              value: {{ .Values.env.AUTH_CLIENT_SECRETT }}
               {{- end }}
-            {{- end }}
+{{/*            {{- end }}*/}}
           ports:
             - name: http
               containerPort: 9000
