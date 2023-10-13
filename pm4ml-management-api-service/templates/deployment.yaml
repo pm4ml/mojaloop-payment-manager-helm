@@ -33,7 +33,7 @@ spec:
               value: {{$val | quote}}
             {{- end}}
             - name: AUTH_CLIENT_SECRET
-            {{- with .Values "management-api" }}
+            {{- with .Values."management-api" }}
               {{- if .clientSecretName }}
               valueFrom:
                 secretKeyRef:
