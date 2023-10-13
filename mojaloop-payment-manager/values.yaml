@@ -97,8 +97,8 @@ experience-api:
         paths: ["/experience-api(/|$)(.*)"]
 
 management-api:
-#  clientSecretName: changeme
-#  clientSecretKey: changeme
+#  CLIENT_SECRET_NAME: changeme
+#  CLIENT_SECRET_KEY: changeme
   imagePullCredentials: *imagePullCredentials
   env:
     CACHE_HOST: redis-master
