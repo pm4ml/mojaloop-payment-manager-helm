@@ -38,7 +38,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ $.Values.env.CLIENT_SECRET_NAME }}
-                  key: {{ $.Values.env.CLIENT_SECRET__KEY }}
+                  key: {{ $.Values.env.CLIENT_SECRET_KEY }}
             {{- else }}
             - name: {{$key}}
               value: {{$val | quote}}
