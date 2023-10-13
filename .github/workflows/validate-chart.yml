@@ -100,7 +100,7 @@ jobs:
           --k3s-agent-arg "--kube-proxy-arg=conntrack-max-per-core=0" \
           --kubeconfig-update-default \
           --kubeconfig-switch-context \
-          --image=rancher/k3s:v1.17.9-k3s1 \
+          --image=rancher/k3s:v1.21.10-k3s1 \
           int-test
 
     - name: Deploy

@@ -99,12 +99,14 @@ experience-api:
 management-api:
   imagePullCredentials: *imagePullCredentials
   env:
+#    CLIENT_SECRET_NAME: changeme
+#    CLIENT_SECRET_KEY: changeme
     CACHE_HOST: redis-master
     DFSP_ID: *dfspId
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
     MCM_CLIENT_REFRESH_INTERVAL: 300
-    AUTH_ENABLED: false
+    AUTH_ENABLED: true
     AUTH_CLIENT_ID: change-me_oidc
     AUTH_CLIENT_SECRET: change-me_oidc
     VAULT_ENDPOINT: http://vault:8200
