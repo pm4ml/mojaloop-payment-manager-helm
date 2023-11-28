@@ -1664,7 +1664,7 @@ ttk:
 
   ml-testing-toolkit-backend:
     enabled: true
-    config:
+    config_files:
       user_config.json:
         {
           "VERSION": 1,
