@@ -16,6 +16,15 @@ fullnameOverride: ""
 env:
   BACKEND_ENDPOINT: http://localhost:3002
   MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
+envFromSecrets:
+#  API_KEY:
+#    secret:
+#      name: some-secret-name
+#      key: API_KEY
+#  API_SECRET:
+#    secret:
+#      name: another-secret-name
+#      key: API_SECRET
 
 ports:
   - port: http
@@ -33,7 +42,7 @@ readinessProbe:
   enabled: true
   path: /health
   port: http
-  
+
 service:
   type: ClusterIP
   # this is the port the SERVICE will listen on. requests to the service address on this port

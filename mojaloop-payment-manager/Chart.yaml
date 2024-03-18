@@ -37,6 +37,10 @@ dependencies:
     version: 1.1.2
     repository: file://../mojaloop-core-connector
     condition: mojaloop-core-connector.enabled
+  - name: mojaloop-payment-token-adapter
+    version: 1.0.0
+    repository: file://../mojaloop-payment-token-adapter
+    condition: mojaloop-payment-token-adapter.enabled
   - name: prometheus
     version: 11.16.9
     repository: https://prometheus-community.github.io/helm-charts

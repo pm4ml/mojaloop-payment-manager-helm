@@ -33,6 +33,13 @@ spec:
             - name: {{ $k }}
               value: {{ $v | quote }}
             {{- end }}
+            {{- range $k, $v := .Values.envFromSecrets }}
+            - name: {{ $k }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $v.secret.name }}
+                  key: {{ $v.secret.key | quote }}
+            {{- end }}
           ports:
           {{- range .Values.ports }}
             - name: {{ .port | quote }}

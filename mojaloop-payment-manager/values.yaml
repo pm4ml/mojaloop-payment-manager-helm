@@ -1646,6 +1646,21 @@ mojaloop-core-connector:
   #   repository: pm4ml/wallet-core-connector
   #   tag: 1.0.2
 
+mojaloop-payment-token-adapter:
+  imagePullCredentials: *imagePullCredentials
+  enabled: false
+
+  # todo: add liveness and readiness endpoints
+  livenessProbe:
+    enabled: false
+    path: /health
+    port: http
+
+  readinessProbe:
+    enabled: false
+    path: /health
+    port: http
+
 sim-backend:
   enabled: true
   env:
