@@ -7,11 +7,6 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    # todo: think, of we need this http port ?
-    - port: {{ .Values.service.httpPort }}
-      targetPort: http
-      protocol: TCP
-      name: http
     - port: {{ .Values.service.portalPort }}
       protocol: TCP
       name: portal

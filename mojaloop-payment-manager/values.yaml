@@ -1654,12 +1654,12 @@ mojaloop-payment-token-adapter:
   livenessProbe:
     enabled: false
     path: /health
-    port: http
+    port: sdk
 
   readinessProbe:
     enabled: false
     path: /health
-    port: http
+    port: sdk
 
 sim-backend:
   enabled: true

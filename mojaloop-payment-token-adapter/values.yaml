@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: mojaloop/payment-token-adapter
-  tag: 1.1.2 # todo: update to 1.2.0 after pushing that version
+  tag: v1.1.2 # todo: update to 1.2.0 after pushing that version
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -21,7 +21,6 @@ env:
 
 service:
   type: ClusterIP
-  httpPort: 80 # todo: think, if we need this port
   portalPort: 3000
   sdkPort: 3001
 
@@ -36,6 +35,7 @@ ingress:
   hosts:
     - host: chart-example.local
       paths: ['/']
+      portName: sdk
 
   tls: []
   #  - secretName: chart-example-tls
