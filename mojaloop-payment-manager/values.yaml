@@ -1650,17 +1650,6 @@ mojaloop-payment-token-adapter:
   imagePullCredentials: *imagePullCredentials
   enabled: false
 
-  # todo: add impl. of liveness and readiness endpoints
-  livenessProbe:
-    enabled: false
-    path: /health
-    port: sdk
-
-  readinessProbe:
-    enabled: false
-    path: /health
-    port: sdk
-
 sim-backend:
   enabled: true
   env:

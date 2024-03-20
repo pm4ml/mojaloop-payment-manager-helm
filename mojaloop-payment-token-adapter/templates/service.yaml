@@ -7,13 +7,13 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.portalPort }}
+    - port: {{ .Values.service.portalPort.port }}
+      name: {{ .Values.service.portalPort.name }}
       protocol: TCP
-      name: portal
       targetPort: portal
-    - port: {{ .Values.service.sdkPort }}
+    - port: {{ .Values.service.sdkPort.port }}
+      name: {{ .Values.service.sdkPort.name }}
       protocol: TCP
-      name: sdk
       targetPort: sdk
   selector:
     app.kubernetes.io/name: {{ include "mojaloop-payment-token-adapter.name" . }}

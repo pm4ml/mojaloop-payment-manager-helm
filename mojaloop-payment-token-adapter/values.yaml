@@ -21,8 +21,22 @@ env:
 
 service:
   type: ClusterIP
-  portalPort: 3000
-  sdkPort: 3001
+  portalPort:
+    port: 3000
+    name: portal
+  sdkPort:
+    port: 3001
+    name: sdk
+
+# todo: add impl. of liveness and readiness endpoints
+livenessProbe:
+  enabled: false
+  path: /health
+  port: {{ .Values.service.sdkPort.name }}
+readinessProbe:
+  enabled: false
+  path: /health
+  port: {{ .Values.service.sdkPort.name }}
 
 ingress:
   enabled: false
