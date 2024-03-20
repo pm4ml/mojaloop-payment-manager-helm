@@ -38,7 +38,7 @@ dependencies:
     repository: file://../mojaloop-core-connector
     condition: mojaloop-core-connector.enabled
   - name: mojaloop-payment-token-adapter
-    version: 1.0.0
+    version: 1.0.1
     repository: file://../mojaloop-payment-token-adapter
     condition: mojaloop-payment-token-adapter.enabled
   - name: prometheus
