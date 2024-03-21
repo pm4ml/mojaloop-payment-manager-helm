@@ -1,64 +1,55 @@
-# Default values for mojaloop-simulator-core-connector.
+# Default values for mojaloop payment-token-adapter
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: pm4ml/mojaloop-payment-manager-simulator-core-connector
-  tag: 1.4.5
-  pullPolicy: Always
+  repository: mojaloop/payment-token-adapter
+  tag: v1.4.0
+  pullPolicy: IfNotPresent
 
 nameOverride: ""
 fullnameOverride: ""
 
 #### ENV values
 env:
-  BACKEND_ENDPOINT: http://localhost:3002
-  MLCONN_OUTBOUND_ENDPOINT: http://localhost:4001
-envFromSecrets:
-#  API_KEY:
-#    secret:
-#      name: some-secret-name
-#      key: API_KEY
-#  API_SECRET:
-#    secret:
-#      name: another-secret-name
-#      key: API_SECRET
-
-ports:
-  - port: http
-    portNumber: 3003
-    containerPort: 3003
-    targetPort: http
-    protocol: TCP
-    serviceEnabled: true
-
-livenessProbe:
-  enabled: true
-  path: /health
-  port: http
-
-readinessProbe:
-  enabled: true
-  path: /health
-  port: http
+  EXTERNAL_PORTAL_SERVER_PORT: 3000
+  SDK_SERVER_PORT: 3001
+  SERVER_HOST: 0.0.0.0
+  CORE_CONNECTOR_URL: http://mojaloop-core-connector:3003
 
 service:
   type: ClusterIP
-  # this is the port the SERVICE will listen on. requests to the service address on this port
-  # get mapped to the "http" named port on the deployment
+  portalPort:
+    port: 3000
+    name: portal
+  sdkPort:
+    port: 3001
+    name: &sdkPortName sdk
+
+# todo: add impl. of liveness and readiness endpoints
+livenessProbe:
+  enabled: false
+  path: /health
+  port: *sdkPortName
+readinessProbe:
+  enabled: false
+  path: /health
+  port: *sdkPortName
 
 ingress:
   enabled: false
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+  # hosts:
+  #   - host: chart-example.local
+  #     paths: []
   hosts:
     - host: chart-example.local
-      paths:
-        - path: "/"
-          servicePort: http
+      paths: ['/']
+      portName: sdk
 
   tls: []
   #  - secretName: chart-example-tls
@@ -82,11 +73,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-secrets:
-  # secretName1:
-  #   key1: "value"
-  #   key2: "value"
-  # secretName2:
-  #   key1: "value"
-  #   key2: "value"

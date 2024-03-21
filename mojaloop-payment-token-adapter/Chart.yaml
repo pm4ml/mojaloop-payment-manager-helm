@@ -1,0 +1,10 @@
+apiVersion: v2
+version: 1.0.2
+appVersion: 1.4.0
+description: A Helm chart for Kubernetes
+name: mojaloop-payment-token-adapter
+maintainers:
+  - name: Eugen Klymniuk
+    email: eugen.klymniuk@infitx.com
+  - name: Okello Ivan Elijah
+    email: elijahokello90@gmail.com

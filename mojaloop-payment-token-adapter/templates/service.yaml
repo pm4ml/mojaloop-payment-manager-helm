@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "mojaloop-payment-token-adapter.fullname" . }}
+  labels:
+{{ include "mojaloop-payment-token-adapter.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.portalPort.port }}
+      name: {{ .Values.service.portalPort.name }}
+      protocol: TCP
+      targetPort: portal
+    - port: {{ .Values.service.sdkPort.port }}
+      name: {{ .Values.service.sdkPort.name }}
+      protocol: TCP
+      targetPort: sdk
+  selector:
+    app.kubernetes.io/name: {{ include "mojaloop-payment-token-adapter.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

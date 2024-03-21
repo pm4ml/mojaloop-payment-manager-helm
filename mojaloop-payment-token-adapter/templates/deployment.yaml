@@ -1,51 +1,41 @@
-{{- $fullName := include "self.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "self.fullname" . }}
+  name: {{ include "mojaloop-payment-token-adapter.fullname" . }}
   labels:
-{{ include "self.labels" . | indent 4 }}
+{{ include "mojaloop-payment-token-adapter.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "self.name" . }}
+      app.kubernetes.io/name: {{ include "mojaloop-payment-token-adapter.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "self.name" . }}
+        app.kubernetes.io/name: {{ include "mojaloop-payment-token-adapter.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       {{- if .Values.imagePullCredentials }}
       imagePullSecrets:
-        - name: {{ include "self.fullname" . }}-cred
+        - name: {{ include "mojaloop-payment-token-adapter.fullname" . }}-cred
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            # # this is the outbound api endpoint on the mojaloop-connector
-            # - name: "MLCONN_OUTBOUND_ENDPOINT"
-            #   value: "{{ .Values.env.MLCONN_OUTBOUND_ENDPOINT }}"
             {{- range $k, $v := .Values.env }}
             - name: {{ $k }}
               value: {{ $v | quote }}
             {{- end }}
-            {{- range $k, $v := .Values.envFromSecrets }}
-            - name: {{ $k }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ $v.secret.name }}
-                  key: {{ $v.secret.key | quote }}
-            {{- end }}
           ports:
-          {{- range .Values.ports }}
-            - name: {{ .port | quote }}
-              containerPort: {{ .containerPort }}
-              protocol: {{ .protocol }}
-          {{- end }}
+            - name: portal
+              containerPort: {{ .Values.env.EXTERNAL_PORTAL_SERVER_PORT }}
+              protocol: TCP
+            - name: sdk
+              containerPort: {{ .Values.env.SDK_SERVER_PORT }}
+              protocol: TCP
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
@@ -60,17 +50,6 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts:
-          {{- range $secretName, $secretValue := .Values.secrets }}
-            - name: {{ $fullName }}-secret-{{ $secretName }}
-              mountPath: "/secrets/{{ $secretName }}/"
-          {{- end }}
-      volumes:
-      {{- range $secretName, $secretValue := .Values.secrets }}
-        - name: {{ $fullName }}-secret-{{ $secretName }}
-          secret:
-            secretName: {{ $fullName }}-{{ $secretName }}
-      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

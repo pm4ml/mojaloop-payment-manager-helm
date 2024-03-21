@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 9.0.11
-appVersion: "v4.2.14"
+version: 9.1.2
+appVersion: "v4.2.15"
 description: Helm chart for Mojaloop Payment Manager
 name: mojaloop-payment-manager
 maintainers:
@@ -37,6 +37,10 @@ dependencies:
     version: 1.1.2
     repository: file://../mojaloop-core-connector
     condition: mojaloop-core-connector.enabled
+  - name: mojaloop-payment-token-adapter
+    version: 1.0.2
+    repository: file://../mojaloop-payment-token-adapter
+    condition: mojaloop-payment-token-adapter.enabled
   - name: prometheus
     version: 11.16.9
     repository: https://prometheus-community.github.io/helm-charts
