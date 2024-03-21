@@ -29,6 +29,7 @@ envFromSecrets:
 ports:
   - port: http
     portNumber: 3003
+    containerPort: 3003
     targetPort: http
     protocol: TCP
     serviceEnabled: true
