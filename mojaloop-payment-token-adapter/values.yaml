@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: mojaloop/payment-token-adapter
-  tag: v1.4.0
+  tag: v1.6.0
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -28,15 +28,22 @@ service:
     port: 3001
     name: &sdkPortName sdk
 
-# todo: add impl. of liveness and readiness endpoints
+startupProbe:
+  enabled: true
+  path: /health
+  port: *sdkPortName
+  periodSeconds: 1
+  failureThreshold: 20
 livenessProbe:
-  enabled: false
+  enabled: true
   path: /health
   port: *sdkPortName
+  periodSeconds: 60
 readinessProbe:
-  enabled: false
+  enabled: true
   path: /health
   port: *sdkPortName
+  periodSeconds: 30
 
 ingress:
   enabled: false
