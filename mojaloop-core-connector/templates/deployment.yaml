@@ -43,7 +43,7 @@ spec:
           ports:
           {{- range .Values.ports }}
             - name: {{ .port | quote }}
-              containerPort: {{ .portNumber }}
+              containerPort: {{ .containerPort }}
               protocol: {{ .protocol }}
           {{- end }}
           {{- if .Values.livenessProbe.enabled }}
