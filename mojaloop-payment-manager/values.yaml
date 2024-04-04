@@ -265,15 +265,29 @@ scheme-adapter:
       # expiry period in seconds for quote and transfers issued by the SDK
       EXPIRY_SECONDS: 60
 
-      # if set to false the SDK will not automatically accept all returned quotes
-      # but will halt the transfer after a quote response is received. A further
-      # confirmation call will be required to complete the final transfer stage.
-      AUTO_ACCEPT_QUOTES: true
+      # if set to true the SDK will automatically accept all returned quotes
+      AUTO_ACCEPT_QUOTES: false
 
-      # if set to false the SDK will not automatically accept a resolved party
-      # but will halt the transer after a party lookup response is received. A further
-      # cnofirmation call will be required to progress the transfer to quotes state.
-      AUTO_ACCEPT_PARTY: true
+      # if set to true the SDK will automatically accept a resolved party
+      AUTO_ACCEPT_PARTY: false
+
+      # if set to true the SDK will automatically accept a resolved party on a requestToPay operation
+      AUTO_ACCEPT_R2P_PARTY: false
+
+      # This parameter is only for the requestToPay transfers when the initiator is of type BUSINESS.
+      # if set to false the SDK will not automatically accept quote on a requestToPayTransfer.
+      # but will halt the operation after a quote response is received. A further
+      # confirmation call will be required to progress the requestToPayTransfer to authorization step.
+      AUTO_ACCEPT_R2P_BUSINESS_QUOTES: false
+
+      # if set to false the SDK will not automatically accept OTP on a requestToPay operation
+      # but will halt the operation after receiving entered OTP from payee. A further
+      # confirmation call will be required to progress the requestToPayTransfer to transfer step.
+      AUTO_ACCEPT_R2P_DEVICE_OTP: false
+
+      # this flag is for testing purpose only. sdk-scheme-adapter is not supposed to receive PUT /participants/{Type}/{ID},
+      # but for testing we can enable it by setting this flag to true
+      AUTO_ACCEPT_PARTICIPANTS_PUT: false
 
       # when set to true, when sending money via the outbound API, the SDK will use the value
       # of FSPIOP-Source header from the received quote response as the payeeFsp value in the
@@ -409,7 +423,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v22.0.1
+      tag: v23.5.1
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -819,7 +833,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v22.0.1
+      tag: v23.5.1
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1235,7 +1249,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v22.0.1
+      tag: v23.5.1
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1668,6 +1682,9 @@ ttk:
 
   ml-testing-toolkit-backend:
     enabled: true
+    image:
+      repository: mojaloop/ml-testing-toolkit
+      tag: v17.2.0
     config_files:
       user_config.json:
         {
@@ -1675,6 +1692,7 @@ ttk:
           "CALLBACK_ENDPOINT": "http://{{ $.Release.Name }}-scheme-adapter:4001",
           "SEND_CALLBACK_ENABLE": true,
           "DEFAULT_ENVIRONMENT_FILE_NAME": "pm4ml-default-environment.json",
+          "DEFAULT_REQUEST_TIMEOUT": 15000,
           "FSPID": *dfspId,
         }
       system_config.json:
@@ -1721,6 +1739,9 @@ ttk:
 
   ml-testing-toolkit-frontend:
     enabled: true
+    image:
+      repository: mojaloop/ml-testing-toolkit
+      tag: v15.5.0
     className: "nginx"
     ingress:
       enabled: true
