@@ -1740,7 +1740,7 @@ ttk:
   ml-testing-toolkit-frontend:
     enabled: true
     image:
-      repository: mojaloop/ml-testing-toolkit
+      repository: mojaloop/ml-testing-toolkit-ui
       tag: v15.5.0
     className: "nginx"
     ingress:
