@@ -2,95 +2,210 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+imagePullCredentials: &imagePullCredentials
+  registry: "modusbox-mbx-docker.jfrog.io/modusintegration/"
+  user: "someusername"
+  pass: "somepassword"
 
-image:
-  repository: pm4ml/mojaloop-proxy-adapter
-  tag: 0.0.1
-  pullPolicy: IfNotPresent
+proxyid: &proxyid "proxy-id"
 
-nameOverride: ""
-fullnameOverride: ""
+management-api-base: &management-api-base
+  imagePullCredentials: *imagePullCredentials
+  env:
+    #    CLIENT_SECRET_NAME: changeme
+    #    CLIENT_SECRET_KEY: changeme
+    CACHE_HOST: redis-master
+    DFSP_ID: *proxyid
+    HUB_IAM_PROVIDER_URL: https://change.me
+    MCM_SERVER_ENDPOINT: http://mcm-server
+    MCM_CLIENT_REFRESH_INTERVAL: 300
+    AUTH_ENABLED: true
+    AUTH_CLIENT_ID: change-me_oidc
+    AUTH_CLIENT_SECRET: change-me_oidc
+    VAULT_ENDPOINT: http://vault:8200
+    VAULT_AUTH_METHOD: K8S
+    VAULT_K8S_ROLE: vault-pm4ml-auth
+    VAULT_K8S_TOKEN_FILE: /var/run/secrets/kubernetes.io/serviceaccount/token
+    VAULT_ROLE_ID_FILE: /vault/role-id
+    VAULT_ROLE_SECRET_ID_FILE: /vault/secret-id
+    VAULT_PKI_BASE_DOMAIN: example.com
+    VAULT_MOUNT_PKI: pki
+    VAULT_MOUNT_KV: secrets
 
-env:
-  # Add environment variables here...
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+      - host: localhost
+        paths: ["/management-api(/|$)(.*)"]
 
-envFromSecrets:
-#  API_KEY:
-#    secret:
-#      name: some-secret-name
-#      key: API_KEY
-#  API_SECRET:
-#    secret:
-#      name: another-secret-name
-#      key: API_SECRET
+mojaloop-proxy-adapter:
+  imagePullCredentials: *imagePullCredentials
 
-ports:
-  - port: http
-    portNumber: 3003
-    containerPort: 3003
-    targetPort: http
-    protocol: TCP
-    serviceEnabled: true
+  replicaCount: 1
 
-metrics:
-  enabled: true
+  image:
+    repository: pm4ml/mojaloop-proxy-adapter
+    tag: 0.0.1
+    pullPolicy: IfNotPresent
+
+  nameOverride: ""
+  fullnameOverride: ""
+
+  env:
+    # Add environment variables here...
+
+  envFromSecrets:
+  #  API_KEY:
+  #    secret:
+  #      name: some-secret-name
+  #      key: API_KEY
+  #  API_SECRET:
+  #    secret:
+  #      name: another-secret-name
+  #      key: API_SECRET
+
+  ports:
+    - port: http
+      portNumber: 3003
+      containerPort: 3003
+      targetPort: http
+      protocol: TCP
+      serviceEnabled: true
+
+  metrics:
+    enabled: true
+    config:
+      timeout: 5000
+      prefix: moja_
+      defaultLabels:
+        serviceName: mojaloop-proxy-adapter
+
   config:
-    timeout: 5000
-    prefix: moja_
-    defaultLabels:
-      serviceName: mojaloop-proxy-adapter
+    # Add config values here...
+    log_level: info
 
-config:
-  # Add config values here...
-  log_level: info
+  initContainers: []
 
-initContainers: []
+  livenessProbe:
+    enabled: true
+    path: /health
+    port: http
 
-livenessProbe:
-  enabled: true
-  path: /health
-  port: http
+  readinessProbe:
+    enabled: true
+    path: /health
+    port: http
 
-readinessProbe:
-  enabled: true
-  path: /health
-  port: http
+  service:
+    type: ClusterIP
+    # This is the port the SERVICE will listen on. Requests to the service address on this port
+    # get mapped to the "http" named port on the deployment
 
-service:
-  type: ClusterIP
-  # This is the port the SERVICE will listen on. Requests to the service address on this port
-  # get mapped to the "http" named port on the deployment
+  ingress:
+    enabled: false
+    annotations: {}
+    hosts:
+      - host: mojaloop-proxy-adapter.local
+        paths: 
+          - path: /
+            servicePort: http
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
-ingress:
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  secrets: []
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+mysql:
+  replication:
+    enabled: false
+  db:
+    user: test
+    password: test123
+    name: testdb
+  master:
+    persistence:
+      enabled: false
+
+redis:
+  auth:
+    enabled: false
+    sentinel: false
+  nameOverride: redis
+  fullnameOverride: redis
+  cluster:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+
+vault:
   enabled: false
-  annotations: {}
-  hosts:
-    - host: mojaloop-proxy-adapter.local
-      paths: 
-        - path: /
-          servicePort: http
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
-nodeSelector: {}
+prometheus:
+  nodeExporter:
+    enabled: false
+  server:
+    persistentVolume:
+      enabled: true
+    extraScrapeConfigs: |
+      - job_name: 'mojaloop-proxy-adapter'
+        static_configs:
+          - targets:
+            - "mojaloop-proxy-adapter:3004"
+  alertmanager:
+    enabled: false
+  pushgateway:
+    enabled: false
+  kubeStateMetrics:
+    enabled: false
 
-tolerations: []
+management-api-scheme-1: 
+  enabled: true
+  <<: *management-api-base
+  env:
+    <<: *management-api-base.env
+    DFSP_ID: "proxy-id-1"
+    AUTH_CLIENT_ID: "proxy-id-1_oidc"
+    AUTH_CLIENT_SECRET: change-me_oidc
+  
+  ingress:
+    <<: *management-api-base.ingress
+    hosts:
+      - host: localhost
+        paths: ["/management-api-1(/|$)(.*)"]
 
-affinity: {}
-
-secrets: []
-
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+management-api-scheme-2: 
+  enabled: true
+  <<: *management-api-base
+  env:
+    <<: *management-api-base.env
+    DFSP_ID: "proxy-id-2"
+    AUTH_CLIENT_ID: "proxy-id-2_oidc"
+    AUTH_CLIENT_SECRET: change-me_oidc
+  
+  ingress:
+    <<: *management-api-base.ingress
+    hosts:
+      - host: localhost
+        paths: ["/management-api-2(/|$)(.*)"]

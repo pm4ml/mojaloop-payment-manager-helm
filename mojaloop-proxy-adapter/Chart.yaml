@@ -1,5 +1,19 @@
 apiVersion: v2
+version: 0.0.1
 appVersion: "0.0.1"
 description: Helm chart for Mojaloop Proxy Adapter
 name: mojaloop-proxy-adapter
-version: 0.0.1
+maintainers:
+  - name: Steven Oderayi
+    email: steven.oderayi@infitx.com
+dependencies:
+  - name: pm4ml-management-api-service
+    version: 2.0.2
+    repository: file://../pm4ml-management-api-service
+    alias: management-api
+    condition: management-api.enabled
+  - name: vault
+    version: 0.14.0
+    repository: https://helm.releases.hashicorp.com
+    alias: vault
+    condition: vault.enabled

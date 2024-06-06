@@ -11,7 +11,7 @@ The following table lists the configurable parameters for this chart and their d
 
 | Parameter                | Description             | Default        |
 | ------------------------ | ----------------------- | -------------- |
-| `ingress.enabled` |  | `false` |
-| ...               |  |         |
+| `ingress.enabled`        |                         | `false`        |
+| ...                      |                         |                |
 
 
