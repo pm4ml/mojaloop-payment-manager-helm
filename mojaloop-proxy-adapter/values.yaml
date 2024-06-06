@@ -1,0 +1,96 @@
+# Default values for mojaloop-proxy-adapter.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: pm4ml/mojaloop-proxy-adapter
+  tag: 0.0.1
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+env:
+  # Add environment variables here...
+
+envFromSecrets:
+#  API_KEY:
+#    secret:
+#      name: some-secret-name
+#      key: API_KEY
+#  API_SECRET:
+#    secret:
+#      name: another-secret-name
+#      key: API_SECRET
+
+ports:
+  - port: http
+    portNumber: 3003
+    containerPort: 3003
+    targetPort: http
+    protocol: TCP
+    serviceEnabled: true
+
+metrics:
+  enabled: true
+  config:
+    timeout: 5000
+    prefix: moja_
+    defaultLabels:
+      serviceName: mojaloop-proxy-adapter
+
+config:
+  # Add config values here...
+  log_level: info
+
+initContainers: []
+
+livenessProbe:
+  enabled: true
+  path: /health
+  port: http
+
+readinessProbe:
+  enabled: true
+  path: /health
+  port: http
+
+service:
+  type: ClusterIP
+  # This is the port the SERVICE will listen on. Requests to the service address on this port
+  # get mapped to the "http" named port on the deployment
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: mojaloop-proxy-adapter.local
+      paths: 
+        - path: /
+          servicePort: http
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+secrets: []
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
