@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ $.Release.Name }}-keycloak-realm
-data:
-{{- range $fileName, $fileContents := .Values.keycloak.configFiles }}
-  {{ $fileName }}: |
-  {{- include "common.tplvalues.render" ( dict "value" $fileContents "context" $ ) | nindent 4 }}
-{{- end }}

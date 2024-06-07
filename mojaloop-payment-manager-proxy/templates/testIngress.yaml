@@ -27,11 +27,25 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-          - path: /mgmt-api(/|$)(.*)
+          - path: /mgmt-api-scheme-1(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
-                name: {{ $.Values.testIngress.mgmtApiServiceName }}
+                name: {{ $.Values.testIngress.mgmtApiScheme1ServiceName }}
+                port:
+                  name: testapi
+          - path: /mgmt-api-scheme-2(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Values.testIngress.mgmtApiScheme2ServiceName }}
+                port:
+                  name: testapi
+          - path: /proxy-adapter(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Values.testIngress.proxyAdapterServiceName }}
                 port:
                   name: testapi
   {{- end }}

@@ -11,6 +11,25 @@ imagePullCredentials: &imagePullCredentials
 
 proxyid: &proxyid "proxy-id"
 
+# the test ingress exposes four internal endpoints used for test automation
+# on a single ingress. if this is enabled you must provide real values for the
+# service names below.
+testIngress:
+  enabled: true
+  proxyAdapterServiceName: "deployment-proxy-adapter"
+  mgmtApiScheme1ServiceName: "deployment-management-api-scheme-1"
+  mgmtApiScheme2ServiceName: "deployment-management-api-scheme-2"
+  hosts:
+    - host: proxy.test
+
+ingress:
+  enabled: true
+  hosts:
+    - host: proxy.local
+      paths:
+        - "/management-api-1(/|$)(.*)"
+        - "/management-api-2(/|$)(.*)"
+
 management-api-base: &management-api-base
   enabled: true
   imagePullCredentials: *imagePullCredentials
