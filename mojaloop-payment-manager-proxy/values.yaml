@@ -12,6 +12,7 @@ imagePullCredentials: &imagePullCredentials
 proxyid: &proxyid "proxy-id"
 
 management-api-base: &management-api-base
+  enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
     CACHE_HOST: redis-master
