@@ -1,11 +1,11 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "mojaloop-payment-manager.fullname" . -}}
+{{- $fullName := include "mojaloop-payment-manager-proxy.fullname" . -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-{{ include "mojaloop-payment-manager.labels" . | indent 4 }}
+{{ include "mojaloop-payment-manager-proxy.labels" . | indent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

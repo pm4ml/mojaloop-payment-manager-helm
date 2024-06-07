@@ -1,11 +1,11 @@
 {{- if .Values.testIngress.enabled -}}
-{{- $fullName := include "mojaloop-payment-manager.fullname" . -}}
+{{- $fullName := include "mojaloop-payment-manager-proxy.fullname" . -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}-test-ingress
   labels:
-{{ include "mojaloop-payment-manager.labels" . | indent 4 }}
+{{ include "mojaloop-payment-manager-proxy.labels" . | indent 4 }}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
   {{- with .Values.testIngress.annotations }}
@@ -27,36 +27,6 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-          {{- if index $.Values "sim-backend" "enabled" }}
-          - path: /sim-backend-test(/|$)(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $.Values.testIngress.simBackendServiceName }}
-                port:
-                  name: testapi
-          {{- end }}
-          - path: /cc-send(/|$)(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $.Values.testIngress.coreConnectorServiceName }}
-                port:
-                  name: http
-          - path: /mlcon-outbound(/|$)(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $.Values.testIngress.schemeAdapterServiceName }}
-                port:
-                  name: outboundapi
-          - path: /mlcon-sdktest(/|$)(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $.Values.testIngress.schemeAdapterServiceName }}
-                port:
-                  name: testapi
           - path: /mgmt-api(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
