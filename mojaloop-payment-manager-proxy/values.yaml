@@ -33,7 +33,7 @@ ingress:
 management-api-base: &management-api-base
   enabled: true
   imagePullCredentials: *imagePullCredentials
-  env:
+  env: &env-base
     CACHE_HOST: redis-master
     DFSP_ID: *proxyid
     HUB_IAM_PROVIDER_URL: https://change.me
@@ -51,6 +51,13 @@ management-api-base: &management-api-base
     VAULT_PKI_BASE_DOMAIN: example.com
     VAULT_MOUNT_PKI: pki
     VAULT_MOUNT_KV: secrets
+  ingress: &ingress-base
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+      - host: localhost
+        paths: ["/management-api(/|$)(.*)"]
 
 # values for sub components
 
@@ -73,13 +80,13 @@ management-api-scheme-1:
   enabled: true
   <<: *management-api-base
   env:
-    <<: *management-api-base.env
+    <<: *env-base
     DFSP_ID: "proxy-id-1"
     AUTH_CLIENT_ID: "proxy-id-1_oidc"
     AUTH_CLIENT_SECRET: change-me_oidc
   
   ingress:
-    <<: *management-api-base.ingress
+    <<: *ingress-base
     hosts:
       - host: management-api-scheme-1.local
         paths: ["/management-api-1(/|$)(.*)"]
@@ -88,13 +95,13 @@ management-api-scheme-2:
   enabled: true
   <<: *management-api-base
   env:
-    <<: *management-api-base.env
+    <<: *env-base
     DFSP_ID: "proxy-id-2"
     AUTH_CLIENT_ID: "proxy-id-2_oidc"
     AUTH_CLIENT_SECRET: change-me_oidc
   
   ingress:
-    <<: *management-api-base.ingress
+    <<: *ingress-base
     hosts:
       - host: management-api-scheme-2.local
         paths: ["/management-api-2(/|$)(.*)"]
@@ -114,7 +121,7 @@ ttk:
           "SEND_CALLBACK_ENABLE": true,
           "DEFAULT_ENVIRONMENT_FILE_NAME": "proxy-default-environment.json",
           "DEFAULT_REQUEST_TIMEOUT": 15000,
-          "FSPID": *dfspId,
+          "FSPID": *proxyid,
         }
       system_config.json:
         {
