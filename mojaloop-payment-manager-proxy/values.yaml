@@ -1,0 +1,153 @@
+# Default values for mojaloop-payment-manager.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# common/shared values
+
+imagePullCredentials: &imagePullCredentials
+  registry: "modusbox-mbx-docker.jfrog.io/modusintegration/"
+  user: "someusername"
+  pass: "somepassword"
+
+proxyid: &proxyid "proxy-id"
+
+management-api-base: &management-api-base
+  imagePullCredentials: *imagePullCredentials
+  env:
+    CACHE_HOST: redis-master
+    DFSP_ID: *proxyid
+    HUB_IAM_PROVIDER_URL: https://change.me
+    MCM_SERVER_ENDPOINT: http://mcm-server
+    MCM_CLIENT_REFRESH_INTERVAL: 300
+    AUTH_ENABLED: true
+    AUTH_CLIENT_ID: change-me_oidc
+    AUTH_CLIENT_SECRET: change-me_oidc
+    VAULT_ENDPOINT: http://vault:8200
+    VAULT_AUTH_METHOD: K8S
+    VAULT_K8S_ROLE: vault-pm4ml-auth
+    VAULT_K8S_TOKEN_FILE: /var/run/secrets/kubernetes.io/serviceaccount/token
+    VAULT_ROLE_ID_FILE: /vault/role-id
+    VAULT_ROLE_SECRET_ID_FILE: /vault/secret-id
+    VAULT_PKI_BASE_DOMAIN: example.com
+    VAULT_MOUNT_PKI: pki
+    VAULT_MOUNT_KV: secrets
+
+# values for sub components
+
+interscheme-proxy-adapter:
+  enabled: true
+  imagePullCredentials: *imagePullCredentials
+  env:
+    # Add environment variables here...
+  ingress:
+    enabled: false
+    annotations: {}
+    hosts:
+      - host: interscheme-proxy-adapter.local
+        paths: 
+          - path: /
+            servicePort: http
+    tls: []
+    
+management-api-scheme-1: 
+  enabled: true
+  <<: *management-api-base
+  env:
+    <<: *management-api-base.env
+    DFSP_ID: "proxy-id-1"
+    AUTH_CLIENT_ID: "proxy-id-1_oidc"
+    AUTH_CLIENT_SECRET: change-me_oidc
+  
+  ingress:
+    <<: *management-api-base.ingress
+    hosts:
+      - host: management-api-scheme-1.local
+        paths: ["/management-api-1(/|$)(.*)"]
+
+management-api-scheme-2: 
+  enabled: true
+  <<: *management-api-base
+  env:
+    <<: *management-api-base.env
+    DFSP_ID: "proxy-id-2"
+    AUTH_CLIENT_ID: "proxy-id-2_oidc"
+    AUTH_CLIENT_SECRET: change-me_oidc
+  
+  ingress:
+    <<: *management-api-base.ingress
+    hosts:
+      - host: management-api-scheme-2.local
+        paths: ["/management-api-2(/|$)(.*)"]
+
+ttk:
+  enabled: false
+  ml-testing-toolkit-backend:
+    enabled: true
+    image:
+      repository: mojaloop/ml-testing-toolkit
+      tag: v17.2.0
+    config_files:
+      user_config.json:
+        {
+          "VERSION": 1,
+          "CALLBACK_ENDPOINT": "http://{{ $.Release.Name }}-scheme-adapter:4001",
+          "SEND_CALLBACK_ENABLE": true,
+          "DEFAULT_ENVIRONMENT_FILE_NAME": "proxy-default-environment.json",
+          "DEFAULT_REQUEST_TIMEOUT": 15000,
+          "FSPID": *dfspId,
+        }
+      system_config.json:
+        {
+          "API_DEFINITIONS":
+            [
+              {
+                "type": "scheme_adapter_outbound",
+                "version": "1.0",
+                "folderPath": "mojaloop_sdk_outbound_scheme_adapter_1.0",
+                "asynchronous": true,
+                "hostnames": [],
+                "prefix": "/sdk-out",
+              },
+              {
+                "type": "mojaloop_simulator_inbound",
+                "version": "1.4",
+                "folderPath": "mojaloop_simulator_sim_1.4",
+                "asynchronous": true,
+              },
+              {
+                "type": "core_connector",
+                "version": "1.4",
+                "folderPath": "payment_manager_1.4",
+                "hostnames": [],
+                "prefix": "/cc-send",
+              },
+            ],
+        }
+      rules_response__default.json: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/rules_response/default.json"
+      api_definitions__mojaloop_simulator_sim_1.4__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_simulator_sim_1.4/api_spec.yaml"
+      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/api_spec.yaml"
+      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__callback_map.json: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/callback_map.json"
+    ingress:
+      enabled: true
+      className: "nginx"
+      hosts:
+        specApi:
+          host: proxy-testing-toolkit-specapi.local
+        adminApi:
+          host: proxy-testing-toolkit.local
+    extraEnvironments:
+      proxy-default-environment.json: { "inputValues": { "VAR1": "VALUE1" } }
+
+  ml-testing-toolkit-frontend:
+    enabled: true
+    image:
+      repository: mojaloop/ml-testing-toolkit-ui
+      tag: v15.5.0
+    className: "nginx"
+    ingress:
+      enabled: true
+      hosts:
+        ui:
+          host: proxy-testing-toolkit.local
+    config:
+      API_BASE_URL: http://proxy-testing-toolkit.local

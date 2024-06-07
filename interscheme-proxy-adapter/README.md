@@ -1,8 +1,8 @@
 
-Mojaloop Proxy Adapter
+Interscheme Proxy Adapter
 ===========
 
-Helm chart for Mojaloop Proxy Adapter
+Helm chart for Interscheme Proxy Adapter
 
 
 ## Configuration

@@ -1,0 +1,68 @@
+{{- if .Values.testIngress.enabled -}}
+{{- $fullName := include "mojaloop-payment-manager.fullname" . -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-test-ingress
+  labels:
+{{ include "mojaloop-payment-manager.labels" . | indent 4 }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  {{- with .Values.testIngress.annotations }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+{{- if .Values.testIngress.tls }}
+  tls:
+  {{- range .Values.testIngress.tls }}
+    - hosts:
+      {{- range .hosts }}
+        - {{ . | quote }}
+      {{- end }}
+      secretName: {{ .secretName }}
+  {{- end }}
+{{- end }}
+  rules:
+  {{- range .Values.testIngress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- if index $.Values "sim-backend" "enabled" }}
+          - path: /sim-backend-test(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Values.testIngress.simBackendServiceName }}
+                port:
+                  name: testapi
+          {{- end }}
+          - path: /cc-send(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Values.testIngress.coreConnectorServiceName }}
+                port:
+                  name: http
+          - path: /mlcon-outbound(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Values.testIngress.schemeAdapterServiceName }}
+                port:
+                  name: outboundapi
+          - path: /mlcon-sdktest(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Values.testIngress.schemeAdapterServiceName }}
+                port:
+                  name: testapi
+          - path: /mgmt-api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Values.testIngress.mgmtApiServiceName }}
+                port:
+                  name: testapi
+  {{- end }}
+{{- end }}
