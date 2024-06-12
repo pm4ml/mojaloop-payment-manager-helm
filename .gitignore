@@ -7,3 +7,5 @@ mojaloop-payment-manager/charts
 
 # Helm
 Chart.lock
+
+**/charts
