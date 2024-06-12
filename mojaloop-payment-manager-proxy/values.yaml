@@ -9,7 +9,7 @@ IMAGE_PULL_CREDENTIALS: &imagePullCredentials {}
 #   user: "someusername"
 #   pass: "somepassword"
 
-PROXY_ID: &proxyid "proxy1"
+PROXY_ID: &proxyId "proxy1"
 
 inter-scheme-proxy-adapter:
   enabled: true
@@ -74,7 +74,7 @@ management-api-service-a:
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
     CACHE_HOST: redis-master
-    DFSP_ID: *proxyid
+    DFSP_ID: *proxyId
     MCM_CLIENT_REFRESH_INTERVAL: 300
     AUTH_ENABLED: true
     AUTH_CLIENT_ID: change-me_oidc
@@ -100,7 +100,7 @@ management-api-service-b:
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
     CACHE_HOST: redis-master
-    DFSP_ID: *proxyid
+    DFSP_ID: *proxyId
     MCM_CLIENT_REFRESH_INTERVAL: 300
     AUTH_ENABLED: true
     AUTH_CLIENT_ID: change-me_oidc
@@ -133,7 +133,7 @@ ttk:
           "SEND_CALLBACK_ENABLE": true,
           "DEFAULT_ENVIRONMENT_FILE_NAME": "proxy-default-environment.json",
           "DEFAULT_REQUEST_TIMEOUT": 15000,
-          "FSPID": *proxyid,
+          "FSPID": *proxyId,
         }
     ingress:
       enabled: true
