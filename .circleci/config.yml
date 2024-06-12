@@ -11,12 +11,11 @@ jobs:
           command: apk --no-cache add git openssh-client
       - checkout
       - run:
-          name: Update the dependencies
-          command: |
-            helm dep update ./mojaloop-payment-manager
+          name: Update Helm Charts
+          command: ./scripts/update-charts-dep.sh
       - run:
-          name: Lint Chart
-          command: helm lint mojaloop-payment-manager
+          name: Linting Helm Charts
+          command: ./scripts/lint-charts.sh
 
   build_and_publish_chart:
     working_directory: ~/repo
@@ -36,27 +35,21 @@ jobs:
             helm repo add bitnami https://charts.bitnami.com/bitnami
             helm repo add prometheus https://prometheus-community.github.io/helm-charts
             helm repo add mojaloop http://mojaloop.io/helm/repo
+            helm repo add charts https://mojaloop.github.io/charts/repo
       - run:
-          name: Update the dependencies
-          command: |
-            cd mojaloop-payment-manager
-            helm dep update
-            cd ..
+          name: Update dependencies
+          command: ./scripts/update-charts-dep.sh
       - run:
-          name: Build helm chart
-          command: |
-            helm package mojaloop-payment-manager
+          name: Package Helm Chart
+          command: ./scripts/package.sh
       - run:
           name: Add new chart to chart repo and publish
           command: |
             git checkout gh-pages
             git checkout master -- .circleci/config.yml
-            mv mojaloop-payment-manager-*.tgz ./repo
-            mv mojaloop-payment-manager/charts/* ./repo
-            rm -rf ./mojaloop-payment-manager
             cd ./repo
             helm repo index --url https://$CIRCLE_PROJECT_USERNAME.github.io/$CIRCLE_PROJECT_REPONAME/repo .
-            git add -A
+            git add ./*.tgz ./index.yaml
             git config user.email "cicd@modusbox.com"
             git config user.name "CICD at ModusBox"
             git commit -m "Automated deployment to GitHub Pages" --allow-empty

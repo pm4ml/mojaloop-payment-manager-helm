@@ -1,11 +1,13 @@
 apiVersion: v2
 version: 0.0.1
 appVersion: "v0.0.1"
-description: Helm chart for Interscheme Proxy Adapter
-name: inter-scheme-proxy-adapter
+description: Helm chart for Proxy Payment Manager
+name: mojaloop-payment-manager-proxy
 maintainers:
   - name: Steven Oderayi
     email: steven.oderayi@infitx.com
+  - name: Vijaya Kumar Guthi
+    email: vijaya.guthi@infitx.com
 dependencies:
   - name: inter-scheme-proxy-adapter
     version: 0.0.1
