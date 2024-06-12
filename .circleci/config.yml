@@ -11,6 +11,15 @@ defaults_Dependencies: &defaults_Dependencies
     apk add --no-cache -t python2
     apk add --no-cache -t build-dependencies make gcc g++ libtool autoconf automake
 
+defaults_helm_dependencies: &defaults_helm_dependencies
+  name: Install default helm dependencies
+  command: |
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm repo add prometheus https://prometheus-community.github.io/helm-charts
+    helm repo add mojaloop http://mojaloop.io/helm/repo
+    helm repo add charts https://mojaloop.github.io/charts/repo
+    helm repo update
+
 jobs:
   lint:
     working_directory: ~/repo
@@ -20,6 +29,8 @@ jobs:
       - run:
           <<: *defaults_Dependencies
       - checkout
+      - run:
+          <<: *defaults_helm_dependencies
       - run:
           name: Update Helm Charts
           command: ./scripts/update-charts-dep.sh
@@ -39,12 +50,7 @@ jobs:
            - "27:60:48:42:65:59:f3:15:37:63:f1:ba:43:0f:9c:5b"
       - checkout
       - run:
-          name: Add helm repo
-          command: |
-            helm repo add bitnami https://charts.bitnami.com/bitnami
-            helm repo add prometheus https://prometheus-community.github.io/helm-charts
-            helm repo add mojaloop http://mojaloop.io/helm/repo
-            helm repo add charts https://mojaloop.github.io/charts/repo
+          <<: *defaults_helm_dependencies
       - run:
           name: Update dependencies
           command: ./scripts/update-charts-dep.sh
