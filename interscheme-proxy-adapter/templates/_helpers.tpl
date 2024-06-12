@@ -1,51 +1,46 @@
 {{/* vim: set filetype=mustache: */}}
+
 {{/*
-Expand the name of the chart.
+Return the proper main image name
 */}}
-{{- define "self.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- define "inter-scheme-proxy-adapter.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
+Return the proper image name (for the init container volume-permissions image)
 */}}
-{{- define "self.fullname" -}}
-{{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- define "inter-scheme-proxy-adapter.volumePermissions.image" -}}
+{{- include "common.images.image" ( dict "imageRoot" .Values.volumePermissions.image "global" .Values.global ) -}}
+{{- end -}}
+
+{{/*
+Return the proper Docker Image Registry Secret Names
+*/}}
+{{- define "inter-scheme-proxy-adapter.imagePullSecrets" -}}
+{{- include "common.images.pullSecrets" (dict "images" (list .Values.image) "global" .Values.global) -}}
+{{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "inter-scheme-proxy-adapter.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (printf "%s" (include "common.names.fullname" .)) .Values.serviceAccount.name }}
 {{- else -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- if contains $name .Release.Name -}}
-{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
+    {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
 
 {{/*
-Create chart name and version as used by the chart label.
+Compile all warnings into a single message.
 */}}
-{{- define "self.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
+{{- define "inter-scheme-proxy-adapter.validateValues" -}}
+{{- $messages := list -}}
+{{- $messages := without $messages "" -}}
+{{- $message := join "\n" $messages -}}
 
-{{/*
-Common labels
-*/}}
-{{- define "self.labels" -}}
-app.kubernetes.io/name: {{ include "self.name" . }}
-helm.sh/chart: {{ include "self.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if $message -}}
+{{-   printf "\nVALUES VALIDATION:\n%s" $message -}}
 {{- end -}}
-
-{{- define "imagePullSecret" }}
-{{- if $.Values.imagePullCredentials }}
-{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.imagePullCredentials.registry (printf "%s:%s" .Values.imagePullCredentials.user .Values.imagePullCredentials.pass | b64enc) | b64enc }}
-{{- end }}
-{{- end }}
+{{- end -}}

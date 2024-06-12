@@ -6,3 +6,11 @@ name: interscheme-proxy-adapter
 maintainers:
   - name: Steven Oderayi
     email: steven.oderayi@infitx.com
+  - name: Vijaya Kumar Guthi
+    email: vijaya.guthi@infitx.com
+dependencies:
+  - name: common
+    repository: "https://mojaloop.github.io/charts/repo"
+    tags:
+      - moja-common
+    version: 3.0.0
