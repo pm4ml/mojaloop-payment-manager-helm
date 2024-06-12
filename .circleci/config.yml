@@ -22,10 +22,10 @@ jobs:
       - checkout
       - run:
           name: Update Helm Charts
-          command: sh ./scripts/update-charts-dep.sh
+          command: ./scripts/update-charts-dep.sh
       - run:
           name: Linting Helm Charts
-          command: sh ./scripts/lint-charts.sh
+          command: ./scripts/lint-charts.sh
 
   build_and_publish_chart:
     working_directory: ~/repo
@@ -47,10 +47,10 @@ jobs:
             helm repo add charts https://mojaloop.github.io/charts/repo
       - run:
           name: Update dependencies
-          command: sh ./scripts/update-charts-dep.sh
+          command: ./scripts/update-charts-dep.sh
       - run:
           name: Package Helm Chart
-          command: sh ./scripts/package.sh
+          command: ./scripts/package.sh
       - run:
           name: Add new chart to chart repo and publish
           command: |
