@@ -139,7 +139,7 @@ containerSecurityContext:
 
 image:
   registry: docker.io
-  repository: pm4ml/interscheme-proxy-adapter
+  repository: pm4ml/inter-scheme-proxy-adapter
   tag: 0.0.1
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'

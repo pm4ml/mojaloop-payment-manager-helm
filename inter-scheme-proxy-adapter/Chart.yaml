@@ -1,8 +1,8 @@
 apiVersion: v2
 version: 0.0.1
 appVersion: "0.0.1"
-description: Helm chart for Interscheme Proxy Adapter
-name: interscheme-proxy-adapter
+description: Helm chart for Inter scheme Proxy Adapter
+name: inter-scheme-proxy-adapter
 maintainers:
   - name: Steven Oderayi
     email: steven.oderayi@infitx.com

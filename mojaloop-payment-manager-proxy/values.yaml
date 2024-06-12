@@ -4,40 +4,77 @@
 
 # common/shared values
 
-imagePullCredentials: &imagePullCredentials
-  registry: "modusbox-mbx-docker.jfrog.io/modusintegration/"
-  user: "someusername"
-  pass: "somepassword"
+IMAGE_PULL_CREDENTIALS: &imagePullCredentials {}
+#   registry: "somedockerregistry"
+#   user: "someusername"
+#   pass: "somepassword"
 
-proxyid: &proxyid "proxy-id"
+PROXY_ID: &proxyid "proxy1"
 
-# the test ingress exposes four internal endpoints used for test automation
-# on a single ingress. if this is enabled you must provide real values for the
-# service names below.
-testIngress:
-  enabled: true
-  proxyAdapterServiceName: "deployment-proxy-adapter"
-  mgmtApiScheme1ServiceName: "deployment-management-api-scheme-1"
-  mgmtApiScheme2ServiceName: "deployment-management-api-scheme-2"
-  hosts:
-    - host: proxy.test
-
-ingress:
-  enabled: true
-  hosts:
-    - host: proxy.local
-      paths:
-        - "/management-api-1(/|$)(.*)"
-        - "/management-api-2(/|$)(.*)"
-
-management-api-base: &management-api-base
+inter-scheme-proxy-adapter:
   enabled: true
   imagePullCredentials: *imagePullCredentials
-  env: &env-base
-    CACHE_HOST: redis-master
-    DFSP_ID: *proxyid
+  envFromSecrets:
+  #  OAUTH_CLIENT_KEY_A:
+  #    secret:
+  #      name: some-secret-name
+  #      key: OAUTH_CLIENT_KEY_A
+  #  OAUTH_CLIENT_SECRET_A:
+  #    secret:
+  #      name: some-secret-name
+  #      key: OAUTH_CLIENT_SECRET_A
+
+  env:
+    LOG_LEVEL: info
+
+    # Port number that the inbound (FSPIOP API) HTTP server A will listen on
+    INBOUND_LISTEN_PORT_A: 4000
+
+    # Port number that the inbound (FSPIOP API) HTTP server B will listen on
+    INBOUND_LISTEN_PORT_B: 4100
+
+    # Enable mutual TLS authentication. Useful when not running in a secure
+    # environment, i.e. when you're running it locally against your own implementation.
+    OUTBOUND_MUTUAL_TLS_ENABLED_A: true
+    OUTBOUND_MUTUAL_TLS_ENABLED_B: true
+
+    # SWITCH ENDPOINTS
+    PEER_ENDPOINT_A: switch-a-endpoint
+    PEER_ENDPOINT_B: switch-a-endpoint
+
+    # Participant ID of this Proxy
+    PROXY_ID: "proxy1"
+
+    # OAuth2 data used to obtain bearer token
+    # Use envFromSecrets instead when secret is stored as k8s secret
+    OAUTH_TOKEN_ENDPOINT_A:
+    OAUTH_CLIENT_KEY_A:
+    OAUTH_CLIENT_SECRET_A:
+    OAUTH_REFRESH_SECONDS_A: 3600
+
+    OAUTH_TOKEN_ENDPOINT_B:
+    OAUTH_CLIENT_KEY_B:
+    OAUTH_CLIENT_SECRET_B:
+    OAUTH_REFRESH_SECONDS_B: 3600
+
+    # Management API websocket connection settings.
+    # The Management API uses this for exchanging connector management messages.
+    MGMT_API_WS_URL_A: management-api-service-a
+    MGMT_API_WS_PORT_A: 4005
+
+    MGMT_API_WS_URL_B: management-api-service-b
+    MGMT_API_WS_PORT_B: 4005
+
+    PM4ML_ENABLED: true
+    
+management-api-service-a: 
+  enabled: true
+  imagePullCredentials: *imagePullCredentials
+  env:
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
+    CACHE_HOST: redis-master
+    DFSP_ID: *proxyid
     MCM_CLIENT_REFRESH_INTERVAL: 300
     AUTH_ENABLED: true
     AUTH_CLIENT_ID: change-me_oidc
@@ -51,60 +88,36 @@ management-api-base: &management-api-base
     VAULT_PKI_BASE_DOMAIN: example.com
     VAULT_MOUNT_PKI: pki
     VAULT_MOUNT_KV: secrets
-  ingress: &ingress-base
-    enabled: true
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-    hosts:
-      - host: localhost
-        paths: ["/management-api(/|$)(.*)"]
+  
+  ingress:
+    enabled: false
 
-# values for sub components
 
-interscheme-proxy-adapter:
+management-api-service-b: 
   enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
-    # Add environment variables here...
+    HUB_IAM_PROVIDER_URL: https://change.me
+    MCM_SERVER_ENDPOINT: http://mcm-server
+    CACHE_HOST: redis-master
+    DFSP_ID: *proxyid
+    MCM_CLIENT_REFRESH_INTERVAL: 300
+    AUTH_ENABLED: true
+    AUTH_CLIENT_ID: change-me_oidc
+    AUTH_CLIENT_SECRET: change-me_oidc
+    VAULT_ENDPOINT: http://vault:8200
+    VAULT_AUTH_METHOD: K8S
+    VAULT_K8S_ROLE: vault-pm4ml-auth
+    VAULT_K8S_TOKEN_FILE: /var/run/secrets/kubernetes.io/serviceaccount/token
+    VAULT_ROLE_ID_FILE: /vault/role-id
+    VAULT_ROLE_SECRET_ID_FILE: /vault/secret-id
+    VAULT_PKI_BASE_DOMAIN: example.com
+    VAULT_MOUNT_PKI: pki
+    VAULT_MOUNT_KV: secrets
+  
   ingress:
     enabled: false
-    annotations: {}
-    hosts:
-      - host: interscheme-proxy-adapter.local
-        paths: 
-          - path: /
-            servicePort: http
-    tls: []
-    
-management-api-scheme-1: 
-  enabled: true
-  <<: *management-api-base
-  env:
-    <<: *env-base
-    DFSP_ID: "proxy-id-1"
-    AUTH_CLIENT_ID: "proxy-id-1_oidc"
-    AUTH_CLIENT_SECRET: change-me_oidc
-  
-  ingress:
-    <<: *ingress-base
-    hosts:
-      - host: management-api-scheme-1.local
-        paths: ["/management-api-1(/|$)(.*)"]
 
-management-api-scheme-2: 
-  enabled: true
-  <<: *management-api-base
-  env:
-    <<: *env-base
-    DFSP_ID: "proxy-id-2"
-    AUTH_CLIENT_ID: "proxy-id-2_oidc"
-    AUTH_CLIENT_SECRET: change-me_oidc
-  
-  ingress:
-    <<: *ingress-base
-    hosts:
-      - host: management-api-scheme-2.local
-        paths: ["/management-api-2(/|$)(.*)"]
 
 ttk:
   enabled: false
@@ -116,44 +129,12 @@ ttk:
     config_files:
       user_config.json:
         {
-          "VERSION": 1,
           "CALLBACK_ENDPOINT": "http://{{ $.Release.Name }}-scheme-adapter:4001",
           "SEND_CALLBACK_ENABLE": true,
           "DEFAULT_ENVIRONMENT_FILE_NAME": "proxy-default-environment.json",
           "DEFAULT_REQUEST_TIMEOUT": 15000,
           "FSPID": *proxyid,
         }
-      system_config.json:
-        {
-          "API_DEFINITIONS":
-            [
-              {
-                "type": "scheme_adapter_outbound",
-                "version": "1.0",
-                "folderPath": "mojaloop_sdk_outbound_scheme_adapter_1.0",
-                "asynchronous": true,
-                "hostnames": [],
-                "prefix": "/sdk-out",
-              },
-              {
-                "type": "mojaloop_simulator_inbound",
-                "version": "1.4",
-                "folderPath": "mojaloop_simulator_sim_1.4",
-                "asynchronous": true,
-              },
-              {
-                "type": "core_connector",
-                "version": "1.4",
-                "folderPath": "payment_manager_1.4",
-                "hostnames": [],
-                "prefix": "/cc-send",
-              },
-            ],
-        }
-      rules_response__default.json: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/rules_response/default.json"
-      api_definitions__mojaloop_simulator_sim_1.4__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_simulator_sim_1.4/api_spec.yaml"
-      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/api_spec.yaml"
-      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__callback_map.json: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/callback_map.json"
     ingress:
       enabled: true
       className: "nginx"
