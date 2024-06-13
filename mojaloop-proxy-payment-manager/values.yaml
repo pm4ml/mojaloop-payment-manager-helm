@@ -59,15 +59,15 @@ inter-scheme-proxy-adapter:
 
     # Management API websocket connection settings.
     # The Management API uses this for exchanging connector management messages.
-    MGMT_API_WS_URL_A: management-api-service-a
+    MGMT_API_WS_URL_A: management-api-a
     MGMT_API_WS_PORT_A: 4005
 
-    MGMT_API_WS_URL_B: management-api-service-b
+    MGMT_API_WS_URL_B: management-api-b
     MGMT_API_WS_PORT_B: 4005
 
     PM4ML_ENABLED: true
     
-management-api-service-a: 
+management-api-a: 
   enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
@@ -93,7 +93,7 @@ management-api-service-a:
     enabled: false
 
 
-management-api-service-b: 
+management-api-b: 
   enabled: true
   imagePullCredentials: *imagePullCredentials
   env:

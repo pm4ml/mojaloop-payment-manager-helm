@@ -14,15 +14,15 @@ dependencies:
     repository: file://../inter-scheme-proxy-adapter
     condition: inter-scheme-proxy-adapter.enabled
   - name: pm4ml-management-api-service
-    alias: management-api-service-a
+    alias: management-api-a
     version: 2.0.2
     repository: file://../pm4ml-management-api-service
-    condition: management-api-service-a.enabled
+    condition: management-api-a.enabled
   - name: pm4ml-management-api-service
-    alias: management-api-service-b
+    alias: management-api-b
     version: 2.0.2
     repository: file://../pm4ml-management-api-service
-    condition: management-api-service-b.enabled
+    condition: management-api-b.enabled
   - name: ml-testing-toolkit
     version: 17.4.0
     repository: http://mojaloop.io/helm/repo
