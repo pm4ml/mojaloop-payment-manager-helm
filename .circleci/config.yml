@@ -60,8 +60,11 @@ jobs:
       - run:
           name: Add new chart to chart repo and publish
           command: |
+            mv repo repoIGNORE
             git checkout gh-pages
             git checkout master -- .circleci/config.yml
+            cp ./repoIGNORE/* repo
+            rm -rf repoIGNORE
             cd ./repo
             helm repo index --url https://$CIRCLE_PROJECT_USERNAME.github.io/$CIRCLE_PROJECT_REPONAME/repo .
             git add ./*.tgz ./index.yaml
