@@ -23,7 +23,7 @@ declare -a charts=(
         mojaloop-simulator-backend
         mojaloop-payment-manager
         inter-scheme-proxy-adapter
-        mojaloop-payment-manager-proxy
+        mojaloop-proxy-payment-manager
     )
 
 echo "Updating all Charts..."

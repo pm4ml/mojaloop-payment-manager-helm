@@ -2,7 +2,7 @@ apiVersion: v2
 version: 0.0.1
 appVersion: "v0.0.1"
 description: Helm chart for Proxy Payment Manager
-name: mojaloop-payment-manager-proxy
+name: mojaloop-proxy-payment-manager
 maintainers:
   - name: Steven Oderayi
     email: steven.oderayi@infitx.com

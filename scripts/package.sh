@@ -28,7 +28,7 @@ else
         mojaloop-simulator-backend
         mojaloop-payment-manager
         inter-scheme-proxy-adapter
-        mojaloop-payment-manager-proxy
+        mojaloop-proxy-payment-manager
     )
 fi
 
