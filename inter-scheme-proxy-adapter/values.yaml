@@ -41,7 +41,6 @@ env:
   OUTBOUND_MUTUAL_TLS_ENABLED_A: false
   OUTBOUND_MUTUAL_TLS_ENABLED_B: false
 
-
   # Location of certs and key required for TLS
   # OUT_CA_CERT_PATH_A:./secrets/cacert_a.pem
   # OUT_CLIENT_CERT_PATH_A:./secrets/servercert_a.pem
