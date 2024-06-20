@@ -20,7 +20,7 @@ dependencies:
     condition: management-api-a.enabled
   - name: pm4ml-management-api-service
     alias: management-api-b
-    version: 2.0.2
+    version: 2.0.3
     repository: file://../pm4ml-management-api-service
     condition: management-api-b.enabled
   - name: ml-testing-toolkit
