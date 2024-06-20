@@ -1,0 +1,161 @@
+# Default values for mojaloop-proxy-payment-manager.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# common/shared values
+
+IMAGE_PULL_CREDENTIALS: &imagePullCredentials {}
+#   registry: "somedockerregistry"
+#   user: "someusername"
+#   pass: "somepassword"
+
+PROXY_ID: &proxyId "proxy1"
+
+inter-scheme-proxy-adapter:
+  enabled: true
+  imagePullCredentials: *imagePullCredentials
+  envFromSecrets:
+  #  OAUTH_CLIENT_KEY_A:
+  #    secret:
+  #      name: some-secret-name
+  #      key: OAUTH_CLIENT_KEY_A
+  #  OAUTH_CLIENT_SECRET_A:
+  #    secret:
+  #      name: some-secret-name
+  #      key: OAUTH_CLIENT_SECRET_A
+
+  env:
+    LOG_LEVEL: info
+
+    # Port number that the inbound (FSPIOP API) HTTP server A will listen on
+    INBOUND_LISTEN_PORT_A: 4000
+
+    # Port number that the inbound (FSPIOP API) HTTP server B will listen on
+    INBOUND_LISTEN_PORT_B: 4100
+
+    # Enable mutual TLS authentication. Useful when not running in a secure
+    # environment, i.e. when you're running it locally against your own implementation.
+    OUTBOUND_MUTUAL_TLS_ENABLED_A: true
+    OUTBOUND_MUTUAL_TLS_ENABLED_B: true
+
+    # SWITCH ENDPOINTS
+    PEER_ENDPOINT_A: switch-a-endpoint
+    PEER_ENDPOINT_B: switch-a-endpoint
+
+    # Participant ID of this Proxy
+    PROXY_ID: "proxy1"
+
+    # OAuth2 data used to obtain bearer token
+    # Use envFromSecrets instead when secret is stored as k8s secret
+    OAUTH_TOKEN_ENDPOINT_A:
+    OAUTH_CLIENT_KEY_A:
+    OAUTH_CLIENT_SECRET_A:
+    OAUTH_REFRESH_SECONDS_A: 3600
+
+    OAUTH_TOKEN_ENDPOINT_B:
+    OAUTH_CLIENT_KEY_B:
+    OAUTH_CLIENT_SECRET_B:
+    OAUTH_REFRESH_SECONDS_B: 3600
+
+    # Management API websocket connection settings.
+    # The Management API uses this for exchanging connector management messages.
+    MGMT_API_WS_URL_A: management-api-a
+    MGMT_API_WS_PORT_A: 4005
+
+    MGMT_API_WS_URL_B: management-api-b
+    MGMT_API_WS_PORT_B: 4005
+
+    PM4ML_ENABLED: true
+    
+management-api-a: 
+  enabled: true
+  imagePullCredentials: *imagePullCredentials
+  env:
+    HUB_IAM_PROVIDER_URL: https://change.me
+    MCM_SERVER_ENDPOINT: http://mcm-server
+    CACHE_HOST: redis-master
+    DFSP_ID: *proxyId
+    MCM_CLIENT_REFRESH_INTERVAL: 300
+    AUTH_ENABLED: true
+    AUTH_CLIENT_ID: change-me_oidc
+    AUTH_CLIENT_SECRET: change-me_oidc
+    VAULT_ENDPOINT: http://vault:8200
+    VAULT_AUTH_METHOD: K8S
+    VAULT_K8S_ROLE: vault-pm4ml-auth
+    VAULT_K8S_TOKEN_FILE: /var/run/secrets/kubernetes.io/serviceaccount/token
+    VAULT_ROLE_ID_FILE: /vault/role-id
+    VAULT_ROLE_SECRET_ID_FILE: /vault/secret-id
+    VAULT_PKI_BASE_DOMAIN: example.com
+    VAULT_MOUNT_PKI: pki
+    VAULT_MOUNT_KV: secrets
+  
+  ingress:
+    enabled: false
+
+
+management-api-b: 
+  enabled: true
+  imagePullCredentials: *imagePullCredentials
+  env:
+    HUB_IAM_PROVIDER_URL: https://change.me
+    MCM_SERVER_ENDPOINT: http://mcm-server
+    CACHE_HOST: redis-master
+    DFSP_ID: *proxyId
+    MCM_CLIENT_REFRESH_INTERVAL: 300
+    AUTH_ENABLED: true
+    AUTH_CLIENT_ID: change-me_oidc
+    AUTH_CLIENT_SECRET: change-me_oidc
+    VAULT_ENDPOINT: http://vault:8200
+    VAULT_AUTH_METHOD: K8S
+    VAULT_K8S_ROLE: vault-pm4ml-auth
+    VAULT_K8S_TOKEN_FILE: /var/run/secrets/kubernetes.io/serviceaccount/token
+    VAULT_ROLE_ID_FILE: /vault/role-id
+    VAULT_ROLE_SECRET_ID_FILE: /vault/secret-id
+    VAULT_PKI_BASE_DOMAIN: example.com
+    VAULT_MOUNT_PKI: pki
+    VAULT_MOUNT_KV: secrets
+  
+  ingress:
+    enabled: false
+
+
+ttk:
+  enabled: false
+  ml-testing-toolkit-backend:
+    enabled: true
+    image:
+      repository: mojaloop/ml-testing-toolkit
+      tag: v17.2.0
+    config_files:
+      user_config.json:
+        {
+          "CALLBACK_ENDPOINT": "http://{{ $.Release.Name }}-scheme-adapter:4001",
+          "SEND_CALLBACK_ENABLE": true,
+          "DEFAULT_ENVIRONMENT_FILE_NAME": "proxy-default-environment.json",
+          "DEFAULT_REQUEST_TIMEOUT": 15000,
+          "FSPID": *proxyId,
+        }
+    ingress:
+      enabled: true
+      className: "nginx"
+      hosts:
+        specApi:
+          host: proxy-testing-toolkit-specapi.local
+        adminApi:
+          host: proxy-testing-toolkit.local
+    extraEnvironments:
+      proxy-default-environment.json: { "inputValues": { "VAR1": "VALUE1" } }
+
+  ml-testing-toolkit-frontend:
+    enabled: true
+    image:
+      repository: mojaloop/ml-testing-toolkit-ui
+      tag: v15.5.0
+    className: "nginx"
+    ingress:
+      enabled: true
+      hosts:
+        ui:
+          host: proxy-testing-toolkit.local
+    config:
+      API_BASE_URL: http://proxy-testing-toolkit.local
