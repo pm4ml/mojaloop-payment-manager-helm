@@ -63,15 +63,15 @@ spec:
           livenessProbe:
             httpGet:
               path: /health
-              port: http
+              port: testapi
           readinessProbe:
             httpGet:
               path: /health
-              port: http
+              port: testapi
           startupProbe:
             httpGet:
               path: /health
-              port: http
+              port: testapi
             failureThreshold: 10
             periodSeconds: 5
           resources:

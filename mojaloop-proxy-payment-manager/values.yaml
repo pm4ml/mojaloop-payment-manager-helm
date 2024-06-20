@@ -66,14 +66,14 @@ inter-scheme-proxy-adapter:
     MGMT_API_WS_PORT_B: 4005
 
     PM4ML_ENABLED: true
-    
-management-api-a: 
+
+management-api-a:
   enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
-    CACHE_HOST: redis-master
+    ENABLE_UI_API_SERVER: false
     DFSP_ID: *proxyId
     MCM_CLIENT_REFRESH_INTERVAL: 300
     AUTH_ENABLED: true
@@ -88,18 +88,18 @@ management-api-a:
     VAULT_PKI_BASE_DOMAIN: example.com
     VAULT_MOUNT_PKI: pki
     VAULT_MOUNT_KV: secrets
-  
+
   ingress:
     enabled: false
 
 
-management-api-b: 
+management-api-b:
   enabled: true
   imagePullCredentials: *imagePullCredentials
   env:
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
-    CACHE_HOST: redis-master
+    ENABLE_UI_API_SERVER: false
     DFSP_ID: *proxyId
     MCM_CLIENT_REFRESH_INTERVAL: 300
     AUTH_ENABLED: true
@@ -114,7 +114,7 @@ management-api-b:
     VAULT_PKI_BASE_DOMAIN: example.com
     VAULT_MOUNT_PKI: pki
     VAULT_MOUNT_KV: secrets
-  
+
   ingress:
     enabled: false
 
