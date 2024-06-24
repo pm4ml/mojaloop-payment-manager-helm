@@ -347,6 +347,12 @@ scheme-adapter:
       # when running the scheme-adapter as a mojaloop connector component within Payment Manager for Mojaloop.
       PM4ML_ENABLED: true
 
+      # Set FX Provider to use, this is temporary configuration until services component is implemented. Enable this for FX.
+      # GET_SERVICES_FXP_RESPONSE: testfxp
+
+      # Supported Currencies by this DFSP. Enable this for FX.
+      # SUPPORTED_CURRENCIES: "USD"
+
       ## API-SVC kafka config
       BACKEND_EVENT_CONSUMER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
       BACKEND_EVENT_PRODUCER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
@@ -423,7 +429,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.5.1
+      tag: v23.5.0-snapshot.4
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
