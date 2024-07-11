@@ -66,6 +66,8 @@ inter-scheme-proxy-adapter:
     MGMT_API_WS_PORT_B: 4005
 
     PM4ML_ENABLED: true
+    # Interval to check peer JWS changes in milliseconds. This is fail safe mechanism, so the value can be high.
+    CHECK_PEER_JWS_INTERVAL: 1800000
 
 management-api-a:
   enabled: true

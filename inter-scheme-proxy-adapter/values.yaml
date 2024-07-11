@@ -79,6 +79,9 @@ env:
   # Set to true to enable the use of PM4ML-related services e.g MCM, Management API service
   PM4ML_ENABLED: false
 
+  # Interval to check peer JWS changes in milliseconds. This is fail safe mechanism, so the value can be high.
+  CHECK_PEER_JWS_INTERVAL: 1800000
+
 podAffinityPreset: ""
 ## @param podAntiAffinityPreset Pod anti-affinity preset. Ignored if `main.affinity` is set. Allowed values: `soft` or `hard`
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
@@ -139,7 +142,7 @@ containerSecurityContext:
 image:
   registry: docker.io
   repository: pm4ml/inter-scheme-proxy-adapter
-  tag: 0.0.1
+  tag: 1.0.0-snapshot.1
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
