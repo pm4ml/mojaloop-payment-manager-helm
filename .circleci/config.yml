@@ -1,5 +1,25 @@
 version: 2.1
 
+defaults_Dependencies: &defaults_Dependencies
+  name: Install default dependencies
+  command: |
+    apk --no-cache add git
+    apk --no-cache add bash
+    apk --no-cache add ca-certificates
+    apk --no-cache add curl
+    apk --no-cache add openssh-client
+    apk add --no-cache -t python2
+    apk add --no-cache -t build-dependencies make gcc g++ libtool autoconf automake
+
+defaults_helm_dependencies: &defaults_helm_dependencies
+  name: Install default helm dependencies
+  command: |
+    helm repo add bitnami https://charts.bitnami.com/bitnami
+    helm repo add prometheus https://prometheus-community.github.io/helm-charts
+    helm repo add mojaloop http://mojaloop.io/helm/repo
+    helm repo add charts https://mojaloop.github.io/charts/repo
+    helm repo update
+
 jobs:
   lint:
     working_directory: ~/repo
@@ -7,16 +27,16 @@ jobs:
       - image: alpine/helm:3.5.2
     steps:
       - run:
-          name: Install default dependencies
-          command: apk --no-cache add git openssh-client
+          <<: *defaults_Dependencies
       - checkout
       - run:
-          name: Update the dependencies
-          command: |
-            helm dep update ./mojaloop-payment-manager
+          <<: *defaults_helm_dependencies
       - run:
-          name: Lint Chart
-          command: helm lint mojaloop-payment-manager
+          name: Update Helm Charts
+          command: ./scripts/update-charts-dep.sh
+      - run:
+          name: Linting Helm Charts
+          command: ./scripts/lint-charts.sh
 
   build_and_publish_chart:
     working_directory: ~/repo
@@ -24,39 +44,30 @@ jobs:
       - image: alpine/helm:3.5.2
     steps:
       - run:
-          name: Install default dependencies
-          command: apk --no-cache add git openssh-client
+          <<: *defaults_Dependencies
       - add_ssh_keys:
          fingerprints:
            - "27:60:48:42:65:59:f3:15:37:63:f1:ba:43:0f:9c:5b"
       - checkout
       - run:
-          name: Add helm repo
-          command: |
-            helm repo add bitnami https://charts.bitnami.com/bitnami
-            helm repo add prometheus https://prometheus-community.github.io/helm-charts
-            helm repo add mojaloop http://mojaloop.io/helm/repo
+          <<: *defaults_helm_dependencies
       - run:
-          name: Update the dependencies
-          command: |
-            cd mojaloop-payment-manager
-            helm dep update
-            cd ..
+          name: Update dependencies
+          command: ./scripts/update-charts-dep.sh
       - run:
-          name: Build helm chart
-          command: |
-            helm package mojaloop-payment-manager
+          name: Package Helm Chart
+          command: ./scripts/package.sh
       - run:
           name: Add new chart to chart repo and publish
           command: |
+            mv repo repoIGNORE
             git checkout gh-pages
             git checkout master -- .circleci/config.yml
-            mv mojaloop-payment-manager-*.tgz ./repo
-            mv mojaloop-payment-manager/charts/* ./repo
-            rm -rf ./mojaloop-payment-manager
+            cp ./repoIGNORE/* repo
+            rm -rf repoIGNORE
             cd ./repo
             helm repo index --url https://$CIRCLE_PROJECT_USERNAME.github.io/$CIRCLE_PROJECT_REPONAME/repo .
-            git add -A
+            git add ./*.tgz ./index.yaml
             git config user.email "cicd@modusbox.com"
             git config user.name "CICD at ModusBox"
             git commit -m "Automated deployment to GitHub Pages" --allow-empty
