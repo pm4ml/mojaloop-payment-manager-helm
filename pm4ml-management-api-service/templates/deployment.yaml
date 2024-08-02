@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "pm4ml-management-api-service.fullname" . }}
+  annotations:
+    reloader.stakater.com/auto: 'true'
   labels:
 {{ include "pm4ml-management-api-service.labels" . | indent 4 }}
 spec:
