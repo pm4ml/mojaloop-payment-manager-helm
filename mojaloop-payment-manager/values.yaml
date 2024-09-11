@@ -138,9 +138,6 @@ mysql:
     persistence:
       enabled: false
 
-prometheus:
-  enabled: false
-
 vault:
   enabled: false
 
@@ -1580,6 +1577,7 @@ scheme-adapter:
       name: ""
 
 prometheus:
+  enabled: false
   nodeExporter:
     enabled: false
   server:
