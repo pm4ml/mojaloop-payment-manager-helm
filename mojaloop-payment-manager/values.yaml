@@ -138,6 +138,9 @@ mysql:
     persistence:
       enabled: false
 
+prometheus:
+  enabled: false
+
 vault:
   enabled: false
 
