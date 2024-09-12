@@ -1577,6 +1577,7 @@ scheme-adapter:
       name: ""
 
 prometheus:
+  enabled: true
   nodeExporter:
     enabled: false
   server:
