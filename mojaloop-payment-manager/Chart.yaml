@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 9.2.1-snapshot.4
-appVersion: "v9.1.5"
+version: 10.0.1
+appVersion: "v10.0.1"
 description: Helm chart for Mojaloop Payment Manager
 name: mojaloop-payment-manager
 maintainers:
@@ -10,17 +10,17 @@ maintainers:
     email: david.fry@modusbox.com
 dependencies:
   - name: pm4ml-ui
-    version: 1.17.5
+    version: 1.17.6
     repository: file://../pm4ml-ui
     alias: frontend
     condition: frontend.enabled
   - name: pm4ml-experience-api
-    version: 1.8.22
+    version: 1.8.23
     repository: file://../pm4ml-experience-api
     alias: experience-api
     condition: experience-api.enabled
   - name: pm4ml-management-api-service
-    version: 2.0.3
+    version: 3.0.0
     repository: file://../pm4ml-management-api-service
     alias: management-api
     condition: management-api.enabled

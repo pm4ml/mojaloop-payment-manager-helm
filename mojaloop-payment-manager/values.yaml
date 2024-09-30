@@ -103,6 +103,7 @@ management-api:
     #    CLIENT_SECRET_KEY: changeme
     CACHE_HOST: redis-master
     DFSP_ID: *dfspId
+    ENABLE_UI_API_SERVER: true
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
     MCM_CLIENT_REFRESH_INTERVAL: 300

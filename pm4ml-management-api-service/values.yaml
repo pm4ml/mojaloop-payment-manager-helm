@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-management-api
-  tag: 5.0.0-snapshot.1
+  tag: 6.0.0
   pullPolicy: IfNotPresent
 
 config:
@@ -88,6 +88,7 @@ env:
   TEST_API_PORT: 9050
   CALLBACK_URL: connector.fsp.example.com:443
   ENABLE_VISUALIZER: true
+  ENABLE_UI_API_SERVER: true
 
 imagePullSecrets: []
 nameOverride: ""

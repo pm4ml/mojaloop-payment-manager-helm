@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-experience-api
-  tag: 2.0.5
+  tag: 2.0.16
   pullPolicy: Always
 
 nameOverride: ""
@@ -18,6 +18,8 @@ env:
   managementEndPoint: management-api
   dfspId: test
   metricsEndPoint: prometheus-server
+  cacheUrl: redis://redis-master:6379
+  authSessionSecure: false
 
 service:
   type: ClusterIP
