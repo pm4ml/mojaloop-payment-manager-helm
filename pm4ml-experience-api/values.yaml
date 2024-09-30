@@ -20,7 +20,7 @@ env:
   managementEndPoint: management-api
   dfspId: test
   metricsEndPoint: prometheus-server
-  CACHE_URL: redis://redis-master:6379
+  cacheUrl: redis://redis-master:6379
   authSessionSecure: true
 
 service:
