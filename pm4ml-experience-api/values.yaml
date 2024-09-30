@@ -21,7 +21,7 @@ env:
   dfspId: test
   metricsEndPoint: prometheus-server
   cacheUrl: redis://redis-master:6379
-  authSessionSecure: true
+  authSessionSecure: false
 
 service:
   type: ClusterIP
