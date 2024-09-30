@@ -8,9 +8,4 @@ maintainers:
     email: murthy@modusbox.com
   - name: Nguni Phakela
     email: nguni@izyane.com
-# dependencies:
-#   - name: redis
-#     version: 17.6.0
-#     repository: https://charts.bitnami.com/bitnami
-#     condition: redis.enabled
   
