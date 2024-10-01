@@ -4,9 +4,9 @@ metadata:
   name: test-pm4ml-ui
   labels:
     app.kubernetes.io/name: pm4ml-ui
-    helm.sh/chart: pm4ml-ui-1.0.0
+    helm.sh/chart: pm4ml-ui-1.17.6
     app.kubernetes.io/instance: test
-    app.kubernetes.io/version: "1.0"
+    app.kubernetes.io/version: "1.17.6"
     app.kubernetes.io/managed-by: Tiller
 spec:
   replicas: 1
