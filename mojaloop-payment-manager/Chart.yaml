@@ -15,7 +15,7 @@ dependencies:
     alias: frontend
     condition: frontend.enabled
   - name: pm4ml-experience-api
-    version: 1.8.23
+    version: 1.8.24
     repository: file://../pm4ml-experience-api
     alias: experience-api
     condition: experience-api.enabled
