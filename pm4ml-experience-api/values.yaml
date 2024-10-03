@@ -6,9 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-experience-api
-  ## TODO: Need to update the tag to the production release when PR is merged
-  ## https://github.com/pm4ml/mojaloop-payment-manager-experience-api/pull/6
-  tag: 2.0.16
+  tag: v3.0.0-snapshot.11
   pullPolicy: Always
 
 nameOverride: ""
