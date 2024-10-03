@@ -37,7 +37,7 @@ jobs:
         kubeconform -strict -kubernetes-version 1.21.1 manifests_1_21
 
     - name: Store templated manifests on failure
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         retention-days: 4 # over the weekend plus a bit
@@ -70,7 +70,7 @@ jobs:
         # chart is not compatible with it.
 
     - name: Store templated manifests on failure
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         retention-days: 4 # over the weekend plus a bit
