@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: pm4ml/mojaloop-payment-manager-experience-api
-  tag: 2.0.16
+  tag: 3.0.0-snapshot.11
   pullPolicy: Always
 
 nameOverride: ""
