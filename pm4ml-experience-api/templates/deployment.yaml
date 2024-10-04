@@ -61,7 +61,7 @@ spec:
               value: "{{ .Values.env.authSessionSecure }}"
             - name: "SESSION_REDIS_URL"
               value: "{{ .Values.env.authSessionRedisUrl }}"
-            - name: "CACHE_URL"
+            - name: "CACHE_REDIS_URL"
               value: "{{ .Values.env.cacheUrl }}"
           ports:
             - name: http
