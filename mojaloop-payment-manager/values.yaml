@@ -1693,6 +1693,7 @@ ttk:
     image:
       repository: mojaloop/ml-testing-toolkit
       tag: v17.2.0
+    command: '["sh", "-c", "until nslookup github.com; do sleep 5;done; cd /opt/default_config; for FILE in *; do newFileName=/opt/app/spec_files/${FILE//__/\\/}; mkdir -p ${newFileName%/*}; firstLine=$(head -n 1 $FILE | tr -d \\\"); regex=\"^(http|https|ftp)://\"; if [[ \"$firstLine\" =~ $regex ]]; then wget $firstLine -O $newFileName; else cp $FILE $newFileName; fi; done; cd /opt/app; npm run start;"]'
     config_files:
       user_config.json:
         {
