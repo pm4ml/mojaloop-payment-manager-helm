@@ -29,7 +29,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
   - name: sdk-scheme-adapter
-    version: 1.5.1-iso.20162
+    version: 1.9.1-iso.20162
     repository: http://mojaloop.io/helm/repo
     alias: scheme-adapter
     condition: scheme-adapter.enabled
