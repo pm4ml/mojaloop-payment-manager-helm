@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 10.1.4
-appVersion: "v10.1.4"
+version: 10.1.5
+appVersion: "v10.1.5"
 description: Helm chart for Mojaloop Payment Manager
 name: mojaloop-payment-manager
 maintainers:
@@ -29,7 +29,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
   - name: sdk-scheme-adapter
-    version: 1.9.0-18400-24b49e8
+    version: 1.5.1-iso.20162
     repository: http://mojaloop.io/helm/repo
     alias: scheme-adapter
     condition: scheme-adapter.enabled
