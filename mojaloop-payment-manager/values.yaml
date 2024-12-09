@@ -85,7 +85,7 @@ experience-api:
     authResourceName: pm4ml-customer-ui
     # this should be set to the external URL of the UI
     authLoggedInLandingUrl: "http://frontend.external.url:1234/"
-    authSessionSecure: true
+    authSessionSecure: false
     authSessionRedisUrl: "redis://redis-master/2"
   ingress:
     enabled: true
@@ -103,7 +103,7 @@ management-api:
     #    CLIENT_SECRET_KEY: changeme
     CACHE_HOST: redis-master
     DFSP_ID: *dfspId
-    ENABLE_UI_API_SERVER: true
+    ENABLE_UI_API_SERVER: false
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
     MCM_CLIENT_REFRESH_INTERVAL: 300
@@ -430,7 +430,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.6.0-snapshot.17
+      tag: v23.6.0-iso.8
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -840,7 +840,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.6.0-snapshot.17
+      tag: v23.6.0-iso.8
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1256,7 +1256,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.6.0-snapshot.17
+      tag: v23.6.0-iso.8
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
