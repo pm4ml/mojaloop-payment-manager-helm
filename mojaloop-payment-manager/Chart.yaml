@@ -10,7 +10,7 @@ maintainers:
     email: david.fry@modusbox.com
 dependencies:
   - name: pm4ml-ui
-    version: 1.17.5
+    version: 1.17.6
     repository: file://../pm4ml-ui
     alias: frontend
     condition: frontend.enabled
