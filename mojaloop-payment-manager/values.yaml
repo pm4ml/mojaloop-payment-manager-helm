@@ -85,7 +85,7 @@ experience-api:
     authResourceName: pm4ml-customer-ui
     # this should be set to the external URL of the UI
     authLoggedInLandingUrl: "http://frontend.external.url:1234/"
-    authSessionSecure: true
+    authSessionSecure: false
     authSessionRedisUrl: "redis://redis-master/2"
   ingress:
     enabled: true
@@ -103,7 +103,7 @@ management-api:
     #    CLIENT_SECRET_KEY: changeme
     CACHE_HOST: redis-master
     DFSP_ID: *dfspId
-    ENABLE_UI_API_SERVER: true
+    ENABLE_UI_API_SERVER: false
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
     MCM_CLIENT_REFRESH_INTERVAL: 300
@@ -337,7 +337,7 @@ scheme-adapter:
       # To enable request for notification on fulfiled transfer
       RESERVE_NOTIFICATION: true
       # resources API versions should be string in format: "resourceOneName=1.0,resourceTwoName=1.1"
-      RESOURCE_VERSIONS: transfers=1.1,participants=1.1
+      #RESOURCE_VERSIONS: transfers=1.1,participants=1.1
 
       # Management API websocket connection settings.
       # The Management API uses this for exchanging connector management messages.
@@ -347,6 +347,12 @@ scheme-adapter:
       # Set to true to enable the use of PM4ML-related services e.g MCM, Management API service
       # when running the scheme-adapter as a mojaloop connector component within Payment Manager for Mojaloop.
       PM4ML_ENABLED: true
+
+      # Set FX Provider to use, this is temporary configuration until services component is implemented. Enable this for FX.
+      # GET_SERVICES_FXP_RESPONSE: testfxp
+
+      # Supported Currencies by this DFSP. Enable this for FX.
+      # SUPPORTED_CURRENCIES: "USD"
 
       ## API-SVC kafka config
       BACKEND_EVENT_CONSUMER_BROKER_LIST: '{{ include "common.tplvalues.render" (dict "value" .Values.kafka.host "context" $) | default (include "common.tplvalues.render" (dict "value" .Values.global.kafka.host "context" $)) }}:{{ .Values.kafka.port | default .Values.global.kafka.port }}'
@@ -424,7 +430,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.5.1
+      tag: v23.6.0-iso.8
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -834,7 +840,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.5.1
+      tag: v23.6.0-iso.8
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1250,7 +1256,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.5.1
+      tag: v23.6.0-iso.8
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1572,6 +1578,7 @@ scheme-adapter:
       name: ""
 
 prometheus:
+  enabled: true
   nodeExporter:
     enabled: false
   server:
@@ -1686,6 +1693,7 @@ ttk:
     image:
       repository: mojaloop/ml-testing-toolkit
       tag: v17.2.0
+    command: '["sh", "-c", "until nslookup github.com; do sleep 5;done; cd /opt/default_config; for FILE in *; do newFileName=/opt/app/spec_files/${FILE//__/\\/}; mkdir -p ${newFileName%/*}; firstLine=$(head -n 1 $FILE | tr -d \\\"); regex=\"^(http|https|ftp)://\"; if [[ \"$firstLine\" =~ $regex ]]; then wget $firstLine -O $newFileName; else cp $FILE $newFileName; fi; done; cd /opt/app; npm run start;"]'
     config_files:
       user_config.json:
         {
@@ -1693,6 +1701,12 @@ ttk:
           "CALLBACK_ENDPOINT": "http://{{ $.Release.Name }}-scheme-adapter:4001",
           "SEND_CALLBACK_ENABLE": true,
           "DEFAULT_ENVIRONMENT_FILE_NAME": "pm4ml-default-environment.json",
+          "GITHUB_CONFIG": {
+            "TEST_CASES_REPO_OWNER": "mojaloop",
+            "TEST_CASES_REPO_NAME": "testing-toolkit-test-cases",
+            "TEST_CASES_REPO_DEFAULT_RELEASE_TAG": "latest",
+            "TEST_CASES_REPO_BASE_PATH": "collections/pm4ml"
+          },
           "DEFAULT_REQUEST_TIMEOUT": 15000,
           "FSPID": *dfspId,
         }
@@ -1701,18 +1715,18 @@ ttk:
           "API_DEFINITIONS":
             [
               {
-                "type": "scheme_adapter_outbound",
-                "version": "1.0",
-                "folderPath": "mojaloop_sdk_outbound_scheme_adapter_1.0",
-                "asynchronous": true,
+                "type": "mojaloop_connector_outbound",
+                "version": "2.1",
+                "folderPath": "mojaloop_connector_outbound_2.1",
+                "asynchronous": false,
                 "hostnames": [],
                 "prefix": "/sdk-out",
               },
               {
-                "type": "mojaloop_simulator_inbound",
-                "version": "1.4",
-                "folderPath": "mojaloop_simulator_sim_1.4",
-                "asynchronous": true,
+                "type": "mojaloop_connector_backend",
+                "version": "2.1",
+                "folderPath": "mojaloop_connector_backend_2.1",
+                "asynchronous": false,
               },
               {
                 "type": "core_connector",
@@ -1723,10 +1737,39 @@ ttk:
               },
             ],
         }
-      rules_response__default.json: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/rules_response/default.json"
-      api_definitions__mojaloop_simulator_sim_1.4__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_simulator_sim_1.4/api_spec.yaml"
-      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/api_spec.yaml"
-      api_definitions__mojaloop_sdk_outbound_scheme_adapter_1.0__callback_map.json: "https://raw.githubusercontent.com/mojaloop/sdk-scheme-adapter/v22.0.1/test/func/config/ttk-ttksim2/spec_files/api_definitions/mojaloop_sdk_outbound_scheme_adapter_1.0/callback_map.json"
+      rules_response__default.json: https://raw.githubusercontent.com/mojaloop/testing-toolkit-test-cases/v17.0.0-iso.13/rules/pm4ml/forex/rules_sync_response/fxp_response_rules.json
+      api_definitions__mojaloop_connector_backend_2.1__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/api-snippets/v17.4.0/docs/sdk-scheme-adapter-backend-v2_1_0-openapi3-snippets.yaml"
+      api_definitions__mojaloop_connector_outbound_2.1__api_spec.yaml: "https://raw.githubusercontent.com/mojaloop/api-snippets/main/docs/sdk-scheme-adapter-outbound-v2_1_0-openapi3-snippets.yaml"
+      api_definitions__mojaloop_connector_outbound_2.1__callback_map.json: []
+    extraEnvironments:
+      pm4ml-default-environment.json: {
+        "inputValues": {
+          "ENABLE_WS_ASSERTIONS": true,
+          "WS_ASSERTION_TIMEOUT": 5000,
+          "RETRY_MAX_ATTEMPTS": 100,
+          "FROM_DISPLAY_NAME": "Display-Test",
+          "FROM_FIRST_NAME": "Firstname-Test",
+          "FROM_MIDDLE_NAME": "Middlename-Test",
+          "FROM_LAST_NAME": "Lastname-Test",
+          "FROM_DOB": "1984-01-01",
+          "FROM_FSP_ID": "testpayer",
+          "HOME_TRANSACTION_ID": "123ABC",
+          "NOTE": "test",
+          "P2P_AMOUNT": "10",
+          "P2P_CURRENCY": "EUR",
+          "P2P_SOURCE_PARTY_ID_1": "16665551001",
+          "P2P_DESTINATION_PARTY_ID_1": "16665551002",
+          "FX_SOURCE_PARTY_ID_1": "16665551001",
+          "FX_DESTINATION_PARTY_ID_1": "16665551002",
+          "FXP1_ID": "testfxp",
+          "FX_PAYERDFSP_ID": "testpayer",
+          "FX_PAYEEDFSP_ID": "testpayee",
+          "FX_SOURCE_CURRENCY": "EUR",
+          "FX_TARGET_CURRENCY": "XXX",
+          "FX_SOURCE_AMOUNT": "10"
+        }
+      }
+
     ingress:
       enabled: true
       className: "nginx"
@@ -1735,8 +1778,6 @@ ttk:
           host: pm4ml-testing-toolkit-specapi.local
         adminApi:
           host: pm4ml-testing-toolkit.local
-    extraEnvironments:
-      pm4ml-default-environment.json: { "inputValues": { "VAR1": "VALUE1" } }
 
   ml-testing-toolkit-frontend:
     enabled: true

@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 10.0.2
-appVersion: "v10.0.2"
+version: 10.1.6
+appVersion: "v10.1.6"
 description: Helm chart for Mojaloop Payment Manager
 name: mojaloop-payment-manager
 maintainers:
@@ -15,12 +15,12 @@ dependencies:
     alias: frontend
     condition: frontend.enabled
   - name: pm4ml-experience-api
-    version: 1.8.22
+    version: 1.8.26
     repository: file://../pm4ml-experience-api
     alias: experience-api
     condition: experience-api.enabled
   - name: pm4ml-management-api-service
-    version: 3.0.0
+    version: 3.0.1
     repository: file://../pm4ml-management-api-service
     alias: management-api
     condition: management-api.enabled
@@ -29,7 +29,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
   - name: sdk-scheme-adapter
-    version: 1.8.0
+    version: 1.9.1-iso.20162
     repository: http://mojaloop.io/helm/repo
     alias: scheme-adapter
     condition: scheme-adapter.enabled
@@ -45,6 +45,7 @@ dependencies:
     version: 11.16.9
     repository: https://prometheus-community.github.io/helm-charts
     alias: prometheus
+    condition: prometheus.enabled
   - name: vault
     version: 0.14.0
     repository: https://helm.releases.hashicorp.com

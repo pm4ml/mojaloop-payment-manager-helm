@@ -61,6 +61,8 @@ spec:
               value: "{{ .Values.env.authSessionSecure }}"
             - name: "SESSION_REDIS_URL"
               value: "{{ .Values.env.authSessionRedisUrl }}"
+            - name: "CACHE_REDIS_URL"
+              value: "{{ .Values.env.cacheUrl }}"
           ports:
             - name: http
               containerPort: 3000
