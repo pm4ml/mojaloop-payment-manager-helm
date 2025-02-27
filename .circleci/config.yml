@@ -24,7 +24,7 @@ jobs:
   lint:
     working_directory: ~/repo
     docker:
-      - image: alpine/helm:3.5.2
+      - image: alpine/helm:3.12.1
     steps:
       - run:
           <<: *defaults_Dependencies
