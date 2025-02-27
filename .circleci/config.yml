@@ -146,10 +146,9 @@ workflows:
             - lint
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
             branches:
               ignore:
-                - /.*/
                 - gh-pages
       - test-lint-k8s:
           context: org-global
@@ -157,10 +156,9 @@ workflows:
             - lint
           filters:
             tags:
-              only: /^v.*/
+              only: /.*/
             branches:
               ignore:
-                - /.*/
                 - gh-pages
       - build_and_publish_chart:
           requires:
