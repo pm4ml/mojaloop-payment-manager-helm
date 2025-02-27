@@ -53,7 +53,8 @@ jobs:
             - eslint.config.mjs
 
   test-lint-yaml:
-    executor: default-machine
+    machine:
+      image: ubuntu-2004:current
     steps:
       - attach_workspace:
           at: .
@@ -74,7 +75,8 @@ jobs:
           path: /home/circleci/project/test/lint.html
           destination: Lint-YAML
   test-lint-k8s:
-    executor: default-machine
+    machine:
+      image: ubuntu-2004:current
     steps:
       - attach_workspace:
           at: .
