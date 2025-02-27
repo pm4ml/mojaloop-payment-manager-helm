@@ -9,3 +9,7 @@ mojaloop-payment-manager/charts
 Chart.lock
 
 **/charts
+
+# Linting
+test/**
+node_modules
