@@ -118,7 +118,7 @@ jobs:
           command: |
             mv repo repoIGNORE
             git checkout gh-pages
-            git checkout master -- .circleci/config.yml
+            git checkout main -- .circleci/config.yml
             cp ./repoIGNORE/* repo
             rm -rf repoIGNORE
             cd ./repo
