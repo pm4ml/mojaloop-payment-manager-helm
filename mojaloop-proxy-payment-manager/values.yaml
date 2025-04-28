@@ -49,12 +49,10 @@ inter-scheme-proxy-adapter:
     # Use envFromSecrets instead when secret is stored as k8s secret
     OAUTH_TOKEN_ENDPOINT_A:
     OAUTH_CLIENT_KEY_A:
-    OAUTH_CLIENT_SECRET_A:
     OAUTH_REFRESH_SECONDS_A: 3600
 
     OAUTH_TOKEN_ENDPOINT_B:
     OAUTH_CLIENT_KEY_B:
-    OAUTH_CLIENT_SECRET_B:
     OAUTH_REFRESH_SECONDS_B: 3600
 
     # Management API websocket connection settings.
