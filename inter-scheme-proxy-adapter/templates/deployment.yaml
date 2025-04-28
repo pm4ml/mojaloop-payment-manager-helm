@@ -9,6 +9,7 @@ metadata:
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
   annotations:
+    reloader.stakater.com/auto: 'true'
     # Common annotations
     {{- if .Values.commonAnnotations }}
     {{- include "common.tplvalues.render" ( dict "value" $.Values.commonAnnotations "context" $ ) | nindent 4 }}
@@ -20,7 +21,7 @@ spec:
       app.kubernetes.io/component: {{ .Chart.Name }}
   template:
     metadata:
-      annotations: 
+      annotations:
         checksum/config: {{ .Values.env | toString | sha256sum }}
         {{- if .Values.podAnnotations }}
         {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
