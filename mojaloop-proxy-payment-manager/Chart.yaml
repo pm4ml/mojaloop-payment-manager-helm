@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 1.1.0
-appVersion: "v1.1.0"
+version: 1.1.1
+appVersion: "v1.1.1"
 description: Helm chart for Proxy Payment Manager
 name: mojaloop-proxy-payment-manager
 maintainers:
@@ -10,7 +10,7 @@ maintainers:
     email: vijaya.guthi@infitx.com
 dependencies:
   - name: inter-scheme-proxy-adapter
-    version: 1.0.0
+    version: 1.0.1
     repository: file://../inter-scheme-proxy-adapter
     condition: inter-scheme-proxy-adapter.enabled
   - name: pm4ml-management-api-service
@@ -24,7 +24,7 @@ dependencies:
     repository: file://../pm4ml-management-api-service
     condition: management-api-b.enabled
   - name: ml-testing-toolkit
-    version: 17.4.0
+    version: 17.7.1
     repository: http://mojaloop.io/helm/repo
     alias: ttk
     condition: ttk.enabled
