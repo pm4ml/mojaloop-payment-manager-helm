@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "self.fullname" . }}
+  labels:
+{{ include "self.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    {{- range .Values.ports }}
+    {{- if .serviceEnabled }}
+    - port: {{ .portNumber }}
+      targetPort: {{ .targetPort }}
+      protocol: {{ .protocol }}
+      name: {{ .port | quote }}
+    {{- end }}
+    {{- end }}    
+  selector:
+    app.kubernetes.io/name: {{ include "self.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

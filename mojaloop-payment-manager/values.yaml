@@ -4072,3 +4072,6 @@ keycloak:
         "keycloakVersion": "12.0.4",
         "userManagedAccessAllowed": false
       }
+
+cbs-mock:
+  enabled: false
