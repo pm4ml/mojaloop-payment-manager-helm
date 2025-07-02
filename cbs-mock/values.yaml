@@ -1,0 +1,79 @@
+# Default values for cbs-mock.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  # The cbs-mock image should usually come from the core connector repository.
+  # Update the repository and tag fields below accordingly.
+  # This cbs mock image doesn't necessarily based on ML testing toolkit.
+  repository: mojaloop/ml-testing-toolkit
+  tag: latest
+  pullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""
+
+#### ENV values
+env:
+  SAMPLE_ENV_VAR1: 'sample'
+
+envFromSecrets:
+#  API_KEY:
+#    secret:
+#      name: some-secret-name
+#      key: API_KEY
+#  API_SECRET:
+#    secret:
+#      name: another-secret-name
+#      key: API_SECRET
+
+ports:
+  - port: http
+    portNumber: 4040
+    containerPort: 4040
+    targetPort: http
+    protocol: TCP
+    serviceEnabled: true
+
+livenessProbe:
+  enabled: false
+  path: /health
+  port: http
+
+readinessProbe:
+  enabled: false
+  path: /health
+  port: http
+
+service:
+  type: ClusterIP
+  # this is the port the SERVICE will listen on. requests to the service address on this port
+  # get mapped to the "http" named port on the deployment
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+secrets:
+  # secretName1:
+  #   key1: "value"
+  #   key2: "value"
+  # secretName2:
+  #   key1: "value"
+  #   key2: "value"

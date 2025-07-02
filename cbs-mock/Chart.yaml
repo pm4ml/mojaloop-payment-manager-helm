@@ -1,0 +1,5 @@
+apiVersion: v2
+appVersion: "0.0.1"
+description: A generic Helm chart for mock core backend system
+name: cbs-mock
+version: 0.0.1
