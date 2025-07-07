@@ -103,7 +103,7 @@ management-api:
     #    CLIENT_SECRET_KEY: changeme
     CACHE_HOST: redis-master
     DFSP_ID: *dfspId
-    ENABLE_UI_API_SERVER: false
+    ENABLE_UI_API_SERVER: true
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
     MCM_CLIENT_REFRESH_INTERVAL: 300
@@ -370,6 +370,11 @@ scheme-adapter:
       ENABLE_BACKEND_EVENT_HANDLER: false
       ENABLE_FSPIOP_EVENT_HANDLER: false
 
+      # API_TYPE can be one of fspiop, iso20022
+      # API_TYPE: iso20022
+      # ILP_VERSION can be one of 1, 4
+      # ILP_VERSION: '4'
+
     podAffinityPreset: ""
     ## @param podAntiAffinityPreset Pod anti-affinity preset. Ignored if `main.affinity` is set. Allowed values: `soft` or `hard`
     ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
@@ -430,7 +435,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.6.0-iso.8
+      tag: v24.10.3
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -840,7 +845,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.6.0-iso.8
+      tag: v24.10.3
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1256,7 +1261,7 @@ scheme-adapter:
     image:
       registry: docker.io
       repository: mojaloop/sdk-scheme-adapter
-      tag: v23.6.0-iso.8
+      tag: v24.10.3
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1692,7 +1697,7 @@ ttk:
     enabled: true
     image:
       repository: mojaloop/ml-testing-toolkit
-      tag: v17.2.0
+      tag: v18.12.4
     command: '["sh", "-c", "until nslookup github.com; do sleep 5;done; cd /opt/default_config; for FILE in *; do newFileName=/opt/app/spec_files/${FILE//__/\\/}; mkdir -p ${newFileName%/*}; firstLine=$(head -n 1 $FILE | tr -d \\\"); regex=\"^(http|https|ftp)://\"; if [[ \"$firstLine\" =~ $regex ]]; then wget $firstLine -O $newFileName; else cp $FILE $newFileName; fi; done; cd /opt/app; npm run start;"]'
     config_files:
       user_config.json:
@@ -1783,7 +1788,7 @@ ttk:
     enabled: true
     image:
       repository: mojaloop/ml-testing-toolkit-ui
-      tag: v15.5.0
+      tag: v16.4.0
     className: "nginx"
     ingress:
       enabled: true

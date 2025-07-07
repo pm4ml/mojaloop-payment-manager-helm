@@ -73,7 +73,7 @@ management-api-a:
   env:
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
-    ENABLE_UI_API_SERVER: false
+    ENABLE_UI_API_SERVER: true
     DFSP_ID: *proxyId
     MCM_CLIENT_REFRESH_INTERVAL: 300
     AUTH_ENABLED: true
@@ -99,7 +99,7 @@ management-api-b:
   env:
     HUB_IAM_PROVIDER_URL: https://change.me
     MCM_SERVER_ENDPOINT: http://mcm-server
-    ENABLE_UI_API_SERVER: false
+    ENABLE_UI_API_SERVER: true
     DFSP_ID: *proxyId
     MCM_CLIENT_REFRESH_INTERVAL: 300
     AUTH_ENABLED: true
