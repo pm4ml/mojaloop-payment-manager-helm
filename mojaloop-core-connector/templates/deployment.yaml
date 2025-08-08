@@ -40,6 +40,11 @@ spec:
                   name: {{ $v.secret.name }}
                   key: {{ $v.secret.key | quote }}
             {{- end }}
+          {{- if .Values.envSecret }}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.envSecret }}
+          {{- end }}
           ports:
           {{- range .Values.ports }}
             - name: {{ .port | quote }}
