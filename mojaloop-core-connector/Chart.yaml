@@ -2,4 +2,4 @@ apiVersion: v2
 appVersion: "1.1.1"
 description: A generic Helm chart for core-connectors
 name: mojaloop-core-connector
-version: 1.1.2
+version: 1.1.3

@@ -25,7 +25,7 @@ envFromSecrets:
 #    secret:
 #      name: another-secret-name
 #      key: API_SECRET
-
+envSecret: # pm4ml-core-connector-secret
 ports:
   - port: http
     portNumber: 3003
