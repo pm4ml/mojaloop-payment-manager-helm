@@ -125,7 +125,7 @@ ttk:
     enabled: true
     image:
       repository: mojaloop/ml-testing-toolkit
-      tag: v17.2.0
+      tag: v18.15.0
     config_files:
       user_config.json:
         {
@@ -150,7 +150,7 @@ ttk:
     enabled: true
     image:
       repository: mojaloop/ml-testing-toolkit-ui
-      tag: v15.5.0
+      tag: v16.7.1
     className: "nginx"
     ingress:
       enabled: true

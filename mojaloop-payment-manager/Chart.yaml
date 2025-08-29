@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 10.3.2
-appVersion: "v10.3.2"
+version: 10.3.3
+appVersion: "v10.3.3"
 description: Helm chart for Mojaloop Payment Manager
 name: mojaloop-payment-manager
 maintainers:
@@ -52,7 +52,7 @@ dependencies:
     alias: vault
     condition: vault.enabled
   - name: ml-testing-toolkit
-    version: 17.4.0
+    version: 17.10.0
     repository: http://mojaloop.io/helm/repo
     alias: ttk
     condition: ttk.enabled
