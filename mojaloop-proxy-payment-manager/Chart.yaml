@@ -1,6 +1,6 @@
 apiVersion: v2
-version: 1.2.0
-appVersion: "v1.2.0"
+version: 1.2.1
+appVersion: "v1.2.1"
 description: Helm chart for Proxy Payment Manager
 name: mojaloop-proxy-payment-manager
 maintainers:
@@ -24,7 +24,7 @@ dependencies:
     repository: file://../pm4ml-management-api-service
     condition: management-api-b.enabled
   - name: ml-testing-toolkit
-    version: 17.7.1
+    version: 17.10.0
     repository: http://mojaloop.io/helm/repo
     alias: ttk
     condition: ttk.enabled
