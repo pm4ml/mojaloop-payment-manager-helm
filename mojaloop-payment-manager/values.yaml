@@ -1697,8 +1697,9 @@ ttk:
     enabled: true
     image:
       repository: mojaloop/ml-testing-toolkit
-      tag: v18.12.4
-    command: '["sh", "-c", "until nslookup github.com; do sleep 5;done; cd /opt/default_config; for FILE in *; do newFileName=/opt/app/spec_files/${FILE//__/\\/}; mkdir -p ${newFileName%/*}; firstLine=$(head -n 1 $FILE | tr -d \\\"); regex=\"^(http|https|ftp)://\"; if [[ \"$firstLine\" =~ $regex ]]; then wget $firstLine -O $newFileName; else cp $FILE $newFileName; fi; done; cd /opt/app; npm run start;"]'
+      tag: v18.15.0
+    commandPersistence: '["sh", "-c", "if [ -d /opt/ttk-data ]; then if [ ! -d /opt/ttk-data/spec_files ]; then cp -pR spec_files /opt/ttk-data/spec_files; fi; mv spec_files spec_files_bkp; ln -s /opt/ttk-data/spec_files spec_files; fi; npm run start;"]'
+    command: '["sh", "-c", "until nslookup github.com; do sleep 5;done; npm run start;"]'
     config_files:
       user_config.json:
         {
@@ -1788,7 +1789,7 @@ ttk:
     enabled: true
     image:
       repository: mojaloop/ml-testing-toolkit-ui
-      tag: v16.4.0
+      tag: v16.7.1
     className: "nginx"
     ingress:
       enabled: true
