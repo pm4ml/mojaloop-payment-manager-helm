@@ -1697,7 +1697,7 @@ ttk:
     enabled: true
     image:
       repository: mojaloop/ml-testing-toolkit
-      tag: v18.15.0
+      tag: v18.15.1
     commandPersistence: '["sh", "-c", "if [ -d /opt/ttk-data ]; then if [ ! -d /opt/ttk-data/spec_files ]; then cp -pR spec_files /opt/ttk-data/spec_files; fi; mv spec_files spec_files_bkp; ln -s /opt/ttk-data/spec_files spec_files; fi; npm run start;"]'
     command: '["sh", "-c", "until nslookup github.com; do sleep 5;done; npm run start;"]'
     config_files:

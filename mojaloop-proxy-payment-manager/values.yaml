@@ -125,7 +125,7 @@ ttk:
     enabled: true
     image:
       repository: mojaloop/ml-testing-toolkit
-      tag: v18.15.0
+      tag: v18.15.1
     config_files:
       user_config.json:
         {
