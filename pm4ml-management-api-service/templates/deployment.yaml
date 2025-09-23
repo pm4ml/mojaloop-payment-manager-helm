@@ -7,6 +7,8 @@ metadata:
   labels:
 {{ include "pm4ml-management-api-service.labels" . | indent 4 }}
 spec:
+  strategy:
+    type: Recreate # do not do a rolling update, as it will conflict doing writes to the Vault
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
